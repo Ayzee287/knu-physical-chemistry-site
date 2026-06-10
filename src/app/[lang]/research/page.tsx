@@ -35,7 +35,7 @@ export default async function ResearchPage({ params }: PageProps) {
   const t = dict.research;
 
   return (
-    <main className="pb-24">
+    <main>
       <PageIntro
         eyebrow={t.intro.eyebrow}
         title={t.intro.title}
@@ -48,48 +48,61 @@ export default async function ResearchPage({ params }: PageProps) {
           {t.profileNote}
         </p>
 
-        <div className="mt-12 border-b border-navy/10">
+        <div className="mb-16 mt-12 border-b border-navy/10 sm:mb-20">
           {areas.map((area, i) => (
             <ResearchAreaCard key={area.id} area={area} index={i} />
           ))}
         </div>
-
-        {/* Scientific school — the department's registered school: name,
-            1944 lineage, and a publication-style selected bibliography.
-            Current school leadership is deliberately not stated (backlog). */}
-        <section id="school" className="mt-16 scroll-mt-24 sm:mt-20">
-          <SectionHeader eyebrow={t.school.eyebrow} title={school.name} />
-          <p className="mt-6 max-w-2xl text-pretty leading-7 text-slate">
-            {school.lineage}
-            <ReviewMark provenance={school.provenance.lineage} />
-          </p>
-
-          <div className="mt-10 max-w-3xl">
-            <p className="text-xs uppercase tracking-[0.18em] text-copper">
-              {t.school.worksTitle}
-              <ReviewMark provenance={school.provenance.works} />
-            </p>
-            <ul className="mt-4 border-b border-navy/10">
-              {school.works.map((work) => (
-                <li
-                  key={work.citation}
-                  className="grid gap-x-8 gap-y-1 border-t border-navy/10 py-4 sm:grid-cols-[4rem_1fr]"
-                >
-                  <span className="font-serif text-lg tabular-nums leading-snug text-copper">
-                    {work.year}
-                  </span>
-                  <span className="max-w-2xl text-pretty text-sm leading-6 text-slate">
-                    {work.citation}
-                  </span>
-                </li>
-              ))}
-            </ul>
-            <p className="mt-4 max-w-xl text-xs leading-5 text-slate/80">
-              {t.school.worksNote}
-            </p>
-          </div>
-        </section>
       </Container>
+
+      {/* Scientific school — the page's archival close: the department's
+          registered school, its 1944 lineage, and a journal-style selected
+          bibliography. Current school leadership deliberately not stated. */}
+      <section
+        id="school"
+        className="relative scroll-mt-24 overflow-hidden border-t border-navy/10 bg-sand/40 py-16 sm:py-20 lg:py-24"
+      >
+        <Container>
+          <div className="relative">
+            <p
+              aria-hidden
+              className="pointer-events-none absolute -top-8 right-0 hidden select-none font-serif text-[8rem] leading-none tracking-tight text-navy/[0.07] tabular-nums lg:block"
+            >
+              1944
+            </p>
+            <SectionHeader eyebrow={t.school.eyebrow} title={school.name} />
+            <p className="mt-6 max-w-2xl text-pretty leading-7 text-slate">
+              {school.lineage}
+              <ReviewMark provenance={school.provenance.lineage} />
+            </p>
+
+            <div className="mt-10 max-w-3xl">
+              <p className="text-xs uppercase tracking-[0.18em] text-copper">
+                {t.school.worksTitle}
+                <ReviewMark provenance={school.provenance.works} />
+              </p>
+              <ul className="mt-4 border-b border-navy/10">
+                {school.works.map((work) => (
+                  <li
+                    key={work.citation}
+                    className="grid gap-x-8 gap-y-1 border-t border-navy/10 py-4 sm:grid-cols-[4rem_1fr]"
+                  >
+                    <span className="font-serif text-lg tabular-nums leading-snug text-copper">
+                      {work.year}
+                    </span>
+                    <span className="max-w-2xl text-pretty text-sm leading-6 text-slate">
+                      {work.citation}
+                    </span>
+                  </li>
+                ))}
+              </ul>
+              <p className="mt-4 max-w-xl text-xs leading-5 text-slate/80">
+                {t.school.worksNote}
+              </p>
+            </div>
+          </div>
+        </Container>
+      </section>
     </main>
   );
 }

@@ -37,4 +37,16 @@
     background-color: var(--color-navy);
     color: var(--color-ivory);
   }
+
+  /* Dark surfaces (ink masthead, navy closer) invert the interaction details —
+     a navy focus ring or selection is invisible there. Small things like this
+     are where the surface either feels designed or doesn't. */
+  .dark-surface :is(a, summary, button):focus-visible {
+    outline-color: var(--color-ivory);
+  }
+
+  .dark-surface ::selection {
+    background-color: var(--color-ivory);
+    color: var(--color-ink);
+  }
 }
