@@ -78,14 +78,15 @@ const namePending: Localised = {
   en: "Name to be confirmed",
 };
 const personWithheld = placeholder(
-  "Person sourced from the staff directories but unverified; withheld from publication until independently confirmed.",
+  "Person record withheld: claim carries no publishable provenance.",
 );
 
-/** The dean's public view — withheld-or-verified, same contract as staff. */
+/** The dean's public view — publishes sourced records per ADR-0005. */
 export function getDean(lang: Locale): LocalisedStaffMember {
   const dean = leadership[0];
-  const isVerified = dean.person.provenance.state === "verified";
-  if (!isVerified) {
+  const state = dean.person.provenance.state;
+  const publishable = state === "verified" || state === "sourced";
+  if (!publishable) {
     return {
       id: dean.id,
       role: dean.role[lang],

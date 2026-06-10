@@ -101,15 +101,14 @@ export const periods: HistoryPeriod[] = [
   {
     id: "current",
     years: "2005–",
-    // The source names the current head; the NAME stays withheld here in
-    // alignment with ADR-0001 (current-personnel claim, pending verification —
-    // see content/staff/staff.ts). The period itself is part of the record.
-    head: { ua: "чинний завідувач кафедри", en: "the current head of department" },
+    // Published under ADR-0005 (operator-authorized curated set), consistent
+    // with the head record in content/staff/staff.ts.
+    head: { ua: "І. О. Фрицький", en: "I. O. Fritsky" },
     focus: {
       ua: "Біофізична хімія, електрохімія координаційних сполук, металокомплексний каталіз, магнетохімія.",
       en: "Biophysical chemistry, electrochemistry of coordination compounds, metal-complex catalysis, magnetochemistry.",
     },
-    provenance: src("Head named in source and in staff directory; withheld pending verification (ADR-0001)."),
+    provenance: src("Head since 2005 per the department's own record; published as sourced (ADR-0005)."),
   },
 ];
 

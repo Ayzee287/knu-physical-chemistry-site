@@ -3,6 +3,7 @@ import type { OfficialLink } from "@/types/content";
 import {
   claim,
   fromChemKnu,
+  fromDeptProfile,
   sourced,
   SOURCES,
   type Claim,
@@ -12,49 +13,46 @@ import {
 
 // Contact facts.
 //
-// CONTENT REALITY: no department-specific postal address, room, phone or email
-// exists in the source materials (see docs/content-audit). What we hold are
-// FACULTY-level contacts, inherited from the faculty project's sourced records.
-// They are published clearly labelled as faculty contacts; department-specific
-// details are added here once the department provides and confirms them.
+// The v3 department profile supplies DEPARTMENT-level contacts (phone, email,
+// address) consistent with the legacy contacts page's phone — and resolves the
+// old address conflict: the department sits in the faculty building at
+// Скоропадського 12 (the legacy Володимирська 62А address was stale).
+// Contacts are navigational, low-stakes claims: published with provenance.
 
 const address: Claim<Localised<string[]>> = claim(
   {
     ua: ["вул. Гетьмана Павла Скоропадського, 12", "Київ, 01033, Україна"],
     en: ["12 Hetmana Pavla Skoropadskoho St", "Kyiv 01033, Ukraine"],
   },
-  fromChemKnu(
-    "Faculty building address. Street renamed from Lva Tolstoho; confirm building number and postal index. Department rooms unknown.",
+  fromDeptProfile(
+    "Department address per the v3 profile — same building as the faculty; supersedes the legacy site's stale Volodymyrska address.",
   ),
 );
 
-// Locale-invariant facts — stored as plain values, not localised maps.
-const email: Claim<string> = claim("chem@knu.ua", fromChemKnu("Faculty inbox; department email unknown."));
+// Department-level contacts (v3 profile; phone matches the legacy contacts page).
+const departmentPhone: Claim<string> = claim(
+  "+38 (044) 239-33-93",
+  fromDeptProfile("Consistent with the legacy contacts page (head's office, room 218)."),
+);
+const departmentEmail: Claim<string> = claim(
+  "ifritsky@univ.kiev.ua",
+  fromDeptProfile("The department lists the head's mailbox as the departmental contact."),
+);
+
+// Faculty-level contacts (kept as the institutional fallback channel).
+const email: Claim<string> = claim("chem@knu.ua", fromChemKnu("Faculty inbox."));
 const phone: Claim<string> = claim(
   "+38 (044) 239-33-58",
-  fromChemKnu("Faculty number; department phone unknown."),
+  fromChemKnu("Faculty number."),
 );
 
-export const contact = { address, email, phone };
+export const contact = { address, email, phone, departmentPhone, departmentEmail };
 
 // ── Unpublished backlog ──────────────────────────────────────────────────────
-// Department-level contacts found on the legacy official site's contacts page
-// (snapshot: source-materials/physchem-knu-ua/contacts_ukr.html, ©2009).
-// NOT rendered anywhere: the page carries a visible copy-paste error («кафедра
-// органічної хімії» in the heading), an address that conflicts with the
-// current faculty address (Володимирська 62А vs Скоропадського 12), and
-// deprecated @univ.kiev.ua mailboxes. Publishing stale contacts is worse than
-// publishing none. Kept solely as the verification-backlog record — confirm
-// each value with the department, then promote into `contact` above.
+// The legacy head-office phone was PROMOTED to `departmentPhone` above after
+// the v3 profile independently listed the same number. The secretary line
+// remains backlog (single stale source).
 export const legacyDepartmentContacts = {
-  headPhone: claim(
-    "+38 (044) 239-33-93",
-    sourced(
-      "https://physchem.knu.ua/contacts_ukr.html",
-      "2026-06-10",
-      "Legacy (©2009); page heading misnames the department — treat with caution.",
-    ),
-  ),
   secretaryPhone: claim(
     "+38 (044) 239-33-70",
     sourced(
@@ -105,6 +103,8 @@ export type LocalisedContact = {
   address: { value: string[]; provenance: Provenance };
   email: { value: string; provenance: Provenance };
   phone: { value: string; provenance: Provenance };
+  departmentPhone: { value: string; provenance: Provenance };
+  departmentEmail: { value: string; provenance: Provenance };
   links: Array<{ id: string; label: string; url: string; provenance: Provenance }>;
 };
 
@@ -113,6 +113,8 @@ export function getContact(lang: Locale): LocalisedContact {
     address: { value: address.value[lang], provenance: address.provenance },
     email,
     phone,
+    departmentPhone,
+    departmentEmail,
     links: officialLinks.map((link) => ({
       id: link.id,
       label: link.label[lang],

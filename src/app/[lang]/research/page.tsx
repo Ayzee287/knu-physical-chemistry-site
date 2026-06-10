@@ -6,6 +6,7 @@ import { SectionHeader } from "@/components/layout/section-header";
 import { ResearchAreaCard } from "@/components/cards/research-area-card";
 import { ReviewMark } from "@/components/ui/review-mark";
 import { getResearchAreas } from "@content/research/research";
+import { getResearchGroups } from "@content/research/groups";
 import { getSchool } from "@content/research/school";
 import { getDictionary, isLocale } from "@/lib/i18n";
 import { buildMetadata } from "@/lib/seo";
@@ -31,6 +32,7 @@ export default async function ResearchPage({ params }: PageProps) {
   if (!isLocale(lang)) notFound();
   const dict = getDictionary(lang);
   const areas = getResearchAreas(lang);
+  const groups = getResearchGroups(lang);
   const school = getSchool(lang);
   const t = dict.research;
 
@@ -48,11 +50,58 @@ export default async function ResearchPage({ params }: PageProps) {
           {t.profileNote}
         </p>
 
-        <div className="mb-16 mt-12 border-b border-navy/10 sm:mb-20">
+        <div className="mt-12 border-b border-navy/10">
           {areas.map((area, i) => (
             <ResearchAreaCard key={area.id} area={area} index={i} />
           ))}
         </div>
+
+        {/* Research groups — the department's own group designations: leader,
+            programme line, keywords. Quiet rows; identity, not a directory. */}
+        <section
+          id="groups"
+          className="mb-16 mt-16 scroll-mt-24 sm:mb-20 sm:mt-20"
+          aria-labelledby="research-groups"
+        >
+          <SectionHeader
+            eyebrow={t.groups.eyebrow}
+            title={t.groups.title}
+            lead={t.groups.lead}
+          />
+          <div className="mt-10 max-w-3xl border-b border-navy/10">
+            {groups.map((group) => (
+              <article
+                key={group.id}
+                className="border-t border-navy/10 py-6 sm:py-7"
+              >
+                <h3 className="font-medium leading-6 text-navy">
+                  <a
+                    href={`#${group.areaId}`}
+                    className="transition-colors hover:text-ink"
+                  >
+                    {group.name}
+                  </a>
+                  <ReviewMark provenance={group.provenance} />
+                </h3>
+                <p className="mt-1.5 max-w-2xl text-pretty text-sm leading-6 text-slate">
+                  {group.focus}
+                </p>
+                <p className="mt-2 text-xs leading-5 text-slate/90">
+                  {group.keywords.map((keyword, i) => (
+                    <span key={keyword}>
+                      {i > 0 ? (
+                        <span aria-hidden className="mx-2 text-copper/60">
+                          ·
+                        </span>
+                      ) : null}
+                      {keyword}
+                    </span>
+                  ))}
+                </p>
+              </article>
+            ))}
+          </div>
+        </section>
       </Container>
 
       {/* Scientific school — the page's archival close: the department's
@@ -74,6 +123,10 @@ export default async function ResearchPage({ params }: PageProps) {
             <p className="mt-6 max-w-2xl text-pretty leading-7 text-slate">
               {school.lineage}
               <ReviewMark provenance={school.provenance.lineage} />
+            </p>
+            <p className="mt-3 max-w-2xl text-pretty leading-7 text-slate">
+              {school.dissertations}
+              <ReviewMark provenance={school.provenance.dissertations} />
             </p>
 
             <div className="mt-10 max-w-3xl">

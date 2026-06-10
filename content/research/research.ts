@@ -1,92 +1,98 @@
 import type { Locale } from "@/lib/i18n";
 import type { LocalisedResearchArea, ResearchArea } from "@/types/content";
-import { fromPhyschem } from "@/lib/provenance";
+import { fromDeptProfile } from "@/lib/provenance";
 
 // Research directions of the Department of Physical Chemistry.
 //
-// SOURCED from the department's own published record: the legacy official site
-// (physchem.knu.ua — «Основні наукові напрямки», «Історія кафедри»; snapshots
-// in source-materials/physchem-knu-ua/). That record is authoritative as the
-// department's self-description but dates from ~2009, so every area carries a
-// confirm-current-emphasis note. Summaries stay conservative paraphrases of
-// the source text — never stronger than the original claims.
-//
-// Specific research GROUPS (people, labs, projects) are still not listed —
-// that detail requires department confirmation (see docs/content-audit).
+// Rebuilt 2026-06-10 from the v3 department profile (six research groups with
+// explicit programmes; cites infopacket.knu.ua / vstup.chem.knu.ua, June
+// 2026), corroborated by the legacy official site. Five public directions map
+// the six groups: institutional research identity, not personal biographies.
+// Summaries remain conservative paraphrases of source text.
 
-const confirmNote =
-  "From the department's legacy official site (©2009); confirm current emphasis with the department.";
+const v3 = fromDeptProfile;
+const confirmNote = "From the department's published profile; confirm current emphasis with the department.";
 
 export const researchAreas: ResearchArea[] = [
   {
-    id: "catalysis-surface",
+    id: "coordination-spin",
     title: {
-      ua: "Каталіз і фізична хімія поверхні",
-      en: "Catalysis and surface physical chemistry",
+      ua: "Координаційна хімія і спінові переходи",
+      en: "Coordination chemistry and spin crossover",
     },
     summary: {
-      ua: "Фізико-хімічні, адсорбційні та каталітичні властивості металовмісних систем; взаємодія газових молекул з поверхнею твердих тіл.",
-      en: "Physicochemical, adsorption and catalytic properties of metal-containing systems; the interaction of gas molecules with solid surfaces.",
+      ua: "Поліядерні координаційні сполуки з прогнозованими магнітними та каталітичними властивостями; спінові переходи у сполуках Fe(II) і Co(II); стабілізація нетрадиційно високих ступенів окиснення металів — Fe(IV), Cu(III), Ni(III) — у водних розчинах.",
+      en: "Polynuclear coordination compounds with designed magnetic and catalytic properties; spin crossover in Fe(II) and Co(II) compounds; stabilisation of unusually high metal oxidation states — Fe(IV), Cu(III), Ni(III) — in aqueous solutions.",
     },
     topics: {
-      ua: ["екологічний каталіз", "кластерний каталіз", "сенсори газів"],
-      en: ["ecological catalysis", "cluster catalysis", "gas sensors"],
+      ua: ["spin crossover", "поліядерні комплекси", "високі ступені окиснення", "молекулярні магнітні матеріали"],
+      en: ["spin crossover", "polynuclear complexes", "high oxidation states", "molecular magnetic materials"],
     },
-    provenance: fromPhyschem("napriamki_ukr.html", confirmNote),
+    provenance: v3(confirmNote),
   },
   {
-    id: "melts-thermodynamics",
+    id: "heterogeneous-catalysis",
     title: {
-      ua: "Термодинаміка і структура розплавів",
-      en: "Thermodynamics and structure of melts",
+      ua: "Гетерогенний каталіз",
+      en: "Heterogeneous catalysis",
     },
     summary: {
-      ua: "Термодинаміка і структура металічних та оксидних розплавів; термодинамічні функції бінарних і потрійних металічних систем.",
-      en: "Thermodynamics and structure of metallic and oxide melts; thermodynamic functions of binary and ternary metallic systems.",
+      ua: "Масивні та нанесені каталізатори промислово важливих реакцій — синтез аміаку, окиснення CO, метанізація CO₂; бі- та трикомпонентні нанокомпозити на оксидних і вуглецевих носіях; мас-спектрометрія термодесорбції для дослідження поверхні каталізаторів.",
+      en: "Bulk and supported catalysts for industrially important reactions — ammonia synthesis, CO oxidation, CO₂ methanation; binary and ternary nanocomposites on oxide and carbon supports; thermal-desorption mass spectrometry for catalyst surface studies.",
     },
     topics: {
-      ua: ["рідкі сплави", "гетерогенні рівноваги"],
-      en: ["liquid alloys", "heterogeneous equilibria"],
+      ua: ["метанізація CO₂", "екологічний каталіз", "нанокомпозити", "in situ дослідження поверхні"],
+      en: ["CO₂ methanation", "ecological catalysis", "nanocomposites", "in situ surface studies"],
     },
-    provenance: fromPhyschem("napriamki_ukr.html", confirmNote),
+    provenance: v3(confirmNote),
   },
   {
-    id: "coordination-bioinorganic",
+    id: "gas-sensors",
     title: {
-      ua: "Координаційна та біонеорганічна хімія",
-      en: "Coordination and bioinorganic chemistry",
+      ua: "Напівпровідникові газові сенсори",
+      en: "Semiconductor gas sensors",
     },
     summary: {
-      ua: "Електрохімія координаційних сполук, металокомплексний каталіз і магнетохімія; біоміметичні каталізатори та молекулярні магнітні наноматеріали.",
-      en: "Electrochemistry of coordination compounds, metal-complex catalysis and magnetochemistry; biomimetic catalysts and molecular magnetic nanomaterials.",
+      ua: "Розробка та дослідження сенсорів газів на основі SnO₂ з каталітичними добавками; чутливість сенсорів визначається гетерогенно-каталітичними реакціями на поверхні газочутливого шару.",
+      en: "Development and study of SnO₂-based gas sensors with catalytic additives; sensor response is governed by heterogeneous catalytic reactions at the gas-sensitive surface.",
     },
     topics: {
-      ua: ["біофізична хімія", "магнетохімія", "біоміметичні каталізатори"],
-      en: ["biophysical chemistry", "magnetochemistry", "biomimetic catalysts"],
+      ua: ["SnO₂", "аналітика водню", "сенсорні матеріали"],
+      en: ["SnO₂", "hydrogen sensing", "sensor materials"],
     },
-    // Two converging sources: the department history page (directions started
-    // under the current head, 2005–) and the head's stated field in the staff
-    // directory document.
-    provenance: fromPhyschem(
-      "history_ukr.html",
-      `${confirmNote} Corroborated by the staff-directory document (head's stated field).`,
-    ),
+    provenance: v3(`Corroborated by the legacy record (sensor work since the 1990s). ${confirmNote}`),
   },
   {
-    id: "dispersed-systems",
+    id: "melts-disordered",
     title: {
-      ua: "Фізична хімія дисперсних систем",
-      en: "Physical chemistry of dispersed systems",
+      ua: "Структура розплавів і невпорядкованих систем",
+      en: "Structure of melts and disordered systems",
     },
     summary: {
-      ua: "Агрегативна стійкість дисперсних систем, зокрема механізм впливу неіоногенних полімерів.",
-      en: "Aggregative stability of dispersed systems, including the influence of non-ionic polymers.",
+      ua: "Атомна структура рідких металів, бінарних металічних розплавів та оксидних систем; рентгенівська дифракція, зворотний метод Монте-Карло, молекулярна динаміка; синхротронні вимірювання у міжнародних центрах.",
+      en: "Atomic structure of liquid metals, binary metallic melts and oxide systems; X-ray diffraction, reverse Monte Carlo and molecular dynamics; synchrotron measurements at international facilities.",
     },
     topics: {
-      ua: ["колоїдні системи", "полімерні стабілізатори"],
-      en: ["colloidal systems", "polymer stabilisers"],
+      ua: ["рідкі метали", "оксидні системи", "зворотний Монте-Карло", "синхротронні дослідження"],
+      en: ["liquid metals", "oxide systems", "reverse Monte Carlo", "synchrotron studies"],
     },
-    provenance: fromPhyschem("napriamki_ukr.html", confirmNote),
+    provenance: v3(confirmNote),
+  },
+  {
+    id: "dispersed-carbon",
+    title: {
+      ua: "Дисперсні системи та вуглецеві матеріали",
+      en: "Dispersed systems and carbon materials",
+    },
+    summary: {
+      ua: "Стійкість і коагуляція дисперсних систем, адсорбція полімерів на межах поділу фаз; фізико-хімія модифікованих вуглецевих матеріалів — активованого вугілля, графіту й нанотрубок із металевими наночастинками — для екологічного каталізу та паливних елементів.",
+      en: "Stability and coagulation of dispersed systems, polymer adsorption at interfaces; physical chemistry of modified carbon materials — activated carbon, graphite and nanotubes with metal nanoparticles — for ecological catalysis and fuel cells.",
+    },
+    topics: {
+      ua: ["колоїдні системи", "адсорбція полімерів", "вуглецеві наноматеріали", "паливні елементи"],
+      en: ["colloidal systems", "polymer adsorption", "carbon nanomaterials", "fuel cells"],
+    },
+    provenance: v3(confirmNote),
   },
 ];
 

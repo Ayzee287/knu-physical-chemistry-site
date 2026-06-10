@@ -1,29 +1,33 @@
 import type { Locale } from "@/lib/i18n";
 import {
   claim,
+  fromDeptProfile,
   fromPhyschem,
   type Claim,
   type Localised,
   type Provenance,
 } from "@/lib/provenance";
 
-// The department's scientific school — sourced from its own published record
-// («Наукова школа з фізичної хімії», snapshot:
-// source-materials/physchem-knu-ua/shkola_ukr.html).
+// The department's scientific school.
 //
-// Published: the school's name, founding (1944, Frantsevych) and lineage —
-// historical/structural facts. NOT published: the school's stated leadership
-// and headcount figures (current-state claims of unknown date — backlog), and
-// the page's full results narrative (kept in the snapshot).
-
-const src = (note?: string) => fromPhyschem("shkola_ukr.html", note);
+// Sources: the v3 department profile (current styling of the school record)
+// and the legacy school page (lineage detail; snapshot
+// source-materials/physchem-knu-ua/shkola_ukr.html). NAME CONFLICT recorded:
+// v3 styles it «Фізична хімія каталізаторів, сорбентів та сплавів»; the
+// legacy page «Фізико-хімічні властивості каталізаторів, сорбентів і
+// сплавів». The newer styling is published; the variant stays in this note.
+//
+// LANGUAGE POLICY: the published selected-works list contains
+// Ukrainian-language editions only. The school's earlier Soviet-period
+// monographs exist in the source snapshots; the public site carries no
+// russian-language text (operator directive, 2026-06-10).
 
 export const schoolName: Claim<Localised> = claim(
   {
-    ua: "Фізико-хімічні властивості каталізаторів, сорбентів і сплавів",
-    en: "Physicochemical properties of catalysts, sorbents and alloys",
+    ua: "Фізична хімія каталізаторів, сорбентів та сплавів",
+    en: "Physical chemistry of catalysts, sorbents and alloys",
   },
-  src("Official school name as registered by the department."),
+  fromDeptProfile("Current styling; legacy variant «Фізико-хімічні властивості…» recorded in collection notes."),
 );
 
 export const schoolLineage: Claim<Localised> = claim(
@@ -31,50 +35,63 @@ export const schoolLineage: Claim<Localised> = claim(
     ua: "Школу засновано 1944 року академіком І. М. Францевичем; її розвивали В. Н. Єременко, М. В. Товбін, Г. І. Баталін та В. К. Яцимирський.",
     en: "The school was founded in 1944 by Academician I. M. Frantsevych and developed under V. N. Yeremenko, M. V. Tovbin, H. I. Batalin and V. K. Yatsymyrskyi.",
   },
-  src("Historical lineage per the department's record; current leadership intentionally not stated."),
+  fromPhyschem(
+    "shkola_ukr.html",
+    "Founder named on the legacy page; v3 confirms the 1944 founding. Current leadership intentionally not stated.",
+  ),
 );
 
-// Selected monographs and textbooks of the school, era-spanning, cited
-// verbatim from the source (bibliographic facts; titles stay in their
-// original language in both locales, per academic convention).
+/** Defended dissertations within the school — per the department's own data. */
+export const schoolDissertations: Claim<Localised> = claim(
+  {
+    ua: "У межах школи захищено 36 дисертацій, зокрема 6 докторських і 19 кандидатських.",
+    en: "Thirty-six dissertations have been defended within the school, including 6 doctoral and 19 candidate theses.",
+  },
+  fromDeptProfile("Figure attributed by the source to the department's own site data."),
+);
+
+// Selected works of the school — Ukrainian-language editions, cited as the
+// department's own materials cite them.
 export type SchoolWork = { year: string; citation: string };
 
 export const selectedWorks: Claim<SchoolWork[]> = claim(
   [
     {
-      year: "1963",
-      citation:
-        "Францевич И.Н., Войтович Р.Ф., Лавренко В.А. Высокотемпературное окисление металлов и сплавов. — Киев, 1963.",
-    },
-    {
       year: "1975",
-      citation: "Товбин М.В. Физическая химия. — Киев, 1975.",
+      citation: "Товбін М. В. Фізична хімія. — Київ, 1975.",
     },
     {
-      year: "1983",
-      citation:
-        "Баталин Г.И., Белобородова Е.А., Казимиров В.П. Термодинамика и строение жидких сплавов на основе алюминия. — Киев, 1983.",
+      year: "1992",
+      citation: "Яцимирський В. К. Фізична хімія рівноважних систем. — Київ, 1992.",
     },
     {
-      year: "2002",
-      citation:
-        "Гончарук В.В., Камалов Г.Л., Ковтун Г.А., Рудаков Е.С., Яцимирский В.К. Катализ. Механизмы гомогенного и гетерогенного катализа, кластерные подходы. — Киев: Наукова думка, 2002.",
+      year: "1997",
+      citation: "Яцимирський К. Б., Яцимирський В. К. Хімічний зв’язок. — Київ, 1997 (2-ге видання).",
     },
     {
       year: "2007",
-      citation: "Яцимирський В.К. Фізична хімія. — Київ, 2007.",
+      citation: "Яцимирський В. К. Фізична хімія. — Київ, 2007.",
+    },
+    {
+      year: "2012",
+      citation: "Іщенко О. В. та ін. Статистичні методи у хімії. — Донецьк, 2012.",
     },
   ],
-  src("Selection (5 of 10) from the school's published list; full list in the snapshot."),
+  fromPhyschem(
+    "shkola_ukr.html",
+    "Ukrainian-language editions from the school's published list (titles as cited in the department's history/school pages); the full list incl. earlier Soviet-period editions remains in the snapshot.",
+  ),
 );
 
 export type LocalisedSchool = {
   name: string;
   lineage: string;
+  dissertations: string;
   works: SchoolWork[];
   provenance: {
     name: Provenance;
     lineage: Provenance;
+    dissertations: Provenance;
     works: Provenance;
   };
 };
@@ -83,10 +100,12 @@ export function getSchool(lang: Locale): LocalisedSchool {
   return {
     name: schoolName.value[lang],
     lineage: schoolLineage.value[lang],
+    dissertations: schoolDissertations.value[lang],
     works: selectedWorks.value,
     provenance: {
       name: schoolName.provenance,
       lineage: schoolLineage.provenance,
+      dissertations: schoolDissertations.provenance,
       works: selectedWorks.provenance,
     },
   };

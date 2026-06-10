@@ -4,9 +4,9 @@ import { getContact } from "@content/contacts/contacts";
 import type { Locale, Dictionary } from "@/lib/i18n";
 
 /**
- * The department's contact record: faculty-level address, email and phone
- * (clearly labelled as such — see content/contacts) plus the official sites of
- * record. Every fact renders with its provenance mark in review mode.
+ * The department's contact record: departmental phone/email (v3 profile),
+ * the building address, faculty-level fallback channels, and the official
+ * sites of record. Every fact renders with its provenance mark in review mode.
  */
 export function ContactSection({
   lang,
@@ -19,7 +19,7 @@ export function ContactSection({
   const labels = dict.contacts.labels;
 
   return (
-    <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-3">
+    <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-4">
       <div>
         <p className="text-xs uppercase tracking-[0.18em] text-copper">
           {labels.address}
@@ -39,6 +39,41 @@ export function ContactSection({
       <div className="space-y-6">
         <div>
           <p className="text-xs uppercase tracking-[0.18em] text-copper">
+            {labels.departmentPhone}
+          </p>
+          <p className="mt-3 text-sm leading-6 text-navy">
+            {contact.departmentPhone.value}
+            <ReviewMark provenance={contact.departmentPhone.provenance} />
+          </p>
+        </div>
+        <div>
+          <p className="text-xs uppercase tracking-[0.18em] text-copper">
+            {labels.departmentEmail}
+          </p>
+          <p className="mt-3 text-sm leading-6">
+            <a
+              href={`mailto:${contact.departmentEmail.value}`}
+              className="text-navy transition-colors hover:text-slate"
+            >
+              {contact.departmentEmail.value}
+            </a>
+            <ReviewMark provenance={contact.departmentEmail.provenance} />
+          </p>
+        </div>
+      </div>
+
+      <div className="space-y-6">
+        <div>
+          <p className="text-xs uppercase tracking-[0.18em] text-copper">
+            {labels.phone}
+          </p>
+          <p className="mt-3 text-sm leading-6 text-navy">
+            {contact.phone.value}
+            <ReviewMark provenance={contact.phone.provenance} />
+          </p>
+        </div>
+        <div>
+          <p className="text-xs uppercase tracking-[0.18em] text-copper">
             {labels.email}
           </p>
           <p className="mt-3 text-sm leading-6">
@@ -49,15 +84,6 @@ export function ContactSection({
               {contact.email.value}
             </a>
             <ReviewMark provenance={contact.email.provenance} />
-          </p>
-        </div>
-        <div>
-          <p className="text-xs uppercase tracking-[0.18em] text-copper">
-            {labels.phone}
-          </p>
-          <p className="mt-3 text-sm leading-6 text-navy">
-            {contact.phone.value}
-            <ReviewMark provenance={contact.phone.provenance} />
           </p>
         </div>
       </div>

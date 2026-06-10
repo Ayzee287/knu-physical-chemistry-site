@@ -2,36 +2,36 @@ import type { Locale } from "@/lib/i18n";
 import type { LocalisedStaffMember, StaffMember } from "@/types/content";
 import {
   claim,
-  fromStaffDirectoryV2,
+  fromDeptProfile,
   placeholder,
   type Localised,
 } from "@/lib/provenance";
 
 // Academic staff of the Department of Physical Chemistry.
 //
-// SOURCES: the v2 faculty staff directory (full departmental roster; see
-// SOURCES.staffDirectoryV2) corroborated by the legacy official site's
-// teachers page (source-materials/physchem-knu-ua/teachers_ukr.html). Both
-// are secondary; every person record is `sourced`, none is verified.
+// SOURCES, strongest first: the v3 department profile (SOURCES.deptProfile —
+// per-person ORCID, rooms, focus lines; cites infopacket.knu.ua and
+// vstup.chem.knu.ua, June 2026), corroborated by the v2 faculty directory and
+// the legacy site's teachers page. Secondary sources; nothing here is
+// independently verified yet.
 //
 // RECORDED CONFLICTS (do not silently resolve):
-// - Казіміров В. П. (д.х.н., проф.) appears on the legacy teachers page but
-//   is ABSENT from the v2 directory — possibly retired/emeritus. Not recorded
-//   below; ask the department.
-// - Several emails differ between sources (e.g. Усенко: nataliya_usenko@knu.ua
-//   on the legacy page vs nusenko68@gmail.com in v2). Where both exist the
-//   institutional @knu.ua address is recorded; confirm preferred addresses.
+// - Казіміров В. П. (legacy page) is absent from v2 AND v3 — treat as no
+//   longer on the roster; ask the department for the record.
+// - Emails differed across sources; v3 settles most (institutional where the
+//   department itself lists one). Remaining personal-domain addresses are the
+//   department's own listing.
 //
-// PUBLICATION GOVERNANCE (two independent gates, see ADR-0001 + ADR-0004):
-// 1. visibility — only `featured` records belong to the curated public
-//    surface. The site is a curated institution, not a staff directory:
-//    `internal` records exist for normalization, verification and operations,
-//    and have NO public render site by design.
-// 2. provenance — a featured person still renders as an honest pending
-//    placeholder until their claim is flipped to verified(...).
+// PUBLICATION GOVERNANCE (ADR-0004 + ADR-0005):
+// - visibility gate: only `featured` records render publicly — the curated
+//   set per operator authorization: head + Іщенко, Олексенко, Роїк, Усенко.
+// - provenance gate (amended): featured records publish with their `sourced`
+//   provenance; review marks expose the trust state until verification flips
+//   claims to verified(...). Volatile bio statistics are NOT recorded as
+//   publishable fields.
 
-const v2 = fromStaffDirectoryV2;
-const confirmNote = "Verify current post, degree and preferred contact with the department.";
+const src = fromDeptProfile;
+const confirmNote = "Verify with the department; published as sourced under ADR-0005.";
 
 export const staff: StaffMember[] = [
   {
@@ -47,71 +47,88 @@ export const staff: StaffMember[] = [
           en: "Dr. Sc. (Chemistry), Professor",
         },
         honours: {
-          ua: "член-кореспондент НАН України",
-          en: "Corresponding Member, NAS of Ukraine",
+          ua: "член-кореспондент НАН України (2021)",
+          en: "Corresponding Member, NAS of Ukraine (2021)",
         },
         focus: {
-          ua: "координаційна хімія та хімія поліядерних комплексів",
-          en: "coordination chemistry and the chemistry of polynuclear complexes",
+          ua: "координаційна хімія, спінові переходи та поліядерні комплекси",
+          en: "coordination chemistry, spin crossover and polynuclear complexes",
         },
       },
-      v2(
-        "Named head in: v1+v2 directories, legacy dept site (head since 2005, own group subsection). " +
-          "NOTE: v2 staff section lists him WITHOUT the NAS honour; the v2 heads section includes it — " +
-          "internal inconsistency in the source. Confirm the honour against the NAS register. " +
-          "Confirm EN transliteration. Strong sourcing; needs one present-day confirmation.",
+      src(
+        "Head since 2005 (room 218). v3 resolves the v2 inconsistency: NAS corresponding membership dated 2021. " +
+          "Convergent across v1/v2/v3 + legacy dept site. Bio statistics (460+ publications, h=27, prizes) " +
+          "kept in source only — not publishable fields. " +
+          confirmNote,
       ),
     ),
-    email: claim("ifritsky@univ.kiev.ua", v2("Legacy univ.kiev.ua domain; confirm current address.")),
+    email: claim("ifritsky@univ.kiev.ua", src("Listed by the department as the departmental contact mailbox.")),
+    orcid: claim("0000-0002-1092-8035", src()),
   },
   {
     id: "ishchenko",
     rank: "professor",
-    visibility: "internal",
+    visibility: "featured",
     role: { ua: "Професор кафедри", en: "Professor" },
     person: claim(
       {
         name: { ua: "Іщенко Олена Вікторівна", en: "Olena V. Ishchenko" },
         degree: { ua: "доктор хімічних наук, професор", en: "Dr. Sc. (Chemistry), Professor" },
+        focus: {
+          ua: "фізико-хімія гетерогенних каталізаторів",
+          en: "physical chemistry of heterogeneous catalysts",
+        },
       },
-      v2(`${confirmNote} Also on legacy teachers page (room 102). Candidate for featured once verified.`),
+      src(`Leads the heterogeneous-catalysis unit (room 102). ${confirmNote}`),
     ),
-    email: claim("elischenko58@gmail.com", v2("Personal address in both sources.")),
+    email: claim("elischenko58@gmail.com", src("Address as listed by the department.")),
+    orcid: claim("0000-0001-9782-1769", src()),
   },
   {
     id: "oleksenko",
     rank: "professor",
-    visibility: "internal",
+    visibility: "featured",
     role: { ua: "Професор кафедри", en: "Professor" },
     person: claim(
       {
         name: { ua: "Олексенко Людмила Петрівна", en: "Liudmyla P. Oleksenko" },
         degree: { ua: "доктор хімічних наук, професор", en: "Dr. Sc. (Chemistry), Professor" },
+        focus: {
+          ua: "металовмісні каталітичні системи та напівпровідникові газові сенсори",
+          en: "metal-containing catalytic systems and semiconductor gas sensors",
+        },
       },
-      v2(`${confirmNote} Also on legacy teachers page and groups page (own group). Candidate for featured once verified.`),
+      src(`Room 202. ${confirmNote}`),
     ),
-    email: claim("olexludmil@ukr.net", v2()),
+    email: claim("olexludmil@ukr.net", src("Address as listed by the department.")),
+    orcid: claim("0000-0002-7970-6895", src()),
   },
   {
     id: "roik",
     rank: "professor",
-    visibility: "internal",
+    visibility: "featured",
     role: { ua: "Професор кафедри", en: "Professor" },
     person: claim(
       {
         name: { ua: "Роїк Олександр Сергійович", en: "Oleksandr S. Roik" },
-        degree: { ua: "доктор хімічних наук, професор", en: "Dr. Sc. (Chemistry), Professor" },
+        degree: {
+          ua: "доктор хімічних наук (2021), професор",
+          en: "Dr. Sc. (Chemistry, 2021), Professor",
+        },
+        focus: {
+          ua: "структура рідких металів і металічних розплавів",
+          en: "structure of liquid metals and metallic melts",
+        },
       },
-      v2(
-        `${confirmNote} Legacy page lists oleksandr_roik@knu.ua; v2 lists a gmail address — conflict recorded, knu.ua preferred.`,
-      ),
+      src(`Room 106. v3 confirms the institutional email over v2's personal one. ${confirmNote}`),
     ),
-    email: claim("oleksandr_roik@knu.ua", v2("From legacy teachers page (institutional domain preferred over v2 gmail).")),
+    email: claim("oleksandr_roik@knu.ua", src()),
+    orcid: claim("0000-0001-9705-1100", src()),
   },
   {
     id: "usenko",
     rank: "docent",
-    visibility: "internal",
+    visibility: "featured",
     role: {
       ua: "Доцент кафедри · заступник декана з навчальної роботи",
       en: "Associate Professor · Vice-Dean for Education",
@@ -121,11 +138,12 @@ export const staff: StaffMember[] = [
         name: { ua: "Усенко Наталія Ігорівна", en: "Nataliia I. Usenko" },
         degree: { ua: "кандидат хімічних наук, доцент", en: "Cand. Sc. (Chemistry), Associate Professor" },
       },
-      v2(
-        `${confirmNote} Triple-sourced (v1 dean's office, v2 roster, legacy teachers page) — strongest-corroborated record after the head.`,
+      src(
+        `Room 241. The most cross-corroborated record (v1 dean's office, v2, v3, legacy page). ${confirmNote}`,
       ),
     ),
-    email: claim("nataliya_usenko@knu.ua", v2("Institutional address from v1/legacy; v2 lists a gmail — conflict recorded.")),
+    email: claim("nataliya_usenko@knu.ua", src("Institutional address (v1/legacy); v3 also lists a personal one.")),
+    orcid: claim("0000-0002-8342-1884", src()),
   },
   {
     id: "haidai",
@@ -137,9 +155,10 @@ export const staff: StaffMember[] = [
         name: { ua: "Гайдай Сніжана Вікторівна", en: "Snizhana V. Haidai" },
         degree: { ua: "кандидат хімічних наук, доцент", en: "Cand. Sc. (Chemistry), Associate Professor" },
       },
-      v2(`${confirmNote} Also on legacy teachers page; co-author in the school's 2012 textbook entry.`),
+      src("Room 102; CO2-methanation work within the Ishchenko group."),
     ),
-    email: claim("gaidaisv77@ukr.net", v2()),
+    email: claim("gaidaisv77@ukr.net", src()),
+    orcid: claim("0000-0001-7742-5830", src()),
   },
   {
     id: "malysheva",
@@ -150,10 +169,15 @@ export const staff: StaffMember[] = [
       {
         name: { ua: "Малишева Марія Львівна", en: "Mariia L. Malysheva" },
         degree: { ua: "кандидат хімічних наук, доцент", en: "Cand. Sc. (Chemistry), Associate Professor" },
+        focus: {
+          ua: "стійкість і коагуляція дисперсних систем",
+          en: "stability and coagulation of dispersed systems",
+        },
       },
-      v2(`${confirmNote} Email differs across sources (univ.kiev.ua vs gmail).`),
+      src("Room 240; leads the dispersed-systems group (appears on /research in group designation, ADR-0005)."),
     ),
-    email: claim("malysheva.silica@gmail.com", v2()),
+    email: claim("maria_malysheva@univ.kiev.ua", src()),
+    orcid: claim("0000-0002-4363-3284", src()),
   },
   {
     id: "diyuk",
@@ -164,10 +188,15 @@ export const staff: StaffMember[] = [
       {
         name: { ua: "Діюк Віталій Євгенович", en: "Vitalii Ye. Diyuk" },
         degree: { ua: "кандидат хімічних наук, доцент", en: "Cand. Sc. (Chemistry), Associate Professor" },
+        focus: {
+          ua: "фізико-хімія модифікованих вуглецевих матеріалів",
+          en: "physical chemistry of modified carbon materials",
+        },
       },
-      v2(`${confirmNote} Legacy page lists vitalii_diyuk@knu.ua; v2 a gmail — knu.ua preferred.`),
+      src("Room 207; leads the carbon-materials group (appears on /research in group designation, ADR-0005)."),
     ),
-    email: claim("vitalii_diyuk@knu.ua", v2("Institutional address from legacy page.")),
+    email: claim("vitalii_diyuk@knu.ua", src()),
+    orcid: claim("0000-0001-5183-5444", src()),
   },
   {
     id: "boldyrieva",
@@ -179,9 +208,10 @@ export const staff: StaffMember[] = [
         name: { ua: "Болдирєва Ольга Юріївна", en: "Olha Yu. Boldyrieva" },
         degree: { ua: "кандидат хімічних наук, доцент", en: "Cand. Sc. (Chemistry), Associate Professor" },
       },
-      v2(confirmNote),
+      src("Room 204."),
     ),
-    email: claim("2017chem@ukr.net", v2()),
+    email: claim("2017chem@ukr.net", src()),
+    orcid: claim("0000-0003-4756-3073", src()),
   },
   {
     id: "yatsymyrskyi",
@@ -192,10 +222,15 @@ export const staff: StaffMember[] = [
       {
         name: { ua: "Яцимирський Андрій Віталійович", en: "Andrii V. Yatsymyrskyi" },
         degree: { ua: "кандидат хімічних наук, доцент", en: "Cand. Sc. (Chemistry), Associate Professor" },
+        focus: {
+          ua: "квантово-хімічні розрахунки адсорбції на металевих поверхнях",
+          en: "quantum-chemical modelling of adsorption on metal surfaces",
+        },
       },
-      v2(`${confirmNote} Legacy page lists andrii_yatsymyrskyi@knu.ua; v2 a gmail — knu.ua preferred.`),
+      src("Room 102; son of the school's long-time leader V. K. Yatsymyrskyi (source note)."),
     ),
-    email: claim("andrii_yatsymyrskyi@knu.ua", v2("Institutional address from legacy page.")),
+    email: claim("andrii_yatsymyrskyi@knu.ua", src()),
+    orcid: claim("0000-0001-5050-8281", src()),
   },
   {
     id: "guralskyi",
@@ -206,25 +241,34 @@ export const staff: StaffMember[] = [
       {
         name: { ua: "Гуральський Ілля Олександрович", en: "Illia O. Guralskyi" },
         degree: { ua: "кандидат хімічних наук, доцент", en: "Cand. Sc. (Chemistry), Associate Professor" },
+        focus: {
+          ua: "координаційна хімія перехідних металів",
+          en: "coordination chemistry of transition metals",
+        },
       },
-      v2(`${confirmNote} Present in v2 only (NOT on the legacy teachers page) — newest roster addition; confirm.`),
+      src("Member of the head's group per v3; absent from the legacy page (newest addition)."),
     ),
-    email: claim("illia.guralskyi@univ.kiev.ua", v2("Legacy univ.kiev.ua domain; confirm current address.")),
+    email: claim("illia.guralskyi@univ.kiev.ua", src()),
   },
 ];
 
-// Honest stand-in for a withheld (unverified) person.
+// Honest stand-in — now used only for records that are featured but carry a
+// bare placeholder claim (should not normally occur).
 const namePending: Localised = {
   ua: "Ім’я уточнюється",
   en: "Name to be confirmed",
 };
 const personWithheld = placeholder(
-  "Person sourced from the staff directories but unverified; name, degree and honours withheld from publication until independently confirmed.",
+  "Person record withheld: claim carries no publishable provenance.",
 );
 
 function resolve(member: StaffMember, lang: Locale): LocalisedStaffMember {
-  const isVerified = member.person.provenance.state === "verified";
-  if (!isVerified) {
+  // ADR-0005: featured records publish with `sourced` provenance; review
+  // marks carry the trust state. Only claims with no factual sourcing at all
+  // (placeholder/editorial) stay withheld.
+  const state = member.person.provenance.state;
+  const publishable = state === "verified" || state === "sourced";
+  if (!publishable) {
     return {
       id: member.id,
       role: member.role[lang],
@@ -252,9 +296,9 @@ function resolve(member: StaffMember, lang: Locale): LocalisedStaffMember {
 }
 
 /**
- * The CURATED public view: featured records only, each still passing through
- * the verified-or-withheld gate. Internal records have no render path — that
- * is the editorial governance, not an accident.
+ * The CURATED public view: featured records only (ADR-0004/0005). Internal
+ * records have no render path — that is the editorial governance, not an
+ * accident.
  */
 export function getStaff(lang: Locale): LocalisedStaffMember[] {
   return staff.filter((m) => m.visibility === "featured").map((m) => resolve(m, lang));
