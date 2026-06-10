@@ -62,7 +62,7 @@ export const en = {
     contact: {
       eyebrow: "Contacts",
       title: "Getting in touch",
-      lead: "While the department's own contact details are being confirmed, the faculty's address, phone and email are the reliable way to reach it.",
+      lead: "The department's phone and email, the building address and the official resources are on the contacts page.",
       cta: "All contacts",
     },
   },
@@ -110,12 +110,13 @@ export const en = {
     intro: {
       eyebrow: "People",
       title: "Academic staff",
-      lead: "The department's staff are published here as each record is confirmed with the department.",
+      lead: "The head of department and the leading faculty of the department.",
     },
     headSection: "Head of Department",
+    featuredSection: "Leading faculty",
     rosterSection: "Teaching and research staff",
     rosterPending:
-      "The departmental roster is being prepared for publication and will appear after the data is verified. The current roster of record is available on the department's official website.",
+      "Profiles of the department's other staff are added as records are confirmed with the department. The full roster of record is available on the department's official website.",
     rosterCta: "Official department website",
   },
 
@@ -131,12 +132,17 @@ export const en = {
       lead: "The department's research profile, from its own published record.",
     },
     profileNote:
-      "Directions are given after the department's official materials (departmental website, 2009 edition) and are being confirmed with the department. Individual research groups will be presented once verified.",
+      "Directions and groups are given after the department's published profile (June 2026 sources) and are being confirmed with the department.",
+    groups: {
+      eyebrow: "Research groups",
+      title: "The groups behind the directions",
+      lead: "Six research groups carry the department's scientific programme.",
+    },
     school: {
       eyebrow: "Scientific school",
-      worksTitle: "Selected monographs and textbooks",
+      worksTitle: "Selected textbooks and monographs",
       worksNote:
-        "Citations are given in the original language of publication, after the school's published list.",
+        "Ukrainian-language editions, cited as the department's materials cite them; the school's full publication list is kept in the source record.",
     },
   },
 
@@ -149,12 +155,14 @@ export const en = {
     intro: {
       eyebrow: "Contacts",
       title: "Department contacts",
-      lead: "Department-specific contact details are being confirmed; until then, reach the department through the Faculty of Chemistry.",
+      lead: "The department is located in the Faculty of Chemistry building; departmental and faculty contacts are below.",
     },
     labels: {
-      address: "Address (faculty)",
-      email: "Email (faculty)",
-      phone: "Phone (faculty)",
+      address: "Address",
+      departmentPhone: "Department phone",
+      departmentEmail: "Department email",
+      phone: "Faculty phone",
+      email: "Faculty email",
       official: "Official resources",
     },
   },

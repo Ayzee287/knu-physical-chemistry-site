@@ -89,6 +89,18 @@ export const SOURCES = {
     url: "source-materials/chemistry_faculty_knu_v2.html",
     retrieved: "2026-06-10",
   },
+  /**
+   * Department profile document, v3 (source-materials/physchemistry_knu.html)
+   * — received 2026-06-10 (late). Department-specific: full profile of the
+   * head, per-person ORCID records, six research groups, department contacts,
+   * school record. Cites the university's CURRENT information systems
+   * (physchem.knu.ua · infopacket.knu.ua · vstup.chem.knu.ua, June 2026).
+   * The strongest source held; still secondary and auto-generated.
+   */
+  deptProfile: {
+    url: "source-materials/physchemistry_knu.html",
+    retrieved: "2026-06-10",
+  },
   /** Faculty of Chemistry site — reference/terminology source. */
   chemKnu: { url: "https://chem.knu.ua/", retrieved: "2026-06-09" },
   /**
@@ -121,6 +133,10 @@ export const fromStaffDirectory = (note?: string): Provenance =>
 /** Convenience: a `sourced` claim attributed to the v2 staff directory. */
 export const fromStaffDirectoryV2 = (note?: string): Provenance =>
   sourced(SOURCES.staffDirectoryV2.url, SOURCES.staffDirectoryV2.retrieved, note);
+
+/** Convenience: a `sourced` claim attributed to the v3 department profile. */
+export const fromDeptProfile = (note?: string): Provenance =>
+  sourced(SOURCES.deptProfile.url, SOURCES.deptProfile.retrieved, note);
 
 /** Convenience: a `sourced` claim attributed to chem.knu.ua. */
 export const fromChemKnu = (note?: string): Provenance =>

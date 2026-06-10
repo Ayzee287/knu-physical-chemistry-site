@@ -1,0 +1,767 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Кафедра фізичної хімії — КНУ ім. Тараса Шевченка</title>
+<style>
+  :root {
+    --blue:       #003087;
+    --blue-mid:   #1a4fa0;
+    --blue-light: #e8edf7;
+    --blue-pale:  #f2f5fb;
+    --gold:       #b8860b;
+    --gold-light: #f9f3e1;
+    --text:       #1a1a1a;
+    --muted:      #5a5a5a;
+    --border:     #d0d7e3;
+    --bg:         #f7f8fc;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: "Georgia", "Times New Roman", serif;
+    color: var(--text);
+    background: var(--bg);
+    line-height: 1.65;
+  }
+
+  /* ── COVER ────────────────────────────────────────────────────── */
+  .cover {
+    background: var(--blue);
+    color: #fff;
+    padding: 64px 48px 52px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .cover::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: linear-gradient(135deg, rgba(255,255,255,.04) 0%, transparent 60%);
+    pointer-events: none;
+  }
+  .cover-eyebrow {
+    font-family: Arial, sans-serif;
+    font-size: .72rem;
+    letter-spacing: .18em;
+    text-transform: uppercase;
+    opacity: .6;
+    margin-bottom: 18px;
+  }
+  .cover-title {
+    font-size: 2rem;
+    font-weight: normal;
+    letter-spacing: .03em;
+    line-height: 1.25;
+    margin-bottom: 10px;
+  }
+  .cover-sub {
+    font-size: 1.05rem;
+    opacity: .75;
+    font-style: italic;
+  }
+  .cover-rule { width: 60px; height: 3px; background: var(--gold); margin: 26px auto; }
+  .cover-meta { font-size: .82rem; opacity: .5; margin-top: 8px; font-family: Arial, sans-serif; }
+
+  /* ── CONTAINER ───────────────────────────────────────────────── */
+  .container { max-width: 980px; margin: 0 auto; padding: 0 28px 60px; }
+
+  /* ── SECTION HEADER ──────────────────────────────────────────── */
+  .section-header {
+    display: flex; align-items: center; gap: 16px;
+    margin: 52px 0 28px;
+  }
+  .section-header h2 {
+    font-size: .68rem; letter-spacing: .16em; text-transform: uppercase;
+    color: var(--blue); font-family: Arial, sans-serif; font-weight: 700;
+    white-space: nowrap;
+  }
+  .section-header-line { flex: 1; height: 1px; background: var(--border); }
+
+  /* ── NOTE BOX ────────────────────────────────────────────────── */
+  .note-box {
+    background: var(--gold-light);
+    border-left: 3px solid var(--gold);
+    padding: 14px 18px;
+    font-size: .88rem;
+    color: var(--muted);
+    margin-bottom: 28px;
+    line-height: 1.6;
+  }
+
+  /* ── INFO BLOCK (dept summary) ───────────────────────────────── */
+  .dept-info {
+    background: #fff;
+    border: 1px solid var(--border);
+    border-top: 4px solid var(--blue);
+    padding: 28px 32px;
+    margin-bottom: 12px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px 32px;
+  }
+  .dept-info-row { display: flex; flex-direction: column; gap: 2px; }
+  .dept-info-label {
+    font-family: Arial, sans-serif; font-size: .68rem;
+    letter-spacing: .12em; text-transform: uppercase;
+    color: var(--muted);
+  }
+  .dept-info-value { font-size: .95rem; color: var(--text); }
+  .dept-info-value a { color: var(--blue); }
+
+  /* ── SCHOOL BLOCK ────────────────────────────────────────────── */
+  .school-block {
+    background: var(--blue-pale);
+    border: 1px solid var(--border);
+    padding: 24px 28px;
+    margin-bottom: 36px;
+  }
+  .school-block h3 {
+    font-size: .8rem; letter-spacing: .1em; text-transform: uppercase;
+    color: var(--blue); font-family: Arial, sans-serif; margin-bottom: 10px;
+  }
+  .school-block p { font-size: .92rem; color: var(--text); margin-bottom: 8px; }
+  .school-block p:last-child { margin-bottom: 0; }
+
+  /* ── PERSON CARD ─────────────────────────────────────────────── */
+  .person-card {
+    background: #fff;
+    border: 1px solid var(--border);
+    display: flex;
+    gap: 0;
+    margin-bottom: 18px;
+    overflow: hidden;
+    transition: box-shadow .15s;
+  }
+  .person-card:hover { box-shadow: 0 2px 12px rgba(0,48,135,.1); }
+  .person-card.head {
+    border-top: 4px solid var(--gold);
+  }
+  .person-photo {
+    width: 100px; min-width: 100px;
+    background: var(--blue-light);
+    display: flex; align-items: center; justify-content: center;
+    color: var(--muted); font-size: .72rem; text-align: center;
+    overflow: hidden;
+  }
+  .person-photo img {
+    width: 100px; height: 120px;
+    object-fit: cover; object-position: top center;
+    display: block;
+  }
+  .person-info { padding: 18px 22px; flex: 1; }
+  .person-name { font-size: 1.05rem; font-weight: bold; color: var(--blue); margin-bottom: 3px; }
+  .person-role { font-size: .85rem; color: var(--muted); margin-bottom: 3px; font-style: italic; }
+  .person-title { font-size: .83rem; color: var(--text); margin-bottom: 8px; }
+  .person-bio { font-size: .88rem; color: var(--text); line-height: 1.6; margin-bottom: 10px; }
+  .person-meta { font-size: .8rem; color: var(--muted); line-height: 1.8; }
+  .person-meta a { color: var(--blue); text-decoration: none; }
+  .person-meta a:hover { text-decoration: underline; }
+  .badge {
+    display: inline-block; font-size: .68rem; font-family: Arial, sans-serif;
+    background: var(--blue-light); color: var(--blue);
+    padding: 2px 7px; border-radius: 2px; margin-right: 5px; margin-bottom: 3px;
+    letter-spacing: .03em;
+  }
+  .badge-gold { background: var(--gold-light); color: var(--gold); }
+  .badge-green { background: #e8f5e9; color: #2e7d32; }
+
+  /* ── RESEARCH GROUP CARD ─────────────────────────────────────── */
+  .group-card {
+    background: #fff;
+    border: 1px solid var(--border);
+    border-left: 4px solid var(--blue-mid);
+    padding: 24px 26px;
+    margin-bottom: 20px;
+  }
+  .group-card-header {
+    display: flex; align-items: flex-start; gap: 18px; margin-bottom: 14px;
+  }
+  .group-card-photo {
+    width: 72px; min-width: 72px; height: 86px;
+    background: var(--blue-light);
+    overflow: hidden;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .group-card-photo img {
+    width: 72px; height: 86px;
+    object-fit: cover; object-position: top center;
+  }
+  .group-card-title { flex: 1; }
+  .group-name { font-size: 1rem; font-weight: bold; color: var(--blue); margin-bottom: 4px; }
+  .group-leader { font-size: .84rem; color: var(--muted); font-style: italic; }
+  .group-desc { font-size: .88rem; color: var(--text); line-height: 1.65; }
+  .group-keywords { margin-top: 10px; }
+
+  /* ── PHOTO LINKS ─────────────────────────────────────────────── */
+  .photo-link-section { margin-bottom: 24px; }
+  .photo-link-section h4 {
+    font-family: Arial, sans-serif; font-size: .72rem;
+    letter-spacing: .1em; text-transform: uppercase;
+    color: var(--muted); margin-bottom: 10px;
+  }
+  .photo-url-row {
+    display: flex; gap: 12px; font-size: .78rem;
+    padding: 5px 0; border-bottom: 1px solid var(--border);
+    align-items: baseline;
+  }
+  .photo-url-name { min-width: 220px; color: var(--text); }
+  .photo-url-row a { color: var(--blue); word-break: break-all; }
+
+  /* ── FOOTER ──────────────────────────────────────────────────── */
+  footer {
+    background: var(--blue);
+    color: rgba(255,255,255,.65);
+    text-align: center;
+    padding: 24px 20px;
+    font-size: .8rem;
+    font-family: Arial, sans-serif;
+  }
+  footer a { color: rgba(255,255,255,.8); }
+
+  @media (max-width: 620px) {
+    .cover { padding: 40px 24px 32px; }
+    .cover-title { font-size: 1.4rem; }
+    .dept-info { grid-template-columns: 1fr; }
+    .person-photo { width: 72px; min-width: 72px; }
+    .person-photo img { width: 72px; height: 88px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="cover">
+  <div class="cover-eyebrow">Київський національний університет імені Тараса Шевченка · Хімічний факультет</div>
+  <div class="cover-title">Кафедра фізичної хімії</div>
+  <div class="cover-sub">Викладачі, наукові групи та напрямки досліджень</div>
+  <div class="cover-rule"></div>
+  <div class="cover-meta">Джерела: physchem.knu.ua · infopacket.knu.ua · vstup.chem.knu.ua · Червень 2026</div>
+</div>
+
+<div class="container">
+
+  <!-- ── ЗАГАЛЬНА ІНФОРМАЦІЯ ───────────────────────────────────── -->
+  <div class="section-header">
+    <h2>Загальні відомості</h2>
+    <div class="section-header-line"></div>
+  </div>
+
+  <div class="dept-info">
+    <div class="dept-info-row">
+      <span class="dept-info-label">Завідувач кафедри</span>
+      <span class="dept-info-value">чл.-кор. НАН України, д.х.н., проф. Фрицький Ігор Олегович</span>
+    </div>
+    <div class="dept-info-row">
+      <span class="dept-info-label">Телефон кафедри</span>
+      <span class="dept-info-value">+38 (044) 239-33-93</span>
+    </div>
+    <div class="dept-info-row">
+      <span class="dept-info-label">E-mail</span>
+      <span class="dept-info-value"><a href="mailto:ifritsky@univ.kiev.ua">ifritsky@univ.kiev.ua</a></span>
+    </div>
+    <div class="dept-info-row">
+      <span class="dept-info-label">Сайт кафедри</span>
+      <span class="dept-info-value"><a href="https://physchem.knu.ua" target="_blank">physchem.knu.ua</a></span>
+    </div>
+    <div class="dept-info-row">
+      <span class="dept-info-label">Адреса</span>
+      <span class="dept-info-value">01033, Київ, вул. Гетьмана Павла Скоропадського, 12</span>
+    </div>
+    <div class="dept-info-row">
+      <span class="dept-info-label">Кількість викладачів</span>
+      <span class="dept-info-value">10 (3 д.х.н. / проф., 7 к.х.н. / доц.) + наукові співробітники</span>
+    </div>
+  </div>
+
+  <div class="school-block">
+    <h3>Наукова школа кафедри</h3>
+    <p><strong>Назва:</strong> «Фізична хімія каталізаторів, сорбентів та сплавів»</p>
+    <p><strong>Засновник:</strong> академік АН УРСР (1944). Пізніше школу розвивали Яцимирський В.К. (д.х.н., проф.), Яцимирський А.В. та інші.</p>
+    <p><strong>Напрямки:</strong> синтез та дослідження нанесених каталізаторів; фізико-хімія гетерогенних каталізаторів; структура металічних розплавів та невпорядкованих систем; координаційна хімія та спінові переходи; хімія дисперсних систем; фізико-хімія модифікованих вуглецевих матеріалів.</p>
+    <p><strong>Захищено:</strong> 36 дисертацій, з них 6 докторських та 19 кандидатських (дані сайту кафедри).</p>
+  </div>
+
+
+  <!-- ── ЗАВІДУВАЧ КАФЕДРИ ─────────────────────────────────────── -->
+  <div class="section-header">
+    <h2>Завідувач кафедри</h2>
+    <div class="section-header-line"></div>
+  </div>
+
+  <div class="person-card head">
+    <div class="person-photo">
+      <img src="https://physchem.knu.ua/images/fritsky1.jpg"
+           alt="Фрицький Ігор Олегович"
+           onerror="this.src='https://s3.esoc.knu.ua/infopacket-bucket/person_photo/900.jpg'; this.onerror=null">
+    </div>
+    <div class="person-info">
+      <div class="person-name">Фрицький Ігор Олегович</div>
+      <div class="person-role">Завідувач кафедри фізичної хімії (з 2005 р.) · Кімн. 218 · Тел. 239-33-93</div>
+      <div class="person-title">Доктор хімічних наук (2003), професор (2005), член-кореспондент НАН України (2021)</div>
+      <div class="person-bio">
+        Народився 20 листопада 1964 р. у Києві. У 1990 р. захистив кандидатську дисертацію («Синтез, будова і властивості координаційних сполук 3d-металів з оксимами пірувіламінокислот»), у 2003 р. — докторську («Поліядерні координаційні сполуки перехідних металів з азотвмісними лігандами в моделюванні активних центрів металоферментів»). Лауреат Державної премії України в галузі науки і техніки (2007) та Премії Георга Форстера (ФРН). Член НАН з 2021 р. Стажувався в університетах Лондона, Лідса, Геттінгена, Майнца, Гейдельберга, Севільї, Вроцлава.
+        Автор понад 460 наукових публікацій (158 статей), індекс Гірша = 27, входить до топ-100 найцитованіших вчених України. Під його керівництвом захищено 15 кандидатських дисертацій.
+        Читає курси: «Фізична хімія», «Біофізична хімія», «Фізико-хімія координаційних сполук», «Хімічна ензимологія», «Магнетохімія», «Хімія металопротеїнів».
+      </div>
+      <div class="person-meta">
+        <span class="badge">д.х.н.</span><span class="badge">проф.</span><span class="badge badge-gold">чл.-кор. НАН</span><span class="badge badge-gold">Держ. премія 2007</span>
+        <br>
+        <a href="https://orcid.org/0000-0002-1092-8035" target="_blank">ORCID: 0000-0002-1092-8035</a> &nbsp;|&nbsp;
+        <a href="https://knu.ua/news/12877" target="_blank">Премія Форстера (KNU)</a> &nbsp;|&nbsp;
+        <a href="mailto:ifritsky@univ.kiev.ua">ifritsky@univ.kiev.ua</a>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ── ВИКЛАДАЧІ ─────────────────────────────────────────────── -->
+  <div class="section-header">
+    <h2>Викладацький склад кафедри</h2>
+    <div class="section-header-line"></div>
+  </div>
+
+  <div class="note-box">
+    Фотографії з офіційного сайту кафедри <a href="https://physchem.knu.ua/teachers_ukr.html" target="_blank">physchem.knu.ua</a>. ORCID-посилання перевірені за офіційним переліком.
+  </div>
+
+  <!-- Іщенко -->
+  <div class="person-card">
+    <div class="person-photo">
+      <img src="https://physchem.knu.ua/1/Ishenko.jpg"
+           alt="Іщенко Олена Вікторівна"
+           onerror="this.src='https://s3.esoc.knu.ua/infopacket-bucket/person_photo/903.jpg'; this.onerror=null">
+    </div>
+    <div class="person-info">
+      <div class="person-name">Іщенко Олена Вікторівна</div>
+      <div class="person-role">Професор кафедри фізичної хімії · Кімн. 102 · Тел. 239-33-16</div>
+      <div class="person-title">Доктор хімічних наук, професор</div>
+      <div class="person-bio">
+        Закінчила КНУ з відзнакою у 1980 р. Кандидатська (1985): «Фізико-хімія та властивості каталізаторів синтезу аміаку на основі відновлених залізо-кобальтових систем». Докторська (2004): «Властивості поверхні та каталітична активність систем на основі 3d- та 4d-перехідних металів». Керівник підрозділу «Фізико-хімія гетерогенних каталізаторів». Викладає «Фізичну хімію» та спецкурс «Фізичні методи в хімії». Автор понад 290 публікацій та 4 підручників. Під її керівництвом захищено 8 дисертацій.
+      </div>
+      <div class="person-meta">
+        <span class="badge">д.х.н.</span><span class="badge">проф.</span>
+        <br>
+        <a href="https://orcid.org/0000-0001-9782-1769" target="_blank">ORCID: 0000-0001-9782-1769</a> &nbsp;|&nbsp;
+        <a href="mailto:elischenko58@gmail.com">elischenko58@gmail.com</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Олексенко -->
+  <div class="person-card">
+    <div class="person-photo">
+      <img src="https://physchem.knu.ua/1/Oleksenko.jpg"
+           alt="Олексенко Людмила Петрівна"
+           onerror="this.src='https://s3.esoc.knu.ua/infopacket-bucket/person_photo/913.jpg'; this.onerror=null">
+    </div>
+    <div class="person-info">
+      <div class="person-name">Олексенко Людмила Петрівна</div>
+      <div class="person-role">Професор кафедри фізичної хімії · Кімн. 202 · Тел. 239-32-28</div>
+      <div class="person-title">Доктор хімічних наук, професор</div>
+      <div class="person-bio">
+        Провідний фахівець кафедри у галузі адсорбційних та каталітичних властивостей металовмісних систем (зокрема SnO₂-based сенсорів), термодинаміки та структури металічних й оксидних розплавів. Очолює відповідний підрозділ кафедри.
+      </div>
+      <div class="person-meta">
+        <span class="badge">д.х.н.</span><span class="badge">проф.</span>
+        <br>
+        <a href="https://orcid.org/0000-0002-7970-6895" target="_blank">ORCID: 0000-0002-7970-6895</a> &nbsp;|&nbsp;
+        <a href="mailto:olexludmil@ukr.net">olexludmil@ukr.net</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Роїк -->
+  <div class="person-card">
+    <div class="person-photo">
+      <img src="https://physchem.knu.ua/1/Roik.jpg"
+           alt="Роїк Олександр Сергійович"
+           onerror="this.src='https://s3.esoc.knu.ua/infopacket-bucket/person_photo/914.png'; this.onerror=null">
+    </div>
+    <div class="person-info">
+      <div class="person-name">Роїк Олександр Сергійович</div>
+      <div class="person-role">Професор кафедри фізичної хімії · Кімн. 106 · Тел. 239-34-17</div>
+      <div class="person-title">Доктор хімічних наук (2021), доцент (2022), професор</div>
+      <div class="person-bio">
+        Народився у 1978 р. Кандидатська (2004): «Експериментальне дослідження та аналіз структури металічних розплавів методами оберненого Монте Карло та Вороного–Делоне». Докторська (2021). Фахівець у галузі структури рідких металів, бінарних та потрійних металічних розплавів, оксидних систем. Автор понад 43 статей Scopus, індекс Гірша = 9. Стажувався у Словаччині (2013) та Польщі (2010).
+      </div>
+      <div class="person-meta">
+        <span class="badge">д.х.н.</span><span class="badge">проф.</span>
+        <br>
+        <a href="https://orcid.org/0000-0001-9705-1100" target="_blank">ORCID: 0000-0001-9705-1100</a> &nbsp;|&nbsp;
+        <a href="mailto:oleksandr_roik@knu.ua">oleksandr_roik@knu.ua</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Усенко -->
+  <div class="person-card">
+    <div class="person-photo">
+      <img src="https://physchem.knu.ua/1/Usenko.jpg"
+           alt="Усенко Наталія Ігорівна"
+           onerror="this.src='https://s3.esoc.knu.ua/infopacket-bucket/person_photo/906.jpg'; this.onerror=null">
+    </div>
+    <div class="person-info">
+      <div class="person-name">Усенко Наталія Ігорівна</div>
+      <div class="person-role">Доцент кафедри фізичної хімії · Заступник декана · Кімн. 241 · Тел. 239-33-70</div>
+      <div class="person-title">Кандидат хімічних наук, доцент</div>
+      <div class="person-bio">
+        К.х.н., доцент кафедри фізичної хімії та заступник декана хімічного факультету. Поєднує адміністративно-деканатські обов'язки з викладацькою та науковою діяльністю кафедри.
+      </div>
+      <div class="person-meta">
+        <span class="badge">к.х.н.</span><span class="badge">доцент</span><span class="badge badge-green">Заступник декана</span>
+        <br>
+        <a href="https://orcid.org/0000-0002-8342-1884" target="_blank">ORCID: 0000-0002-8342-1884</a> &nbsp;|&nbsp;
+        <a href="mailto:nataliya_usenko@knu.ua">nataliya_usenko@knu.ua</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Діюк -->
+  <div class="person-card">
+    <div class="person-photo">
+      <img src="https://physchem.knu.ua/1/Diuk.jpg"
+           alt="Діюк Віталій Євгенович"
+           onerror="this.src='https://s3.esoc.knu.ua/infopacket-bucket/person_photo/920.JPG'; this.onerror=null">
+    </div>
+    <div class="person-info">
+      <div class="person-name">Діюк Віталій Євгенович</div>
+      <div class="person-role">Доцент кафедри фізичної хімії · Кімн. 207 · Тел. 239-34-38</div>
+      <div class="person-title">Кандидат хімічних наук, доцент</div>
+      <div class="person-bio">
+        К.х.н., доцент. Фахівець у галузі фізико-хімії модифікованих вуглецевих матеріалів. Автор понад 50 наукових публікацій у закордонних та вітчизняних журналах, 5 наукових посібників. Активний учасник міжнародних публікацій разом з групою Іщенко О.В.
+      </div>
+      <div class="person-meta">
+        <span class="badge">к.х.н.</span><span class="badge">доцент</span>
+        <br>
+        <a href="https://orcid.org/0000-0001-5183-5444" target="_blank">ORCID: 0000-0001-5183-5444</a> &nbsp;|&nbsp;
+        <a href="mailto:vitalii_diyuk@knu.ua">vitalii_diyuk@knu.ua</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Болдирєва -->
+  <div class="person-card">
+    <div class="person-photo">
+      <img src="https://physchem.knu.ua/1/Boldireva.jpg"
+           alt="Болдирєва Ольга Юріївна"
+           onerror="this.src='https://s3.esoc.knu.ua/infopacket-bucket/person_photo/912.jpg'; this.onerror=null">
+    </div>
+    <div class="person-info">
+      <div class="person-name">Болдирєва Ольга Юріївна</div>
+      <div class="person-role">Доцент кафедри фізичної хімії · Кімн. 204 · Тел. 239-32-93</div>
+      <div class="person-title">Кандидат хімічних наук, доцент</div>
+      <div class="person-bio">
+        К.х.н., доцент кафедри фізичної хімії. Наукова діяльність у галузі фізичної хімії.
+      </div>
+      <div class="person-meta">
+        <span class="badge">к.х.н.</span><span class="badge">доцент</span>
+        <br>
+        <a href="https://orcid.org/0000-0003-4756-3073" target="_blank">ORCID: 0000-0003-4756-3073</a> &nbsp;|&nbsp;
+        <a href="mailto:2017chem@ukr.net">2017chem@ukr.net</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Гайдай -->
+  <div class="person-card">
+    <div class="person-photo">
+      <img src="https://physchem.knu.ua/1/Gaidai.jpg"
+           alt="Гайдай Сніжана Вікторівна"
+           onerror="this.src='https://s3.esoc.knu.ua/infopacket-bucket/person_photo/910.jpg'; this.onerror=null">
+    </div>
+    <div class="person-info">
+      <div class="person-name">Гайдай Сніжана Вікторівна</div>
+      <div class="person-role">Доцент кафедри фізичної хімії · Секретар кафедри · Кімн. 102</div>
+      <div class="person-title">Кандидат хімічних наук, доцент</div>
+      <div class="person-bio">
+        К.х.н., доцент, секретар кафедри. Учасниця численних публікацій наукової групи Іщенко О.В. у галузі гетерогенного каталізу (CO₂ метанізація, синтез аміаку).
+      </div>
+      <div class="person-meta">
+        <span class="badge">к.х.н.</span><span class="badge">доцент</span>
+        <br>
+        <a href="https://orcid.org/0000-0001-7742-5830" target="_blank">ORCID: 0000-0001-7742-5830</a> &nbsp;|&nbsp;
+        <a href="mailto:gaidaisv77@ukr.net">gaidaisv77@ukr.net</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Малишева -->
+  <div class="person-card">
+    <div class="person-photo">
+      <img src="https://physchem.knu.ua/1/Malisheva.JPG"
+           alt="Малишева Марія Львівна"
+           onerror="this.src='https://s3.esoc.knu.ua/infopacket-bucket/person_photo/917.JPG'; this.onerror=null">
+    </div>
+    <div class="person-info">
+      <div class="person-name">Малишева Марія Львівна</div>
+      <div class="person-role">Доцент кафедри фізичної хімії · Кімн. 240 · Тел. 239-33-70</div>
+      <div class="person-title">Кандидат хімічних наук, доцент</div>
+      <div class="person-bio">
+        К.х.н., доцент. Керівник наукової групи у галузі стійкості та коагуляції дисперсних систем, адсорбції полімерів на поверхні часточок дисперсної фази, структури адсорбційних шарів, електроповерхневих властивостей та агрегативної стійкості полімервмісних систем.
+      </div>
+      <div class="person-meta">
+        <span class="badge">к.х.н.</span><span class="badge">доцент</span>
+        <br>
+        <a href="https://orcid.org/0000-0002-4363-3284" target="_blank">ORCID: 0000-0002-4363-3284</a> &nbsp;|&nbsp;
+        <a href="mailto:maria_malysheva@univ.kiev.ua">maria_malysheva@univ.kiev.ua</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Яцимирський -->
+  <div class="person-card">
+    <div class="person-photo">
+      <img src="https://physchem.knu.ua/1/Yatsymyrskyi_AV-new-3.jpg"
+           alt="Яцимирський Андрій Віталійович"
+           onerror="this.src='https://s3.esoc.knu.ua/infopacket-bucket/person_photo/922.JPG'; this.onerror=null">
+    </div>
+    <div class="person-info">
+      <div class="person-name">Яцимирський Андрій Віталійович</div>
+      <div class="person-role">Доцент кафедри фізичної хімії · Кімн. 102</div>
+      <div class="person-title">Кандидат хімічних наук, доцент</div>
+      <div class="person-bio">
+        К.х.н., доцент. Син засновника наукової школи — Яцимирського В.К. Фахівець у галузі квантово-хімічних розрахунків (DFT) адсорбції молекул на металевих поверхнях, співавтор ряду публікацій у галузі CO₂ метанізації та кокаталізу з групою Іщенко.
+      </div>
+      <div class="person-meta">
+        <span class="badge">к.х.н.</span><span class="badge">доцент</span>
+        <br>
+        <a href="https://orcid.org/0000-0001-5050-8281" target="_blank">ORCID: 0000-0001-5050-8281</a> &nbsp;|&nbsp;
+        <a href="mailto:andrii_yatsymyrskyi@knu.ua">andrii_yatsymyrskyi@knu.ua</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Гуральський -->
+  <div class="person-card">
+    <div class="person-photo">
+      <img src="https://s3.esoc.knu.ua/infopacket-bucket/person_photo/923.jpg"
+           alt="Гуральський Ілля Олександрович"
+           onerror="this.parentElement.innerHTML='Фото<br>недоступне'">
+    </div>
+    <div class="person-info">
+      <div class="person-name">Гуральський Ілля Олександрович</div>
+      <div class="person-role">Доцент кафедри фізичної хімії</div>
+      <div class="person-title">Кандидат хімічних наук, доцент</div>
+      <div class="person-bio">
+        К.х.н., доцент. Фахівець у галузі координаційної хімії та синтезу координаційних сполук перехідних металів (спеціальність 02.00.01 «Неорганічна хімія»). Входить до групи Фрицького І.О.
+      </div>
+      <div class="person-meta">
+        <span class="badge">к.х.н.</span><span class="badge">доцент</span>
+        <br>
+        <a href="mailto:illia.guralskyi@univ.kiev.ua">illia.guralskyi@univ.kiev.ua</a>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ── НАУКОВІ ГРУПИ ──────────────────────────────────────────── -->
+  <div class="section-header">
+    <h2>Наукові групи кафедри фізичної хімії</h2>
+    <div class="section-header-line"></div>
+  </div>
+
+  <!-- Група Фрицького -->
+  <div class="group-card">
+    <div class="group-card-header">
+      <div class="group-card-photo">
+        <img src="https://vstup.chem.knu.ua/sites/default/files/fritskij-chem-fac.jpg"
+             alt="Фрицький" onerror="this.parentElement.style.background='#e8edf7'">
+      </div>
+      <div class="group-card-title">
+        <div class="group-name">Наукова група чл.-кор. НАН, проф. Фрицького І.О.</div>
+        <div class="group-leader">Координаційна хімія · Спінові переходи · Поліядерні комплекси</div>
+      </div>
+    </div>
+    <div class="group-desc">
+      <strong>Напрямки:</strong>
+      <ol style="padding-left:1.4em; margin-top:6px; font-size:.88rem; line-height:1.7;">
+        <li><strong>Спінові переходи (SCO)</strong> — синтез та дослідження координаційних сполук Fe(II), Co(II), що демонструють повну реорганізацію електронної структури під дією температури, тиску, магнітного поля або світла. Такі матеріали перспективні для елементів молекулярної пам'яті, хімічних сенсорів, мікротермометрів.</li>
+        <li><strong>Нетрадиційно високі ступені окиснення металів</strong> — синтез стабільних сполук Fe(IV), Cu(III), Ni(III) у водних розчинах. Ключовий результат: сполуки Fe⁴⁺, стабільні у воді при кімнатній температурі (Nature Communications, 2017).</li>
+        <li><strong>Поліядерні координаційні сполуки</strong> — з прогнозованими магнітними, електрохімічними та каталітичними властивостями (моделювання активних центрів металоферментів).</li>
+      </ol>
+      <p style="margin-top:10px; font-size:.85rem;">
+        <strong>Міжнародна співпраця:</strong> університети Гейдельберга, Геттінгена, Майнца, Тулузи, Орлеана, Лунда, Валенсії. Спільні дисертації з Францією (2013). Проект SCO з Іспанією, Францією, Румунією та Молдовою (2017–2020).
+      </p>
+    </div>
+    <div class="group-keywords" style="margin-top:12px;">
+      <span class="badge">spin crossover</span>
+      <span class="badge">Fe(IV)</span>
+      <span class="badge">поліядерні комплекси</span>
+      <span class="badge">молекулярні машини</span>
+      <span class="badge">Nature Communications</span>
+    </div>
+  </div>
+
+  <!-- Група Іщенко -->
+  <div class="group-card">
+    <div class="group-card-header">
+      <div class="group-card-photo">
+        <img src="https://vstup.chem.knu.ua/sites/default/files/ishenko-chem-facultet-2.jpg"
+             alt="Іщенко" onerror="this.parentElement.style.background='#e8edf7'">
+      </div>
+      <div class="group-card-title">
+        <div class="group-name">Наукова група д.х.н., проф. Іщенко О.В.</div>
+        <div class="group-leader">Фізико-хімія гетерогенних каталізаторів</div>
+      </div>
+    </div>
+    <div class="group-desc">
+      <strong>Напрямки:</strong>
+      <ol style="padding-left:1.4em; margin-top:6px; font-size:.88rem; line-height:1.7;">
+        <li><strong>Синтез та дослідження масивних і нанесених каталізаторів</strong> для промислово важливих реакцій: синтез аміаку, окиснення CO, CO-PROX, метанізація CO₂ (перетворення CO₂ → CH₄).</li>
+        <li><strong>Бі- та трьохкомпонентні нанокомпозити</strong> на основі Fe-Co, Cu-Co-Fe, Ni-Fe, Co-Ni систем на носіях SiO₂, Al₂O₃, вуглецевих нанотрубках та нанодіамантах.</li>
+        <li><strong>Мас-спектрометрія термодесорбції</strong> — оригінальна методика вивчення стану поверхні каталізаторів in situ.</li>
+      </ol>
+      <p style="margin-top:10px; font-size:.85rem;">
+        <strong>Члени групи:</strong> Гайдай С.В., Яцимирський А.В., Діюк В.Є. та ін.
+        <strong>Нещодавні публікації:</strong> Ischenko et al., Int. J. Hydrogen Energy 2021; Applied Nanoscience 2022; Research on Chemical Intermediates 2022.
+      </p>
+    </div>
+    <div class="group-keywords" style="margin-top:12px;">
+      <span class="badge">гетерогенний каталіз</span>
+      <span class="badge">CO₂ метанізація</span>
+      <span class="badge">нанокомпозити</span>
+      <span class="badge">екологічний каталіз</span>
+      <span class="badge">паливна енергетика</span>
+    </div>
+  </div>
+
+  <!-- Група Олексенко -->
+  <div class="group-card">
+    <div class="group-card-header">
+      <div class="group-card-photo">
+        <img src="https://vstup.chem.knu.ua/sites/default/files/oleksenko-chem-fac.jpg"
+             alt="Олексенко" onerror="this.parentElement.style.background='#e8edf7'">
+      </div>
+      <div class="group-card-title">
+        <div class="group-name">Наукова група проф. Олексенко Л.П.</div>
+        <div class="group-leader">Металовмісні каталітичні системи · SnO₂-сенсори · Структура розплавів</div>
+      </div>
+    </div>
+    <div class="group-desc">
+      Група вивчає фізико-хімічні, адсорбційні та каталітичні властивості металовмісних систем. Окремий напрямок — розробка та дослідження напівпровідникових сенсорів газів на основі SnO₂ (з добавками Co, Sb та ін.) для аналітики водню. Паралельно досліджується термодинаміка та структура металічних й оксидних розплавів систем Al, Ge, Si.
+    </div>
+    <div class="group-keywords" style="margin-top:12px;">
+      <span class="badge">SnO₂</span>
+      <span class="badge">газові сенсори</span>
+      <span class="badge">металевий каталіз</span>
+      <span class="badge">структура розплавів</span>
+    </div>
+  </div>
+
+  <!-- Група Роїка -->
+  <div class="group-card">
+    <div class="group-card-header">
+      <div class="group-card-photo">
+        <img src="https://vstup.chem.knu.ua/sites/default/files/roik.jpg"
+             alt="Роїк" onerror="this.parentElement.style.background='#e8edf7'">
+      </div>
+      <div class="group-card-title">
+        <div class="group-name">Наукова група проф. Роїка О.С.</div>
+        <div class="group-leader">Структура рідких металів та металічних розплавів</div>
+      </div>
+    </div>
+    <div class="group-desc">
+      Група проводить систематичні дослідження атомної структури рідких металів, бінарних металічних розплавів (Al-Cu, Al-Co, Al-Ni, Al-Sn, Al-Ge-Fe та ін.) і оксидних систем (CaO-Al₂O₃-SiO₂). Методи: рентгенівська дифракція, зворотній Монте-Карло, молекулярна динаміка, Вороної-Делоне. Міжнародні відрядження у Словаччину, Польщу, Францію для синхротронних вимірювань.
+    </div>
+    <div class="group-keywords" style="margin-top:12px;">
+      <span class="badge">металічні розплави</span>
+      <span class="badge">рентгенівська дифракція</span>
+      <span class="badge">Монте-Карло</span>
+      <span class="badge">невпорядковані системи</span>
+    </div>
+  </div>
+
+  <!-- Група Малишевої -->
+  <div class="group-card">
+    <div class="group-card-header">
+      <div class="group-card-photo">
+        <img src="https://vstup.chem.knu.ua/sites/default/files/malisheva-chem-facultet.jpg"
+             alt="Малишева" onerror="this.parentElement.style.background='#e8edf7'">
+      </div>
+      <div class="group-card-title">
+        <div class="group-name">Наукова група к.х.н. Малишевої М.Л.</div>
+        <div class="group-leader">Дисперсні системи · Адсорбція полімерів · Колоїдна хімія</div>
+      </div>
+    </div>
+    <div class="group-desc">
+      Група займається вивченням природи стійкості та механізмів коагуляції дисперсних систем, адсорбції полімерів на поверхні часточок дисперсної фази та структури утворених адсорбційних шарів. Досліджуються електроповерхневі властивості та агрегативна стійкість полімервмісних дисперсних систем.
+    </div>
+    <div class="group-keywords" style="margin-top:12px;">
+      <span class="badge">дисперсні системи</span>
+      <span class="badge">колоїдна хімія</span>
+      <span class="badge">адсорбція полімерів</span>
+      <span class="badge">стійкість суспензій</span>
+    </div>
+  </div>
+
+  <!-- Група Діюка -->
+  <div class="group-card">
+    <div class="group-card-header">
+      <div class="group-card-photo">
+        <img src="https://vstup.chem.knu.ua/sites/default/files/diuk-chem-facultet_0.jpg"
+             alt="Діюк" onerror="this.parentElement.style.background='#e8edf7'">
+      </div>
+      <div class="group-card-title">
+        <div class="group-name">Наукова група к.х.н. Діюка В.Є.</div>
+        <div class="group-leader">Фізико-хімія модифікованих вуглецевих матеріалів</div>
+      </div>
+    </div>
+    <div class="group-desc">
+      Науковий напрямок — фізико-хімія модифікованих вуглецевих матеріалів. Дослідження поверхневого стану активованого вугілля, графіту та вуглецевих нанотрубок, модифікованих металевими наночастинками (Ni, Fe). Застосування — мікробні паливні елементи, екологічний каталіз. Автор понад 50 публікацій та 5 навчальних посібників.
+    </div>
+    <div class="group-keywords" style="margin-top:12px;">
+      <span class="badge">вуглецеві матеріали</span>
+      <span class="badge">нанотрубки</span>
+      <span class="badge">поверхнева хімія</span>
+      <span class="badge">мікробні паливні елементи</span>
+    </div>
+  </div>
+
+
+  <!-- ── ПОСИЛАННЯ НА ФОТО ─────────────────────────────────────── -->
+  <div class="section-header">
+    <h2>Посилання на фотографії</h2>
+    <div class="section-header-line"></div>
+  </div>
+
+  <div class="note-box">
+    Усі фото завантажуються безпосередньо з офіційних сайтів. При недоступності основного URL автоматично підвантажується резервне фото з infopacket.knu.ua.
+  </div>
+
+  <div class="photo-link-section">
+    <h4>Основні фото — physchem.knu.ua</h4>
+    <div class="photo-url-row"><span class="photo-url-name">Фрицький Ігор Олегович</span><a href="https://physchem.knu.ua/images/fritsky1.jpg" target="_blank">physchem.knu.ua/images/fritsky1.jpg</a></div>
+    <div class="photo-url-row"><span class="photo-url-name">Іщенко Олена Вікторівна</span><a href="https://physchem.knu.ua/1/Ishenko.jpg" target="_blank">…/1/Ishenko.jpg</a></div>
+    <div class="photo-url-row"><span class="photo-url-name">Олексенко Людмила Петрівна</span><a href="https://physchem.knu.ua/1/Oleksenko.jpg" target="_blank">…/1/Oleksenko.jpg</a></div>
+    <div class="photo-url-row"><span class="photo-url-name">Роїк Олександр Сергійович</span><a href="https://physchem.knu.ua/1/Roik.jpg" target="_blank">…/1/Roik.jpg</a></div>
+    <div class="photo-url-row"><span class="photo-url-name">Усенко Наталія Ігорівна</span><a href="https://physchem.knu.ua/1/Usenko.jpg" target="_blank">…/1/Usenko.jpg</a></div>
+    <div class="photo-url-row"><span class="photo-url-name">Діюк Віталій Євгенович</span><a href="https://physchem.knu.ua/1/Diuk.jpg" target="_blank">…/1/Diuk.jpg</a></div>
+    <div class="photo-url-row"><span class="photo-url-name">Болдирєва Ольга Юріївна</span><a href="https://physchem.knu.ua/1/Boldireva.jpg" target="_blank">…/1/Boldireva.jpg</a></div>
+    <div class="photo-url-row"><span class="photo-url-name">Гайдай Сніжана Вікторівна</span><a href="https://physchem.knu.ua/1/Gaidai.jpg" target="_blank">…/1/Gaidai.jpg</a></div>
+    <div class="photo-url-row"><span class="photo-url-name">Малишева Марія Львівна</span><a href="https://physchem.knu.ua/1/Malisheva.JPG" target="_blank">…/1/Malisheva.JPG</a></div>
+    <div class="photo-url-row"><span class="photo-url-name">Яцимирський Андрій Віталійович</span><a href="https://physchem.knu.ua/1/Yatsymyrskyi_AV-new-3.jpg" target="_blank">…/1/Yatsymyrskyi_AV-new-3.jpg</a></div>
+    <div class="photo-url-row"><span class="photo-url-name">Гуральський Ілля Олександрович</span><a href="https://s3.esoc.knu.ua/infopacket-bucket/person_photo/923.jpg" target="_blank">infopacket (…/923.jpg)</a></div>
+  </div>
+
+  <div class="photo-link-section">
+    <h4>Фото наукових груп — vstup.chem.knu.ua</h4>
+    <div class="photo-url-row"><span class="photo-url-name">Наукова група Фрицького</span><a href="https://vstup.chem.knu.ua/sites/default/files/fritskij-chem-fac.jpg" target="_blank">…/fritskij-chem-fac.jpg</a></div>
+    <div class="photo-url-row"><span class="photo-url-name">Наукова група Іщенко</span><a href="https://vstup.chem.knu.ua/sites/default/files/ishenko-chem-facultet-2.jpg" target="_blank">…/ishenko-chem-facultet-2.jpg</a></div>
+    <div class="photo-url-row"><span class="photo-url-name">Наукова група Олексенко</span><a href="https://vstup.chem.knu.ua/sites/default/files/oleksenko-chem-fac.jpg" target="_blank">…/oleksenko-chem-fac.jpg</a></div>
+    <div class="photo-url-row"><span class="photo-url-name">Наукова група Малишевої</span><a href="https://vstup.chem.knu.ua/sites/default/files/malisheva-chem-facultet.jpg" target="_blank">…/malisheva-chem-facultet.jpg</a></div>
+    <div class="photo-url-row"><span class="photo-url-name">Наукова група Діюка</span><a href="https://vstup.chem.knu.ua/sites/default/files/diuk-chem-facultet_0.jpg" target="_blank">…/diuk-chem-facultet_0.jpg</a></div>
+    <div class="photo-url-row"><span class="photo-url-name">Наукова група Роїка</span><a href="https://vstup.chem.knu.ua/sites/default/files/roik.jpg" target="_blank">…/roik.jpg</a></div>
+  </div>
+
+</div><!-- /container -->
+
+<footer>
+  Кафедра фізичної хімії &nbsp;·&nbsp;
+  <a href="https://physchem.knu.ua" target="_blank">physchem.knu.ua</a> &nbsp;·&nbsp;
+  <a href="https://vstup.chem.knu.ua/kafedry/fizichnoyi-himiyi" target="_blank">vstup.chem.knu.ua</a> &nbsp;·&nbsp;
+  <a href="https://infopacket.knu.ua/DepartmentInfo?departmentId=101" target="_blank">infopacket.knu.ua</a>
+  <br>Документ сформовано автоматично · Червень 2026
+</footer>
+
+</body>
+</html>
