@@ -83,12 +83,12 @@ export const en = {
     body: [
       "Physical chemistry sits where chemistry meets physics and mathematics. It gives chemical phenomena their quantitative form: the energetics of transformations, the rates of reactions, the behaviour of matter at interfaces and in solution.",
       "Physico-chemical disciplines are a required part of a university chemical education, and within the faculty this part of the curriculum is carried by the Department of Physical Chemistry.",
-      "This site is being developed in cooperation with the department. Information about staff, research groups and publications appears here after the department confirms it; until then, the information of record is available on the department's official website.",
+      "The content of these pages draws on the department's own published materials and is refined together with the department. The presentation is deliberately curated — leadership, leading faculty and the research groups that carry the department's work — rather than a full staff listing.",
     ],
     leadership: {
       eyebrow: "Faculty",
       title: "Within the Faculty of Chemistry",
-      body: "The department is one of five departments of the Faculty of Chemistry. The faculty's work — teaching and research across its departments — is coordinated by the dean's office.",
+      body: "The department works within the Faculty of Chemistry, whose teaching and research across all its departments are coordinated by the dean's office.",
       facultyCta: "Faculty of Chemistry website",
     },
     history: {
@@ -110,7 +110,7 @@ export const en = {
     intro: {
       eyebrow: "People",
       title: "Academic staff",
-      lead: "The head of department and the leading faculty of the department.",
+      lead: "The head of department and its leading faculty.",
     },
     headSection: "Head of Department",
     featuredSection: "Leading faculty",

@@ -35,6 +35,9 @@ export default async function ResearchPage({ params }: PageProps) {
   const groups = getResearchGroups(lang);
   const school = getSchool(lang);
   const t = dict.research;
+  // Map each group to its parent direction's title, so the group rows make the
+  // area↔group structure explicit (e.g. the two groups under one direction).
+  const areaTitleById = new Map(areas.map((area) => [area.id, area.title]));
 
   return (
     <main>
@@ -60,7 +63,7 @@ export default async function ResearchPage({ params }: PageProps) {
             programme line, keywords. Quiet rows; identity, not a directory. */}
         <section
           id="groups"
-          className="mb-16 mt-16 scroll-mt-24 sm:mb-20 sm:mt-20"
+          className="mb-16 mt-16 scroll-mt-24 sm:mb-20 sm:mt-20 lg:mb-24 lg:mt-24"
           aria-labelledby="research-groups"
         >
           <SectionHeader
@@ -74,13 +77,14 @@ export default async function ResearchPage({ params }: PageProps) {
                 key={group.id}
                 className="border-t border-navy/10 py-6 sm:py-7"
               >
-                <h3 className="font-medium leading-6 text-navy">
-                  <a
-                    href={`#${group.areaId}`}
-                    className="transition-colors hover:text-ink"
-                  >
-                    {group.name}
-                  </a>
+                <a
+                  href={`#${group.areaId}`}
+                  className="text-xs uppercase tracking-[0.16em] text-copper transition-colors hover:text-ink"
+                >
+                  {areaTitleById.get(group.areaId)}
+                </a>
+                <h3 className="mt-1.5 font-medium leading-6 text-navy">
+                  {group.name}
                   <ReviewMark provenance={group.provenance} />
                 </h3>
                 <p className="mt-1.5 max-w-2xl text-pretty text-sm leading-6 text-slate">
