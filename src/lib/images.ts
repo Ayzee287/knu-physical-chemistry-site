@@ -24,6 +24,12 @@ export type SiteImage = {
   width: number;
   height: number;
   alt: Localised;
+  /**
+   * Archival cropping: CSS object-position for the fixed-ratio plates
+   * (portraits sit eyes-in-upper-third, e.g. "50% 30%"). Optional — defaults
+   * to center crop.
+   */
+  position?: string;
 };
 
 const registry = {} as const satisfies Record<string, SiteImage>;

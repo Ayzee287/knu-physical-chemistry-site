@@ -16,6 +16,18 @@ listings inside it belong to the **Analytical Chemistry** department and are
 out of scope here. Its photo URLs are remote legacy links — kept for a future
 download-and-localise pass, never hotlinked.
 
+## chemistry_faculty_knu_v2.html
+
+Expanded staff directory, received 2026-06-10 (~20:30, via 7z archive).
+Supersedes v1 in coverage: full teaching rosters for ALL five departments
+(incl. an 11-person Physical Chemistry roster), the dean's office, and
+department heads with fresher detail (cites a July-2025 rector's order).
+Still an auto-generated secondary source — nothing publishes from it without
+verification. Recorded conflicts vs the legacy teachers page: Казіміров
+absent in v2; several emails differ (institutional @knu.ua preferred where
+both exist); the head's NAS honour appears in the heads section but not the
+roster section of the same document.
+
 ## physchem-knu-ua/
 
 Page snapshots of the department's legacy official site (physchem.knu.ua,

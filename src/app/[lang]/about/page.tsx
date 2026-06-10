@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import { Container } from "@/components/layout/container";
 import { PageIntro } from "@/components/layout/page-intro";
 import { SectionHeader } from "@/components/layout/section-header";
+import { LeadershipSection } from "@/components/sections/leadership-section";
 import { QuoteBlock } from "@/components/ui/quote-block";
 import { ExternalLink } from "@/components/ui/external-link";
 import { ReviewMark } from "@/components/ui/review-mark";
@@ -44,7 +45,7 @@ export default async function AboutPage({ params }: PageProps) {
       />
 
       <Container>
-        <div className="mt-14 max-w-2xl pb-16 sm:mt-16 sm:pb-20">
+        <div className="mt-14 max-w-2xl sm:mt-16">
           <QuoteBlock text={t.epigraph} />
 
           <div className="mt-12 space-y-5">
@@ -54,6 +55,12 @@ export default async function AboutPage({ params }: PageProps) {
               </p>
             ))}
           </div>
+        </div>
+
+        {/* Faculty leadership — quiet institutional context, before the
+            page's monumental history band. */}
+        <div className="mt-14 pb-16 sm:mt-16 sm:pb-20">
+          <LeadershipSection lang={lang} dict={dict} />
         </div>
       </Container>
 
