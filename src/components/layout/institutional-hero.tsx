@@ -41,7 +41,7 @@ export function InstitutionalHero({
   facts: HeroFact[];
 }) {
   return (
-    <section className="bg-ink text-ivory">
+    <section className="dark-surface bg-ink text-ivory">
       <Container>
         <div className="grid gap-x-16 gap-y-12 pb-16 pt-16 sm:pt-20 lg:grid-cols-[minmax(0,7fr)_minmax(0,3fr)] lg:pb-24 lg:pt-28">
           {/* Title block */}
@@ -51,6 +51,11 @@ export function InstitutionalHero({
               <p className="text-xs uppercase tracking-[0.22em] text-sand/70">
                 {eyebrow}
               </p>
+            </div>
+            {/* Masthead double rule — a print-nameplate cue. */}
+            <div aria-hidden className="mt-8">
+              <div className="border-t border-ivory/25" />
+              <div className="mt-[3px] border-t border-ivory/25" />
             </div>
             <h1 className="mt-7 text-balance font-serif text-5xl font-medium leading-[1.04] tracking-tight sm:text-6xl lg:text-7xl">
               {title}

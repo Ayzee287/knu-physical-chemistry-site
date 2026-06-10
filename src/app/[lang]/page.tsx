@@ -5,10 +5,11 @@ import { Container } from "@/components/layout/container";
 import { InstitutionalHero } from "@/components/layout/institutional-hero";
 import { SectionHeader } from "@/components/layout/section-header";
 import { ResearchAreaCard } from "@/components/cards/research-area-card";
+import { CenturyRule } from "@/components/ui/century-rule";
 import { Figure } from "@/components/ui/figure";
 import { ReviewMark } from "@/components/ui/review-mark";
 import { getResearchAreas } from "@content/research/research";
-import { founded } from "@content/history/history";
+import { founded, periods } from "@content/history/history";
 import { site } from "@/content/site";
 import { getDictionary, href, isLocale } from "@/lib/i18n";
 import { buildMetadata } from "@/lib/seo";
@@ -134,11 +135,20 @@ export default async function HomePage({ params }: PageProps) {
               className="self-start"
             />
           </div>
+
+          {/* The century, as a rule: one tick per era of the record. */}
+          <CenturyRule
+            className="mt-14 lg:mt-16"
+            years={periods.map((p, i) => ({
+              year: p.years.slice(0, 4),
+              major: i === 0 || i === 2 || i === 6 || i === 7,
+            }))}
+          />
         </Container>
       </section>
 
       {/* Closer — the page's single navy band, bookending the ink masthead */}
-      <section className="bg-navy py-16 text-ivory sm:py-20">
+      <section className="dark-surface bg-navy py-16 text-ivory sm:py-20">
         <Container>
           <SectionHeader
             tone="dark"

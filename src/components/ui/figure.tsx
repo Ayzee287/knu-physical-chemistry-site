@@ -18,8 +18,10 @@ type FigureProps = {
 
 /**
  * Documentary plate. With a registered image it renders an optimised local
- * photograph; without one it renders an intentional, captioned reserved zone —
- * a matted frame awaiting photography — so missing imagery never looks broken.
+ * photograph; without one it renders an intentional archival reserve: corner
+ * registration marks (a print-production cue) and a serif plate index inside
+ * a captioned frame. The absence reads as "plate reserved in the record",
+ * not "image missing" — and real photography drops in without layout shift.
  */
 export function Figure({
   caption,
@@ -46,14 +48,16 @@ export function Figure({
           className="absolute inset-0 h-full w-full object-cover"
         />
       ) : (
-        // Architectural mat frame — signals a designed, reserved plate, not an empty box.
-        <span
-          aria-hidden
-          className="pointer-events-none absolute inset-4 bottom-[3.25rem] border border-navy/[0.07]"
-        />
+        // Archival reserve: four registration marks at the plate corners.
+        <span aria-hidden className="pointer-events-none">
+          <span className="absolute left-4 top-4 h-3 w-3 border-l border-t border-navy/25" />
+          <span className="absolute right-4 top-4 h-3 w-3 border-r border-t border-navy/25" />
+          <span className="absolute bottom-[4.25rem] left-4 h-3 w-3 border-b border-l border-navy/25" />
+          <span className="absolute bottom-[4.25rem] right-4 h-3 w-3 border-b border-r border-navy/25" />
+        </span>
       )}
       {index && !image ? (
-        <span className="absolute left-7 top-7 font-serif text-sm tabular-nums text-navy/40">
+        <span className="absolute left-7 top-7 font-serif text-sm tabular-nums text-navy/45">
           {index}
         </span>
       ) : null}
