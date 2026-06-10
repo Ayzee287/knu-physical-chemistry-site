@@ -77,6 +77,18 @@ export const SOURCES = {
     url: "source-materials/chemistry_faculty_knu.html",
     retrieved: "2026-06-10",
   },
+  /**
+   * Expanded faculty staff directory, v2 (source-materials/
+   * chemistry_faculty_knu_v2.html) — received 2026-06-10, ~20:30. Adds full
+   * per-department teaching rosters (incl. Physical Chemistry), dean's office
+   * and department heads. Auto-generated secondary source; fresher than v1
+   * (cites a July-2025 rector's order) but every current-personnel claim
+   * still requires verification.
+   */
+  staffDirectoryV2: {
+    url: "source-materials/chemistry_faculty_knu_v2.html",
+    retrieved: "2026-06-10",
+  },
   /** Faculty of Chemistry site — reference/terminology source. */
   chemKnu: { url: "https://chem.knu.ua/", retrieved: "2026-06-09" },
   /**
@@ -105,6 +117,10 @@ export const fromPhyschem = (page: string, note?: string): Provenance =>
 /** Convenience: a `sourced` claim attributed to the staff directory document. */
 export const fromStaffDirectory = (note?: string): Provenance =>
   sourced(SOURCES.staffDirectory.url, SOURCES.staffDirectory.retrieved, note);
+
+/** Convenience: a `sourced` claim attributed to the v2 staff directory. */
+export const fromStaffDirectoryV2 = (note?: string): Provenance =>
+  sourced(SOURCES.staffDirectoryV2.url, SOURCES.staffDirectoryV2.retrieved, note);
 
 /** Convenience: a `sourced` claim attributed to chem.knu.ua. */
 export const fromChemKnu = (note?: string): Provenance =>

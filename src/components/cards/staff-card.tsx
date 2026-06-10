@@ -1,40 +1,23 @@
-import Image from "next/image";
+import { Portrait } from "@/components/ui/portrait";
 import { ReviewMark } from "@/components/ui/review-mark";
 import { getImage } from "@/lib/images";
 import type { LocalisedStaffMember } from "@/types/content";
 
 /**
- * Editorial staff entry: a restrained portrait zone beside the person's record.
- * Without a registered local photograph the portrait renders as a designed,
- * matted reserve — never a broken image, never a hotlinked legacy URL. The
- * portrait keeps a fixed 3:4 plate so real photography drops in without
- * shifting the layout.
- *
- * Honesty contract: this card renders exactly what the staff collection
- * resolves. A withheld (unverified) person arrives with a pending name and
- * null degree/honours lines, and the card simply drops those lines.
+ * Editorial staff entry: the shared Portrait plate beside the person's
+ * record. Honesty contract: this card renders exactly what the staff
+ * collection resolves — a withheld (unverified) person arrives with a
+ * pending name and null detail lines, and the card simply drops those lines.
  */
 export function StaffCard({ member }: { member: LocalisedStaffMember }) {
   const image = getImage(member.photo);
 
   return (
     <article className="flex gap-6 border-t border-navy/10 py-8 sm:gap-10 sm:py-10">
-      <div className="relative aspect-[3/4] w-24 flex-shrink-0 self-start overflow-hidden border border-navy/10 bg-navy/[0.04] sm:w-32">
-        {image ? (
-          <Image
-            src={image.src}
-            alt=""
-            width={image.width}
-            height={image.height}
-            className="absolute inset-0 h-full w-full object-cover"
-          />
-        ) : (
-          <span
-            aria-hidden
-            className="pointer-events-none absolute inset-2 border border-navy/[0.07]"
-          />
-        )}
-      </div>
+      <Portrait
+        image={image}
+        className="w-24 flex-shrink-0 self-start sm:w-32"
+      />
       <div className="min-w-0 self-center">
         <p className="text-xs uppercase tracking-[0.18em] text-copper">
           {member.role}
@@ -58,6 +41,18 @@ export function StaffCard({ member }: { member: LocalisedStaffMember }) {
               className="text-slate transition-colors hover:text-navy"
             >
               {member.email}
+            </a>
+          </p>
+        ) : null}
+        {member.orcid ? (
+          <p className="mt-1 text-xs text-slate/90">
+            <a
+              href={`https://orcid.org/${member.orcid}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="transition-colors hover:text-navy"
+            >
+              ORCID {member.orcid}
             </a>
           </p>
         ) : null}

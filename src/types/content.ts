@@ -7,17 +7,37 @@
 import type { Claim, Localised, Provenance } from "@/lib/provenance";
 import type { ImageKey } from "@/lib/images";
 
-/** A member of the department's academic staff. */
+/** Institutional rank — drives ordering and grouping, never invented. */
+export type StaffRank =
+  | "dean"
+  | "vice-dean"
+  | "head"
+  | "professor"
+  | "docent"
+  | "assistant"
+  | "researcher";
+
+/**
+ * Editorial publication governance (separate from provenance):
+ * - featured — belongs to the CURATED public surface (head, dean, selected
+ *   key figures). Still subject to the verified-only rule for the person.
+ * - internal — normalized and archived in the collection, never rendered
+ *   publicly. The public site is a curated institution, not a directory.
+ */
+export type StaffVisibility = "featured" | "internal";
+
+/** A member of the department's academic staff (or faculty leadership). */
 export type StaffMember = {
   id: string;
+  rank: StaffRank;
   /** Structural role label (e.g. "Завідувач кафедри") — editorial, always shown. */
   role: Localised;
   /**
    * The person occupying the role — a single factual claim covering name,
    * degree line and optional honours/focus. Publication policy: a person is
-   * rendered on the public site ONLY when this claim is `verified`; otherwise
-   * an honest pending placeholder is shown and the record below remains the
-   * verification backlog (decision 0001).
+   * rendered on the public site ONLY when this claim is `verified` AND the
+   * record is `featured`; otherwise an honest pending placeholder is shown
+   * and the record remains the verification backlog (decision 0001).
    */
   person: Claim<{
     name: Localised;
@@ -27,7 +47,10 @@ export type StaffMember = {
   }>;
   email?: Claim<string>;
   orcid?: Claim<string>;
+  /** Optional selected publications (verbatim citations, source-backed). */
+  publications?: Claim<string[]>;
   photo?: ImageKey;
+  visibility: StaffVisibility;
 };
 
 /** The public, locale-resolved view of a staff member. */
@@ -40,6 +63,7 @@ export type LocalisedStaffMember = {
   degree: string | null;
   honours: string | null;
   email: string | null;
+  orcid: string | null;
   provenance: Provenance;
   photo?: ImageKey;
 };
