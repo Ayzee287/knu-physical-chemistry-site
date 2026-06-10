@@ -1,0 +1,169 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- DW6 -->
+<head>
+<!-- Copyright 2005 Macromedia, Inc. All rights reserved. -->
+<meta http-equiv="content-type" content="text/html; charset=WINDOWS-1251" >
+<title>Школи</title>
+<link rel="stylesheet" href="emx_nav_left.css" type="text/css">
+<script type="text/javascript">
+<!--
+var time = 3000;
+var numofitems = 7;
+
+//menu constructor
+function menu(allitems,thisitem,startstate){ 
+  callname= "gl"+thisitem;
+  divname="subglobal"+thisitem;  
+  this.numberofmenuitems = allitems;
+  this.caller = document.getElementById(callname);
+  this.thediv = document.getElementById(divname);
+  this.thediv.style.visibility = startstate;
+}
+
+//menu methods
+function ehandler(event,theobj){
+  for (var i=1; i<= theobj.numberofmenuitems; i++){
+    var shutdiv =eval( "menuitem"+i+".thediv");
+    shutdiv.style.visibility="hidden";
+  }
+  theobj.thediv.style.visibility="visible";
+}
+				
+function closesubnav(event){
+  if ((event.clientY <48)||(event.clientY > 107)){
+    for (var i=1; i<= numofitems; i++){
+      var shutdiv =eval('menuitem'+i+'.thediv');
+      shutdiv.style.visibility='hidden';
+    }
+  }
+}
+// -->
+</script>
+<style type="text/css">
+<!--
+#pagecell1 #pageName h2 {
+	font-family: Verdana, Geneva, sans-serif;
+}
+#pagecell1 #pageName h2 {
+	font-family: Palatino Linotype, Book Antiqua, Palatino, serif;
+}
+#pagecell1 #pageName h2 {
+	font-family: Arial, Helvetica, sans-serif;
+}
+#pagecell1 #pageName h2 {
+	color: #00F;
+}
+#pagecell1 #pageName form h2 {
+	color: #000;
+}
+#pagecell1 #pageName form h2 {
+	color: #00F;
+}
+#pagecell1 #pageName h2 {
+	color: #408080;
+}
+#pagecell1 #pageName h2 {
+	color: #008000;
+}
+-->
+</style>
+</head>
+<body onmousemove="closesubnav(event);">
+<div class="skipLinks">skip to: <a href="#content">page content</a> | <a href="#pageNav">links on this page</a> | <a href="#globalNav">site navigation</a> | <a href="#siteInfo">footer (site information)</a> </div>
+<div id="masthead">
+  <h1 id="siteName">&nbsp;</h1>
+  <div id="utility"> <a href="index_ua.html">Українська</a> | <a href="index_ru.html">Русский</a> | <a href="index_us.html">English</a> </div>
+  <div id="globalNav"> <img alt="" src="gblnav_left.gif" height="32" width="4" id="gnl"> <img alt="" src="glbnav_right.gif" height="32" width="4" id="gnr">
+    <div id="globalLink"> <a href="index_ua.html" id="gl1" class="glink" >Головна</a><a href="metod_ukr.html" id="gl2" class="glink" >Навчально-методична робота</a><a href="NDR_ukr.html" id="gl3" class="glink" >Науково-дослідна робота </a><a href="collaboration_ukr.html" id="gl4" class="glink" >Міжнародне співробітництво </a><a href="pubs_ukr.html" id="gl5" class="glink" >Публікації </a></div>
+    <!--end globalLinks-->
+    <form id="search" action="">
+      <input name="searchFor" type="text" size="10">
+      <a href="">пошук</a>
+    </form>
+  </div>
+  <!-- end globalNav -->
+  <div id="subglobal1" class="subglobalNav"> <a href="index_ru.html">Публікації</a> | <a href="#">Історія кафедри</a> | <a href="#">Міжнародні контакти</a> | <a href="#">Керівництво</a> | <a href="#">Фотогалерея</a> | <a href="#">Наукові групи</a> </div>
+  <div id="subglobal2" class="subglobalNav"> <a href="#">subglobal2 link</a> | <a href="#">subglobal2 link</a> | <a href="#">subglobal2 link</a> | <a href="#">subglobal2 link</a> | <a href="#">subglobal2 link</a> | <a href="#">subglobal2 link</a> | <a href="#">subglobal2 link</a> </div>
+  <div id="subglobal3" class="subglobalNav"> <a href="#">subglobal3 link</a> | <a href="#">subglobal3 link</a> | <a href="#">subglobal3 link</a> | <a href="#">subglobal3 link</a> | <a href="#">subglobal3 link</a> | <a href="#">subglobal3 link</a> | <a href="#">subglobal3 link</a> </div>
+  <div id="subglobal4" class="subglobalNav"> <a href="#">subglobal4 link</a> | <a href="#">subglobal4 link</a> | <a href="#">subglobal4 link</a> | <a href="#">subglobal4 link</a> | <a href="#">subglobal4 link</a> | <a href="#">subglobal4 link</a> | <a href="#">subglobal4 link</a> </div>
+  <div id="subglobal5" class="subglobalNav"> <a href="#">subglobal5 link</a> | <a href="#">subglobal5 link</a> | <a href="#">subglobal5 link</a> | <a href="#">subglobal5 link</a> | <a href="#">subglobal5 link</a> | <a href="#">subglobal5 link</a> | <a href="#">subglobal5 link</a> </div>
+  <div id="subglobal6" class="subglobalNav"> <a href="#">subglobal6 link</a> | <a href="#">subglobal6 link</a> | <a href="#">subglobal6 link</a> | <a href="#">subglobal6 link</a> | <a href="#">subglobal6 link</a> | <a href="#">subglobal6 link</a> | <a href="#">subglobal6 link</a> </div>
+  <div id="subglobal7" class="subglobalNav"> <a href="#">subglobal7 link</a> | <a href="#">subglobal7 link</a> | <a href="#">subglobal7 link</a> | <a href="#">subglobal7 link</a> | <a href="#">subglobal7 link</a> | <a href="#">subglobal7 link</a> | <a href="#">subglobal7 link</a> </div>
+  <div id="subglobal8" class="subglobalNav"> <a href="#">subglobal8 link</a> | <a href="#">subglobal8 link</a> | <a href="#">subglobal8 link</a> | <a href="#">subglobal8 link</a> | <a href="#">subglobal8 link</a> | <a href="#">subglobal8 link</a> | <a href="#">subglobal8 link</a> </div>
+</div>
+<!-- end masthead -->
+<div id="pagecell1">
+  <!--pagecell1-->
+  <img alt="" src="tl_curve_white.gif" height="6" width="6" id="tl"> <img alt="" src="tr_curve_white.gif" height="6" width="6" id="tr">
+  <div id="breadCrumb"></div>
+  <div id="pageName">
+    <form name="form1" method="post" action="">
+      <h2 align="center">Кафедра фізичної хімії</h2>
+</form>
+    <h2 align="center">&nbsp;</h2>
+    <h2 align="center">Наукова школа з фізичної хімії</h2>
+  </div>
+  <div id="pageNav">
+    <div id="sectionLinks">  <a href="history_ukr.html">Історія кафедри </a>  <a href="fritsky/prof_ukr.html">Завідувач кафедри</a>  <a href="teachers_ukr.html">Викладачі </a><a href="sprivrNDCH_ukr.html">Співробітники НДЧ </a> <a href="aspir_ukr.html">Аспіранти </a><a href="groups_ukr.html">Наукові групи</a><a href="fotogal_ukr.html">Фотогалерея</a><a href="contacts_ukr.html">Контакти</a></div>
+    <div class="relatedLinks">
+      <h3>&nbsp;</h3>
+    </div>
+<div id="advert"></div>
+  </div>
+  <div id="content">
+    <div class="feature">
+      <p><strong>Назва наукової школи</strong>- <strong><em>фізикохімічні властивості каталізаторів, сорбентів і сплавів.</em></strong><br>
+        <strong>Керівник </strong>- Яцимирський Віталій Костянтинович, доктор хімічних наук, професор. <br>
+        <strong>Період діяльності школи</strong> - Школа заснована у 1944 році академіком АН УРСР, д.х.н., професором  І.М.Францевичем і була пов'язана з широким колом питань фізичної хімії,  зокрема, фізикохімією міжфазних явищ, кінетикою каталітичних процесів,  матеріалознавством, корозією. Подальший розвиток школи фізико-хіміків відбувався  під керівництвом відомих вчених: академіка АН УРСР, д.х.н., професора В.Н.  Єременко, д.х.н., професорів Товбіна М.В. та Баталіна Г.І. Зараз школа  фізикохіміків працює під керівництвом д.х.н., професора Яцимирського В.К.<br>
+        <strong>Характер школи </strong>- Фундаментально-наукова.<br>
+        <strong>Чисельність зайнятих у  діяльності наукової школи</strong> - 36 з них 6 д.х.н. і 19 к.х.н.<br>
+        <strong>Наукові напрямки:</strong><br>
+        1) фізикохімічні, адсорбційні та каталітичні властивості  металвмісних систем;<br>
+        2) термодинаміка та структура металічних  та оксидних розплавів.<br>
+  <strong>Найважливіші результати школи:</strong><br>
+        В галузі екологічного каталізу вивчено  детальний механізм реакцій окиснення малих молекул на масивних та нанесених  металічних каталізаторах. На багатьох прикладах проілюстровано роль кластерної  моделі в гетерогенному каталізі. Вивчена каталітична активність в ряді redoх  реакцій нового класу сполук - кластерних поліядерних комплексів. Доведена роль  гетерогенності і поліморфізму в каталітичних властивостях сплавів; відкрито  явище мікрогетерогенності в сплавах. Вивчаються нові класи металвміщуючих  каталітичних систем: іммобілізованих на поверхні кремнезему та вугілля  комплексів та метал-цеолітних каталізаторів.<br>
+        На основі мозаічної моделі гідрофільно-гідрофобної поверхні встановлений зв'язок  між структурою та активністю льодоутворюючих композицій різної хімічної  природи. <br>
+        Розроблено основи механізму впливу неіоногенних водорозчинних полімерів на  електроповерхневі властивості і агрегативну стійкість грубодисперсних систем.<br>
+        Створено напівпровідникові сенсори на основі SnO2. Показано,  що механізм чутливості сенсорів пов&rsquo;язаний з перебігом  гетерогенно-каталітичних реакцій на поверхні газочутливого шару сенсора.<br>
+        В широких інтервалах температур і концентрацій визначені термодинамічні  функції широкого кола рідких металічних систем на основі Al, Ge,Si.  Встановлено, що для систем з рихлою упаковкою структура рідини формується на  основі модифікації, стабільної в твердому стані при високому тиску; в розплавах  систем евтектичного типу ближній порядок характеризується впорядкуванням по  типу електронних сполук.<br>
+  <strong>Основні монографії і підручники  школи:</strong><br>
+        1. Францевич И.Н., Войтович Р.Ф., Лавренко В.А.  Высокотемпературное окисление металов и сплавов, Киев, 1963.<br>
+        2. Францевич И.Н. Неорганическое  материаловедение в СССР. История, современное состояние и перспективы развития,  Киев, 1983.<br>
+        3. Еременко В.Н., Найдич Ю.В., Лавриненко И.А. Спекание в  присутствии жидкой металической фазы, Киев, 1968.<br>
+        4. Товбин М.В., Забуга В.Я., Яцимирский В.К.  Каталитические свойства сплавов в реакции синтеза амиака, Киев, 1974. <br>
+        5. Товбин М.В. Физическая химия, Киев, 1975.<br>
+        6. Баталин Г.И., Белобородова Е.А., Казимиров В.П.  Термодинамика и строение жидких сплавов на основе алюминия, Киев, 1983<br>
+        7. Яцимирський К.Б., Яцимирський В.К. Хімічний зв'язок,  Київ, 1993.<br>
+        8. Гончарук В.В., Камалов Г.Л., Ковтун Г.А., Рудаков Е.С.,  Яцимирский В.К. Катализ. Механизмы гомогенного и гетерогенного катализа,  кластерные подходы.&ndash; Киев: Наукова думка, 2002.&ndash; 541с. <br>
+        9. Яцимирський В.К. Фізична хімія Київ, 2007.<br>
+       10. Іщенко О. В., Михальчук В. М., Біла Н. І., Гайдай С. В., Білий О. В. Статистичні методи у хімії. Підручник для студентів хімічних спеціальностей вищих навчальних закладів. – Донецьк: Видавництво ДонНУ, 2012. - 504 с.
+           Вибрані глави: <a href="materials/Gl_1-3.pdf" >Глава 1-3</a>, <a href="materials/Gl_5.pdf" >Глава 5</a>
+<H1>&nbsp;</H1>
+      <DL>
+        <dt>&nbsp;</dt>
+      </DL>
+      <h3>&nbsp;</h3>
+      <p>&nbsp;</p>
+    </div>
+    <div class="story">
+      <h3>&nbsp;</h3>
+    </div>
+</div>
+  <div id="siteInfo">&copy;2009 Київський Національний Університет імені Тараса Шевченка</div>
+</div>
+<!--end pagecell1-->
+<br>
+<script type="text/javascript">
+    <!--
+      var menuitem1 = new menu(7,1,"hidden");
+			var menuitem2 = new menu(7,2,"hidden");
+			var menuitem3 = new menu(7,3,"hidden");
+			var menuitem4 = new menu(7,4,"hidden");
+			var menuitem5 = new menu(7,5,"hidden");
+			var menuitem6 = new menu(7,6,"hidden");
+			var menuitem7 = new menu(7,7,"hidden");
+    // -->
+    </script>
+</body>
+</html>

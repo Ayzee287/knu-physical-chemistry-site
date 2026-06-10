@@ -126,6 +126,12 @@ export const en = {
     },
     profileNote:
       "Directions are given after the department's official materials (departmental website, 2009 edition) and are being confirmed with the department. Individual research groups will be presented once verified.",
+    school: {
+      eyebrow: "Scientific school",
+      worksTitle: "Selected monographs and textbooks",
+      worksNote:
+        "Citations are given in the original language of publication, after the school's published list.",
+    },
   },
 
   contacts: {

@@ -30,7 +30,18 @@ DW6 template, ©2009, windows-1251 encoding), retrieved 2026-06-10:
   mailboxes. Backlog record in `content/contacts/contacts.ts`.
 - `fritsky_prof_ukr.html` — the head's group subsection (corroborates the
   head-of-department record; labs 218/203/104/120 listed).
+- `shkola_ukr.html` — «Наукова школа з фізичної хімії»: school name, founded
+  1944 (Frantsevych), lineage, monograph list → published school block in
+  `content/research/school.ts`. Leadership/headcount figures NOT published.
+- `teachers_ukr.html` — **roster of 10 teaching staff** with degrees, rooms,
+  phones, emails. Several @knu.ua addresses ⇒ the page is substantially newer
+  than the ©2009 footer. Current-personnel claims — withheld per ADR-0001;
+  this is the primary candidate list for department confirmation.
+- `groups_ukr.html` — five research groups (named by their leaders) — withheld
+  for the same reason.
+- `results_ukr.html` — research results narrative (overlaps shkola page).
 
 The site is the department's own published record — authoritative as
-self-description, but stale (~2009). Current-state claims taken from it carry
-confirm-with-department notes.
+self-description. The ©2009 footer understates freshness in places (the
+teachers page and the 2012 textbook entry prove later updates), but every
+current-state claim taken from it still carries a confirm-with-department note.
