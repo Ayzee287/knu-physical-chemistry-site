@@ -7,7 +7,7 @@ export const en = {
     title:
       "Department of Physical Chemistry — Taras Shevchenko National University of Kyiv",
     description:
-      "The Department of Physical Chemistry at the Faculty of Chemistry, Taras Shevchenko National University of Kyiv — thermodynamics, kinetics and the structure of matter.",
+      "The Department of Physical Chemistry at the Faculty of Chemistry, Taras Shevchenko National University of Kyiv — founded in 1905; catalysis, thermodynamics of melts, coordination chemistry.",
   },
 
   ui: {
@@ -33,10 +33,12 @@ export const en = {
   home: {
     hero: {
       eyebrow: "KNU · Faculty of Chemistry",
-      title: "The science of why chemical change happens.",
-      lead: "The Department of Physical Chemistry works at the quantitative foundations of chemistry — energetics, rates and the structure of matter — within the Faculty of Chemistry of Taras Shevchenko National University of Kyiv.",
+      title: "Department of Physical Chemistry",
+      statement: "The science of why chemical change happens.",
+      lead: "Thermodynamics, kinetics and the structure of matter — the quantitative foundations of chemistry, taught and studied at Taras Shevchenko National University of Kyiv.",
       ctaResearch: "Research areas",
       ctaStaff: "People",
+      foundedLabel: "Founded",
       metaFacultyLabel: "Faculty",
       metaUniversityLabel: "University",
       metaLocationLabel: "Location",
@@ -44,15 +46,15 @@ export const en = {
     research: {
       eyebrow: "Research",
       title: "Directions of scientific work",
-      lead: "The department's detailed research profile is being compiled together with the department. The directions below outline the field it works in.",
+      lead: "The department's directions as published in its own record — from surface chemistry and catalysis to the thermodynamics of melts — currently being confirmed with the department.",
       cta: "About the research",
     },
     department: {
       eyebrow: "The department",
-      title: "One of five departments of the Faculty of Chemistry",
+      title: "More than a century of physical chemistry",
       body: [
-        "The Department of Physical Chemistry works within the Faculty of Chemistry of Taras Shevchenko National University of Kyiv, alongside the departments of inorganic, organic, analytical and macromolecular chemistry.",
-        "Physical chemistry connects chemistry with physics and mathematics: it describes the energetics of reactions, the rates at which they proceed, and the relation between the structure of matter and its properties.",
+        "The department was founded in 1905, and its scientific history spans the thermodynamics of solutions, surface physical chemistry, catalysis and the chemistry of melts.",
+        "Today it works within the Faculty of Chemistry of Taras Shevchenko National University of Kyiv, alongside the departments of inorganic, organic, analytical and macromolecular chemistry.",
       ],
       cta: "About the department",
       figureCaption: "Departmental photography — in preparation",
@@ -69,12 +71,12 @@ export const en = {
     meta: {
       title: "About the department",
       description:
-        "The Department of Physical Chemistry — one of five departments of the Faculty of Chemistry, Taras Shevchenko National University of Kyiv.",
+        "The Department of Physical Chemistry — founded in 1905, one of five departments of the Faculty of Chemistry, Taras Shevchenko National University of Kyiv.",
     },
     intro: {
       eyebrow: "About the department",
       title: "Department of Physical Chemistry",
-      lead: "One of five departments of the Faculty of Chemistry of Taras Shevchenko National University of Kyiv.",
+      lead: "Founded in 1905. One of five departments of the Faculty of Chemistry of Taras Shevchenko National University of Kyiv.",
     },
     epigraph:
       "Physical chemistry explains why chemical change happens the way it does — in the language of thermodynamics, kinetics and the structure of matter.",
@@ -83,6 +85,13 @@ export const en = {
       "Physico-chemical disciplines are a required part of a university chemical education, and within the faculty this part of the curriculum is carried by the Department of Physical Chemistry.",
       "This site is being developed in cooperation with the department. Information about staff, research groups and publications appears here after the department confirms it; until then, the information of record is available on the department's official website.",
     ],
+    history: {
+      eyebrow: "History",
+      title: "The department since 1905",
+      lead: "A century of physical chemistry in Kyiv, through the work of the scientists who led the department.",
+      sourceNote:
+        "Compiled from the department's published history; being confirmed with the department.",
+    },
     linksTitle: "Official resources",
   },
 
@@ -108,15 +117,15 @@ export const en = {
     meta: {
       title: "Research",
       description:
-        "Research directions of the Department of Physical Chemistry, Taras Shevchenko National University of Kyiv.",
+        "Research directions of the Department of Physical Chemistry, Taras Shevchenko National University of Kyiv: catalysis and surface chemistry, thermodynamics of melts, coordination and bioinorganic chemistry, dispersed systems.",
     },
     intro: {
       eyebrow: "Research",
       title: "Research directions",
-      lead: "The department's research profile within physical chemistry.",
+      lead: "The department's research profile, from its own published record.",
     },
     profileNote:
-      "A detailed account of research groups, topics and publications is being compiled together with the department. The directions below outline the disciplinary field; they are not yet a confirmed list of active groups.",
+      "Directions are given after the department's official materials (departmental website, 2009 edition) and are being confirmed with the department. Individual research groups will be presented once verified.",
   },
 
   contacts: {
@@ -141,5 +150,6 @@ export const en = {
   footer: {
     navTitle: "Sections",
     officialTitle: "Official resources",
+    founded: "Founded in 1905",
   },
 };
