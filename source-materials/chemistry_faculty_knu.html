@@ -1,0 +1,715 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Хімічний факультет КНУ ім. Тараса Шевченка — Викладачі та керівництво</title>
+<style>
+  :root {
+    --blue: #003087;
+    --blue-light: #e8edf7;
+    --gold: #b8860b;
+    --text: #1a1a1a;
+    --muted: #5a5a5a;
+    --border: #d0d7e3;
+    --bg: #f7f8fc;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: "Georgia", "Times New Roman", serif;
+    color: var(--text);
+    background: var(--bg);
+    line-height: 1.6;
+  }
+  .cover {
+    background: var(--blue);
+    color: white;
+    padding: 56px 48px 48px;
+    text-align: center;
+  }
+  .cover-title {
+    font-size: 1.75rem;
+    font-weight: normal;
+    letter-spacing: 0.04em;
+    line-height: 1.3;
+    margin-bottom: 12px;
+  }
+  .cover-sub {
+    font-size: 1rem;
+    opacity: 0.7;
+    font-style: italic;
+  }
+  .cover-rule {
+    width: 60px;
+    height: 3px;
+    background: var(--gold);
+    margin: 24px auto;
+  }
+  .cover-meta {
+    font-size: 0.85rem;
+    opacity: 0.6;
+    margin-top: 12px;
+  }
+  .container {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 0 24px;
+  }
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin: 48px 0 28px;
+  }
+  .section-header h2 {
+    font-size: 0.7rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--blue);
+    font-family: "Arial", sans-serif;
+    font-weight: 600;
+    white-space: nowrap;
+  }
+  .section-header-line {
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+  }
+  /* Person card */
+  .person-card {
+    display: flex;
+    gap: 28px;
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 28px;
+    margin-bottom: 16px;
+    transition: box-shadow 0.15s;
+  }
+  .person-card:hover { box-shadow: 0 2px 12px rgba(0,48,135,0.08); }
+  .person-photo {
+    flex-shrink: 0;
+    width: 100px;
+    height: 120px;
+    object-fit: cover;
+    border-radius: 2px;
+    background: var(--blue-light);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--muted);
+    font-size: 0.7rem;
+    text-align: center;
+    font-family: Arial, sans-serif;
+    line-height: 1.3;
+  }
+  .person-photo img {
+    width: 100px;
+    height: 120px;
+    object-fit: cover;
+    border-radius: 2px;
+    display: block;
+  }
+  .person-info { flex: 1; }
+  .person-name {
+    font-size: 1.15rem;
+    font-weight: bold;
+    color: var(--blue);
+    margin-bottom: 3px;
+  }
+  .person-role {
+    font-size: 0.85rem;
+    color: var(--gold);
+    font-family: Arial, sans-serif;
+    font-weight: 600;
+    letter-spacing: 0.03em;
+    margin-bottom: 8px;
+  }
+  .person-title {
+    font-size: 0.85rem;
+    color: var(--muted);
+    font-style: italic;
+    margin-bottom: 10px;
+    font-family: Arial, sans-serif;
+  }
+  .person-bio {
+    font-size: 0.9rem;
+    color: var(--text);
+    line-height: 1.65;
+  }
+  .person-meta {
+    margin-top: 10px;
+    font-size: 0.8rem;
+    font-family: Arial, sans-serif;
+    color: var(--muted);
+  }
+  .person-meta a { color: var(--blue); text-decoration: none; }
+  .person-meta a:hover { text-decoration: underline; }
+  .badge {
+    display: inline-block;
+    background: var(--blue-light);
+    color: var(--blue);
+    border-radius: 2px;
+    padding: 2px 8px;
+    font-size: 0.72rem;
+    font-family: Arial, sans-serif;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    margin-right: 6px;
+    margin-top: 6px;
+  }
+  .badge-gold {
+    background: #fdf3d8;
+    color: var(--gold);
+  }
+  .note-box {
+    background: #fffbf0;
+    border-left: 3px solid var(--gold);
+    padding: 16px 20px;
+    margin: 32px 0;
+    font-size: 0.88rem;
+    font-family: Arial, sans-serif;
+    color: var(--muted);
+    border-radius: 0 4px 4px 0;
+  }
+  .photo-link-section {
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 20px 24px;
+    margin-bottom: 16px;
+  }
+  .photo-link-section h4 {
+    font-size: 0.85rem;
+    font-family: Arial, sans-serif;
+    font-weight: 600;
+    color: var(--blue);
+    margin-bottom: 12px;
+  }
+  .photo-url-row {
+    display: flex;
+    align-items: baseline;
+    gap: 12px;
+    padding: 5px 0;
+    border-bottom: 1px solid var(--bg);
+    font-size: 0.82rem;
+    font-family: "Courier New", monospace;
+  }
+  .photo-url-row:last-child { border-bottom: none; }
+  .photo-url-name {
+    min-width: 280px;
+    font-family: Arial, sans-serif;
+    color: var(--text);
+    font-size: 0.82rem;
+  }
+  .photo-url-row a { color: var(--blue); word-break: break-all; }
+  footer {
+    text-align: center;
+    padding: 40px 24px;
+    font-size: 0.78rem;
+    color: var(--muted);
+    font-family: Arial, sans-serif;
+    border-top: 1px solid var(--border);
+    margin-top: 60px;
+  }
+  @media (max-width: 600px) {
+    .person-card { flex-direction: column; }
+    .cover { padding: 32px 20px; }
+    .cover-title { font-size: 1.25rem; }
+  }
+</style>
+</head>
+<body>
+
+<div class="cover">
+  <div class="cover-title">Хімічний факультет<br>Київського національного університету<br>імені Тараса Шевченка</div>
+  <div class="cover-rule"></div>
+  <div class="cover-sub">Керівництво, завідувачі кафедр та викладацький склад</div>
+  <div class="cover-meta">Складено: червень 2026 · Джерела: knu.ua, chem.knu.ua, anchem.knu.ua</div>
+</div>
+
+<div class="container">
+
+  <div class="note-box">
+    Документ складено на основі офіційних сайтів КНУ ім. Тараса Шевченка та хімічного факультету. Повний перелік фото та прямі посилання на зображення наведено в розділі «Посилання на фото» наприкінці документа.
+  </div>
+
+  <!-- ======================== ADMINISTRATION ======================== -->
+  <div class="section-header">
+    <h2>Деканат</h2>
+    <div class="section-header-line"></div>
+  </div>
+
+  <div class="person-card">
+    <div class="person-photo">
+      <img src="https://knu.ua/img/departments-admin/chemistry/volovenko.png"
+           alt="Воловенко Юліан Михайлович"
+           onerror="this.parentElement.innerHTML='Фото<br>недоступне'">
+    </div>
+    <div class="person-info">
+      <div class="person-name">Воловенко Юліан Михайлович</div>
+      <div class="person-role">Декан хімічного факультету</div>
+      <div class="person-title">Доктор хімічних наук, професор, заслужений професор КНУ ім. Тараса Шевченка</div>
+      <div class="person-bio">
+        Народився 12 червня 1950 року у Львові. Закінчив Київський університет у 1972 році. З 1998 року — доктор хімічних наук, з 2000 року — професор. Завідувач кафедри органічної хімії з 2004 року. Декан хімічного факультету з 2007 року. Лауреат Державної премії України в галузі науки і техніки (1998). Академік Академії наук та художньої літератури міста Тулузи (Франція). Провідний фахівець в галузі гетероциклічної хімії та синтезу нових органічних сполук.
+      </div>
+      <div class="person-meta">
+        <span class="badge">д.х.н.</span><span class="badge">проф.</span><span class="badge badge-gold">Держ. премія</span>
+        <br>Тел.: +38 (044) 234-31-29 &nbsp;|&nbsp; <a href="mailto:volovenko@knu.ua">volovenko@knu.ua</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="person-card">
+    <div class="person-photo">
+      <img src="https://knu.ua/img/departments-admin/chemistry/usenko.png"
+           alt="Усенко Наталія Ігорівна"
+           onerror="this.parentElement.innerHTML='Фото<br>недоступне'">
+    </div>
+    <div class="person-info">
+      <div class="person-name">Усенко Наталія Ігорівна</div>
+      <div class="person-role">Заступник декана з навчальної роботи</div>
+      <div class="person-title">Кандидат хімічних наук, доцент</div>
+      <div class="person-bio">
+        Відповідає за організацію навчального процесу хімічного факультету. Координує навчальні плани, розклад занять та навчально-методичну роботу. Доцент кафедри хімічного факультету КНУ ім. Тараса Шевченка.
+      </div>
+      <div class="person-meta">
+        <span class="badge">к.х.н.</span><span class="badge">доцент</span>
+        <br>Тел.: +38 (044) 239-31-64 &nbsp;|&nbsp; <a href="mailto:nataliya_usenko@knu.ua">nataliya_usenko@knu.ua</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="person-card">
+    <div class="person-photo">
+      <img src="https://knu.ua/img/departments-admin/chemistry/kutsevol.png"
+           alt="Куцевол Наталія Володимирівна"
+           onerror="this.parentElement.innerHTML='Фото<br>недоступне'">
+    </div>
+    <div class="person-info">
+      <div class="person-name">Куцевол Наталія Володимирівна</div>
+      <div class="person-role">Заступник декана з наукової роботи</div>
+      <div class="person-title">Доктор хімічних наук, провідний науковий співробітник</div>
+      <div class="person-bio">
+        Відповідає за організацію та координацію наукової діяльності факультету. Провідний науковий співробітник, доктор хімічних наук. Займається питаннями міжнародного наукового співробітництва, грантів та наукових проєктів факультету.
+      </div>
+      <div class="person-meta">
+        <span class="badge">д.х.н.</span>
+        <br>Тел.: +38 (044) 239-31-64 &nbsp;|&nbsp; <a href="mailto:nataliya.kutsevol@knu.ua">nataliya.kutsevol@knu.ua</a>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ======================== DEPT HEADS ======================== -->
+  <div class="section-header">
+    <h2>Завідувачі кафедр</h2>
+    <div class="section-header-line"></div>
+  </div>
+
+  <div class="person-card">
+    <div class="person-photo" style="font-size:0.72rem; padding:8px;">Фото<br>на сайті<br>факультету</div>
+    <div class="person-info">
+      <div class="person-name">Слободяник Микола Семенович</div>
+      <div class="person-role">Завідувач кафедри неорганічної хімії</div>
+      <div class="person-title">Доктор хімічних наук, професор, член-кореспондент НАН України</div>
+      <div class="person-bio">
+        Один із провідних вчених України в галузі неорганічної хімії та хімії твердого тіла. Член-кореспондент Національної академії наук України. Нагороджений Державною нагородою України (Указ Президента №787/2019). Займається дослідженням структури та властивостей оксидних систем, синтезом нових неорганічних матеріалів. Автор численних наукових публікацій та монографій.
+      </div>
+      <div class="person-meta">
+        <span class="badge">д.х.н.</span><span class="badge">проф.</span><span class="badge badge-gold">Чл.-кор. НАН</span><span class="badge badge-gold">Держ. нагорода 2019</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="person-card">
+    <div class="person-photo" style="font-size:0.72rem; padding:8px;">Фото<br>на сайті<br>факультету</div>
+    <div class="person-info">
+      <div class="person-name">Фрицький Ігор Олегович</div>
+      <div class="person-role">Завідувач кафедри фізичної хімії</div>
+      <div class="person-title">Доктор хімічних наук, професор, член-кореспондент НАН України</div>
+      <div class="person-bio">
+        Провідний фахівець у галузі фізичної хімії та координаційної хімії. Член-кореспондент Національної академії наук України. Лауреат Державної премії України в галузі науки і техніки. Очолює кафедру фізичної хімії хімічного факультету КНУ ім. Тараса Шевченка. Автор понад 200 наукових праць у вітчизняних та міжнародних журналах.
+      </div>
+      <div class="person-meta">
+        <span class="badge">д.х.н.</span><span class="badge">проф.</span><span class="badge badge-gold">Чл.-кор. НАН</span><span class="badge badge-gold">Держ. премія</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="person-card">
+    <div class="person-photo">
+      <img src="https://anchem.knu.ua/sites/default/files/img_0493-1.jpg"
+           alt="Тананайко Оксана Юріївна"
+           onerror="this.parentElement.innerHTML='Фото<br>недоступне'">
+    </div>
+    <div class="person-info">
+      <div class="person-name">Тананайко Оксана Юріївна</div>
+      <div class="person-role">Завідувач кафедри аналітичної хімії</div>
+      <div class="person-title">Доктор хімічних наук, доцент</div>
+      <div class="person-bio">
+        Завідувач кафедри аналітичної хімії хімічного факультету КНУ ім. Тараса Шевченка. Працює в КНУ з вересня 1992 року. Наукові інтереси: аналіз мікрокількостей органічних і неорганічних токсикантів та біологічно-активних речовин в об'єктах довкілля, харчових, фармацевтичних і біологічних об'єктах; електроаналітична та біоаналітична хімія; розробка хімічних і біохімічних сенсорів на основі нанокомпозитних матеріалів. Співавтор понад 40 наукових статей, 50 тез, 8 патентів України. Почесна грамота МОН України (2020). Стипендіат французьких (CNRS), турецьких та американських наукових програм.
+      </div>
+      <div class="person-meta">
+        <span class="badge">д.х.н.</span><span class="badge">доцент</span>
+        <br><a href="https://orcid.org/0000-0001-5109-3823" target="_blank">ORCID: 0000-0001-5109-3823</a> &nbsp;|&nbsp;
+        <a href="mailto:tananaiko@knu.ua">tananaiko@knu.ua</a>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ======================== ANALYTICAL CHEMISTRY STAFF ======================== -->
+  <div class="section-header">
+    <h2>Кафедра аналітичної хімії — викладацький склад</h2>
+    <div class="section-header-line"></div>
+  </div>
+
+  <!-- Лисенко -->
+  <div class="person-card">
+    <div class="person-photo">
+      <img src="https://anchem.knu.ua/sites/default/files/lisenko.jpg"
+           alt="Лисенко Олена Миколаївна"
+           onerror="this.parentElement.innerHTML='Фото<br>недоступне'">
+    </div>
+    <div class="person-info">
+      <div class="person-name">Лисенко Олена Миколаївна</div>
+      <div class="person-role">Доцент кафедри аналітичної хімії</div>
+      <div class="person-title">Кандидат хімічних наук, доцент</div>
+      <div class="person-bio">Працює в КНУ з листопада 1995 року. Викладач кафедри аналітичної хімії.</div>
+      <div class="person-meta">
+        <span class="badge">к.х.н.</span><span class="badge">доцент</span>
+        <br><a href="https://orcid.org/0000-0002-0345-0256" target="_blank">ORCID: 0000-0002-0345-0256</a> &nbsp;|&nbsp;
+        <a href="mailto:olenalysenko@knu.ua">olenalysenko@knu.ua</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Дорощук -->
+  <div class="person-card">
+    <div class="person-photo">
+      <img src="https://anchem.knu.ua/sites/default/files/img_0372-1.jpg"
+           alt="Дорощук Володимир Олександрович"
+           onerror="this.parentElement.innerHTML='Фото<br>недоступне'">
+    </div>
+    <div class="person-info">
+      <div class="person-name">Дорощук Володимир Олександрович</div>
+      <div class="person-role">Доцент кафедри аналітичної хімії</div>
+      <div class="person-title">Кандидат хімічних наук, доцент</div>
+      <div class="person-bio">Працює в КНУ з жовтня 2000 року. Фахівець у галузі аналітичної хімії.</div>
+      <div class="person-meta">
+        <span class="badge">к.х.н.</span><span class="badge">доцент</span>
+        <br><a href="https://orcid.org/0000-0001-6703-1926" target="_blank">ORCID: 0000-0001-6703-1926</a> &nbsp;|&nbsp;
+        <a href="mailto:vdoroschuk@knu.ua">vdoroschuk@knu.ua</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Алексєєв -->
+  <div class="person-card">
+    <div class="person-photo">
+      <img src="https://anchem.knu.ua/sites/default/files/s_alekseyev_photo_2020-10-03.jpg"
+           alt="Алексєєв Сергій Олександрович"
+           onerror="this.parentElement.innerHTML='Фото<br>недоступне'">
+    </div>
+    <div class="person-info">
+      <div class="person-name">Алексєєв Сергій Олександрович</div>
+      <div class="person-role">Доцент кафедри аналітичної хімії</div>
+      <div class="person-title">Доктор хімічних наук, доцент</div>
+      <div class="person-bio">Працює в КНУ з 2002 року. Доктор хімічних наук, фахівець у галузі аналітичної хімії та наноматеріалів.</div>
+      <div class="person-meta">
+        <span class="badge">д.х.н.</span><span class="badge">доцент</span>
+        <br><a href="https://orcid.org/0000-0003-4190-8528" target="_blank">ORCID: 0000-0003-4190-8528</a> &nbsp;|&nbsp;
+        <a href="mailto:alekseev@knu.ua">alekseev@knu.ua</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Зінько -->
+  <div class="person-card">
+    <div class="person-photo">
+      <img src="https://anchem.knu.ua/sites/default/files/zinko_1.jpg"
+           alt="Зінько Ліонель Степанівна"
+           onerror="this.parentElement.innerHTML='Фото<br>недоступне'">
+    </div>
+    <div class="person-info">
+      <div class="person-name">Зінько Ліонель Степанівна</div>
+      <div class="person-role">Доцент кафедри аналітичної хімії</div>
+      <div class="person-title">Кандидат хімічних наук, доцент</div>
+      <div class="person-bio">Працює в КНУ з листопада 1996 року.</div>
+      <div class="person-meta">
+        <span class="badge">к.х.н.</span><span class="badge">доцент</span>
+        <br><a href="https://orcid.org/0000-0003-2953-4228" target="_blank">ORCID: 0000-0003-2953-4228</a> &nbsp;|&nbsp;
+        <a href="mailto:lionelzinko@knu.ua">lionelzinko@knu.ua</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Зуй -->
+  <div class="person-card">
+    <div class="person-photo">
+      <img src="https://anchem.knu.ua/sites/default/files/img_0069-1.jpg"
+           alt="Зуй Марина Федорівна"
+           onerror="this.parentElement.innerHTML='Фото<br>недоступне'">
+    </div>
+    <div class="person-info">
+      <div class="person-name">Зуй Марина Федорівна</div>
+      <div class="person-role">Доцент кафедри аналітичної хімії</div>
+      <div class="person-title">Кандидат хімічних наук, доцент</div>
+      <div class="person-bio">Працює в КНУ з серпня 1982 року. Один із найдосвідченіших викладачів кафедри. Керує власним науковим напрямом на кафедрі аналітичної хімії.</div>
+      <div class="person-meta">
+        <span class="badge">к.х.н.</span><span class="badge">доцент</span>
+        <br><a href="https://orcid.org/0000-0001-5597-8418" target="_blank">ORCID: 0000-0001-5597-8418</a> &nbsp;|&nbsp;
+        <a href="mailto:maryzuy@knu.ua">maryzuy@knu.ua</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Куліченко -->
+  <div class="person-card">
+    <div class="person-photo">
+      <img src="https://anchem.knu.ua/sites/default/files/kulichenko.jpg"
+           alt="Куліченко Сергій Анатолійович"
+           onerror="this.parentElement.innerHTML='Фото<br>недоступне'">
+    </div>
+    <div class="person-info">
+      <div class="person-name">Куліченко Сергій Анатолійович</div>
+      <div class="person-role">Доцент кафедри аналітичної хімії</div>
+      <div class="person-title">Кандидат хімічних наук, доцент</div>
+      <div class="person-bio">Працює в КНУ з серпня 1979 року. Один із найдосвідченіших викладачів факультету.</div>
+      <div class="person-meta">
+        <span class="badge">к.х.н.</span><span class="badge">доцент</span>
+        <br><a href="https://orcid.org/0000-0002-8150-6497" target="_blank">ORCID: 0000-0002-8150-6497</a> &nbsp;|&nbsp;
+        <a href="mailto:kulichenko@knu.ua">kulichenko@knu.ua</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Смик -->
+  <div class="person-card">
+    <div class="person-photo">
+      <img src="https://anchem.knu.ua/sites/default/files/smyk.jpg"
+           alt="Смик Наталія Іванівна"
+           onerror="this.parentElement.innerHTML='Фото<br>недоступне'">
+    </div>
+    <div class="person-info">
+      <div class="person-name">Смик Наталія Іванівна</div>
+      <div class="person-role">Доцент кафедри аналітичної хімії</div>
+      <div class="person-title">Кандидат хімічних наук, доцент</div>
+      <div class="person-bio">Працює в КНУ з липня 1993 року.</div>
+      <div class="person-meta">
+        <span class="badge">к.х.н.</span><span class="badge">доцент</span>
+        <br><a href="mailto:nataliiasmyk@knu.ua">nataliiasmyk@knu.ua</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Кеда -->
+  <div class="person-card">
+    <div class="person-photo">
+      <img src="https://anchem.knu.ua/sites/default/files/keda_0.jpg"
+           alt="Кеда Тетяна Євгенівна"
+           onerror="this.parentElement.innerHTML='Фото<br>недоступне'">
+    </div>
+    <div class="person-info">
+      <div class="person-name">Кеда Тетяна Євгенівна</div>
+      <div class="person-role">Доцент кафедри аналітичної хімії</div>
+      <div class="person-title">Кандидат хімічних наук, доцент</div>
+      <div class="person-bio">Працює в КНУ з жовтня 1997 року. Доцент кафедри аналітичної хімії.</div>
+      <div class="person-meta">
+        <span class="badge">к.х.н.</span><span class="badge">доцент</span>
+        <br><a href="https://orcid.org/0000-0003-1781-5487" target="_blank">ORCID: 0000-0003-1781-5487</a> &nbsp;|&nbsp;
+        <a href="mailto:tetianakeda@knu.ua">tetianakeda@knu.ua</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Лелюшок -->
+  <div class="person-card">
+    <div class="person-photo">
+      <img src="https://anchem.knu.ua/sites/default/files/lelyushok.jpg"
+           alt="Лелюшок Сергій Олександрович"
+           onerror="this.parentElement.innerHTML='Фото<br>недоступне'">
+    </div>
+    <div class="person-info">
+      <div class="person-name">Лелюшок Сергій Олександрович</div>
+      <div class="person-role">Доцент кафедри аналітичної хімії</div>
+      <div class="person-title">Кандидат хімічних наук, доцент</div>
+      <div class="person-bio">Доцент кафедри аналітичної хімії хімічного факультету КНУ ім. Тараса Шевченка. Працює в КНУ з жовтня 2004 року.</div>
+      <div class="person-meta">
+        <span class="badge">к.х.н.</span><span class="badge">доцент</span>
+        <br><a href="https://orcid.org/0000-0002-8549-5254" target="_blank">ORCID: 0000-0002-8549-5254</a> &nbsp;|&nbsp;
+        <a href="mailto:lelyushok@knu.ua">lelyushok@knu.ua</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Іщенко -->
+  <div class="person-card">
+    <div class="person-photo">
+      <img src="https://anchem.knu.ua/sites/default/files/ishenko.jpg"
+           alt="Іщенко Микола Володимирович"
+           onerror="this.parentElement.innerHTML='Фото<br>недоступне'">
+    </div>
+    <div class="person-info">
+      <div class="person-name">Іщенко Микола Володимирович</div>
+      <div class="person-role">Доцент кафедри аналітичної хімії</div>
+      <div class="person-title">Кандидат хімічних наук, доцент</div>
+      <div class="person-bio">Доцент кафедри аналітичної хімії. Працює в КНУ з жовтня 2001 року.</div>
+      <div class="person-meta">
+        <span class="badge">к.х.н.</span><span class="badge">доцент</span>
+        <br><a href="https://orcid.org/0000-0002-0851-1679" target="_blank">ORCID: 0000-0002-0851-1679</a> &nbsp;|&nbsp;
+        <a href="mailto:ischenko_mv@knu.ua">ischenko_mv@knu.ua</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Верба -->
+  <div class="person-card">
+    <div class="person-photo">
+      <img src="https://anchem.knu.ua/sites/default/files/verba.jpg"
+           alt="Верба Валентина Вікторівна"
+           onerror="this.parentElement.innerHTML='Фото<br>недоступне'">
+    </div>
+    <div class="person-info">
+      <div class="person-name">Верба Валентина Вікторівна</div>
+      <div class="person-role">Асистент кафедри аналітичної хімії</div>
+      <div class="person-title">Кандидат хімічних наук, асистент</div>
+      <div class="person-bio">Асистент кафедри аналітичної хімії хімічного факультету КНУ ім. Тараса Шевченка. Працює в КНУ з серпня 1994 року.</div>
+      <div class="person-meta">
+        <span class="badge">к.х.н.</span><span class="badge">асист.</span>
+        <br><a href="https://orcid.org/0000-0002-5379-9392" target="_blank">ORCID: 0000-0002-5379-9392</a> &nbsp;|&nbsp;
+        <a href="mailto:verba_v@knu.ua">verba_v@knu.ua</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Бас -->
+  <div class="person-card">
+    <div class="person-photo">
+      <img src="https://anchem.knu.ua/sites/default/files/bas.jpg"
+           alt="Бас Юлія Петрівна"
+           onerror="this.parentElement.innerHTML='Фото<br>недоступне'">
+    </div>
+    <div class="person-info">
+      <div class="person-name">Бас Юлія Петрівна</div>
+      <div class="person-role">Асистент кафедри аналітичної хімії</div>
+      <div class="person-title">Кандидат хімічних наук, асистент</div>
+      <div class="person-bio">Працює в КНУ з 2011 року.</div>
+      <div class="person-meta">
+        <span class="badge">к.х.н.</span><span class="badge">асист.</span>
+        <br><a href="https://orcid.org/0000-0002-2535-6009" target="_blank">ORCID: 0000-0002-2535-6009</a> &nbsp;|&nbsp;
+        <a href="mailto:basjulia@knu.ua">basjulia@knu.ua</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Конопліцька -->
+  <div class="person-card">
+    <div class="person-photo">
+      <img src="https://anchem.knu.ua/sites/default/files/konoplytska.jpg"
+           alt="Конопліцька Олена Петрівна"
+           onerror="this.parentElement.innerHTML='Фото<br>недоступне'">
+    </div>
+    <div class="person-info">
+      <div class="person-name">Конопліцька Олена Петрівна</div>
+      <div class="person-role">Асистент кафедри аналітичної хімії</div>
+      <div class="person-title">Кандидат хімічних наук, асистент</div>
+      <div class="person-bio">Асистент кафедри аналітичної хімії. Працює в КНУ з жовтня 2001 року.</div>
+      <div class="person-meta">
+        <span class="badge">к.х.н.</span><span class="badge">асист.</span>
+        <br><a href="mailto:okonoplitska@knu.ua">okonoplitska@knu.ua</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Линник -->
+  <div class="person-card">
+    <div class="person-photo">
+      <img src="https://anchem.knu.ua/sites/default/files/linnyk.jpg"
+           alt="Линник Ростислав Петрович"
+           onerror="this.parentElement.innerHTML='Фото<br>недоступне'">
+    </div>
+    <div class="person-info">
+      <div class="person-name">Линник Ростислав Петрович</div>
+      <div class="person-role">Асистент кафедри аналітичної хімії</div>
+      <div class="person-title">Кандидат хімічних наук, старший дослідник</div>
+      <div class="person-bio">Асистент кафедри аналітичної хімії хімічного факультету КНУ ім. Тараса Шевченка.</div>
+      <div class="person-meta">
+        <span class="badge">к.х.н.</span>
+        <br><a href="https://orcid.org/0000-0002-6401-8184" target="_blank">ORCID: 0000-0002-6401-8184</a> &nbsp;|&nbsp;
+        <a href="mailto:rostyslavlinnik@knu.ua">rostyslavlinnik@knu.ua</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Воловенко О.Б. -->
+  <div class="person-card">
+    <div class="person-photo">
+      <img src="https://anchem.knu.ua/sites/default/files/picture1.jpg"
+           alt="Воловенко Олеся Богданівна"
+           onerror="this.parentElement.innerHTML='Фото<br>недоступне'">
+    </div>
+    <div class="person-info">
+      <div class="person-name">Воловенко Олеся Богданівна</div>
+      <div class="person-role">Асистент кафедри аналітичної хімії</div>
+      <div class="person-title">Кандидат хімічних наук, асистент</div>
+      <div class="person-bio">Асистент кафедри аналітичної хімії хімічного факультету КНУ ім. Тараса Шевченка. Працює в КНУ з листопада 2004 року.</div>
+      <div class="person-meta">
+        <span class="badge">к.х.н.</span><span class="badge">асист.</span>
+        <br><a href="https://orcid.org/0000-0002-5328-4639" target="_blank">ORCID: 0000-0002-5328-4639</a> &nbsp;|&nbsp;
+        <a href="mailto:ovolovenko@ukr.net">ovolovenko@ukr.net</a>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ======================== PHOTO LINKS ======================== -->
+  <div class="section-header">
+    <h2>Посилання на фото</h2>
+    <div class="section-header-line"></div>
+  </div>
+
+  <div class="note-box">
+    Нижче наведено прямі URL-адреси всіх фотографій з офіційних сайтів університету. Клацніть на посилання, щоб відкрити фото у браузері, або збережіть правою кнопкою миші.
+  </div>
+
+  <div class="photo-link-section">
+    <h4>Деканат — knu.ua</h4>
+    <div class="photo-url-row"><span class="photo-url-name">Воловенко Юліан Михайлович</span><a href="https://knu.ua/img/departments-admin/chemistry/volovenko.png" target="_blank">https://knu.ua/img/departments-admin/chemistry/volovenko.png</a></div>
+    <div class="photo-url-row"><span class="photo-url-name">Усенко Наталія Ігорівна</span><a href="https://knu.ua/img/departments-admin/chemistry/usenko.png" target="_blank">https://knu.ua/img/departments-admin/chemistry/usenko.png</a></div>
+    <div class="photo-url-row"><span class="photo-url-name">Куцевол Наталія Володимирівна</span><a href="https://knu.ua/img/departments-admin/chemistry/kutsevol.png" target="_blank">https://knu.ua/img/departments-admin/chemistry/kutsevol.png</a></div>
+  </div>
+
+  <div class="photo-link-section">
+    <h4>Кафедра аналітичної хімії — anchem.knu.ua</h4>
+    <div class="photo-url-row"><span class="photo-url-name">Тананайко Оксана Юріївна</span><a href="https://anchem.knu.ua/sites/default/files/img_0493-1.jpg" target="_blank">…/img_0493-1.jpg</a></div>
+    <div class="photo-url-row"><span class="photo-url-name">Лисенко Олена Миколаївна</span><a href="https://anchem.knu.ua/sites/default/files/lisenko.jpg" target="_blank">…/lisenko.jpg</a></div>
+    <div class="photo-url-row"><span class="photo-url-name">Дорощук Володимир Олександрович</span><a href="https://anchem.knu.ua/sites/default/files/img_0372-1.jpg" target="_blank">…/img_0372-1.jpg</a></div>
+    <div class="photo-url-row"><span class="photo-url-name">Алексєєв Сергій Олександрович</span><a href="https://anchem.knu.ua/sites/default/files/s_alekseyev_photo_2020-10-03.jpg" target="_blank">…/s_alekseyev_photo_2020-10-03.jpg</a></div>
+    <div class="photo-url-row"><span class="photo-url-name">Зінько Ліонель Степанівна</span><a href="https://anchem.knu.ua/sites/default/files/zinko_1.jpg" target="_blank">…/zinko_1.jpg</a></div>
+    <div class="photo-url-row"><span class="photo-url-name">Зуй Марина Федорівна</span><a href="https://anchem.knu.ua/sites/default/files/img_0069-1.jpg" target="_blank">…/img_0069-1.jpg</a></div>
+    <div class="photo-url-row"><span class="photo-url-name">Куліченко Сергій Анатолійович</span><a href="https://anchem.knu.ua/sites/default/files/kulichenko.jpg" target="_blank">…/kulichenko.jpg</a></div>
+    <div class="photo-url-row"><span class="photo-url-name">Смик Наталія Іванівна</span><a href="https://anchem.knu.ua/sites/default/files/smyk.jpg" target="_blank">…/smyk.jpg</a></div>
+    <div class="photo-url-row"><span class="photo-url-name">Кеда Тетяна Євгенівна</span><a href="https://anchem.knu.ua/sites/default/files/keda_0.jpg" target="_blank">…/keda_0.jpg</a></div>
+    <div class="photo-url-row"><span class="photo-url-name">Лелюшок Сергій Олександрович</span><a href="https://anchem.knu.ua/sites/default/files/lelyushok.jpg" target="_blank">…/lelyushok.jpg</a></div>
+    <div class="photo-url-row"><span class="photo-url-name">Іщенко Микола Володимирович</span><a href="https://anchem.knu.ua/sites/default/files/ishenko.jpg" target="_blank">…/ishenko.jpg</a></div>
+    <div class="photo-url-row"><span class="photo-url-name">Верба Валентина Вікторівна</span><a href="https://anchem.knu.ua/sites/default/files/verba.jpg" target="_blank">…/verba.jpg</a></div>
+    <div class="photo-url-row"><span class="photo-url-name">Бас Юлія Петрівна</span><a href="https://anchem.knu.ua/sites/default/files/bas.jpg" target="_blank">…/bas.jpg</a></div>
+    <div class="photo-url-row"><span class="photo-url-name">Конопліцька Олена Петрівна</span><a href="https://anchem.knu.ua/sites/default/files/konoplytska.jpg" target="_blank">…/konoplytska.jpg</a></div>
+    <div class="photo-url-row"><span class="photo-url-name">Линник Ростислав Петрович</span><a href="https://anchem.knu.ua/sites/default/files/linnyk.jpg" target="_blank">…/linnyk.jpg</a></div>
+    <div class="photo-url-row"><span class="photo-url-name">Воловенко Олеся Богданівна</span><a href="https://anchem.knu.ua/sites/default/files/picture1.jpg" target="_blank">…/picture1.jpg</a></div>
+  </div>
+
+</div><!-- /container -->
+
+<footer>
+  Хімічний факультет КНУ ім. Тараса Шевченка &nbsp;·&nbsp;
+  <a href="https://chem.knu.ua" target="_blank">chem.knu.ua</a> &nbsp;·&nbsp;
+  <a href="https://knu.ua/ua/departments/chemistry/admin/" target="_blank">knu.ua</a> &nbsp;·&nbsp;
+  <a href="https://anchem.knu.ua" target="_blank">anchem.knu.ua</a>
+  <br>Документ сформовано автоматично · Червень 2026
+</footer>
+
+</body>
+</html>

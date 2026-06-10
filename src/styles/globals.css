@@ -1,0 +1,40 @@
+@import "tailwindcss";
+
+/* Token layer — inherits the KNU Chemistry family (ivory paper, deep academic
+   navy, restrained warm sand) and develops the department's own register:
+   `ink` is a deeper atmospheric base used for the institutional hero and other
+   full-bleed surfaces, and `copper` replaces the faculty's gold as the single,
+   disciplined accent — a more material, laboratory tone. Serif chains Cormorant
+   (Latin) → Lora (Cyrillic) so Ukrainian headings render correctly; Inter
+   (Latin + Cyrillic) carries body text. */
+@theme {
+  --color-ink: #0f1b36;
+  --color-navy: #14254a;
+  --color-ivory: #f4f0e8;
+  --color-sand: #e8e0d0;
+  --color-copper: #9a6a3f;
+  --color-slate: #5a6275;
+
+  --font-sans: var(--font-inter), system-ui, sans-serif;
+  --font-serif: var(--font-cormorant), var(--font-lora), Georgia, serif;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  /* One consistent, restrained focus treatment across all interactive elements. */
+  a:focus-visible,
+  summary:focus-visible,
+  button:focus-visible {
+    outline: 2px solid var(--color-navy);
+    outline-offset: 3px;
+    border-radius: 2px;
+  }
+
+  ::selection {
+    background-color: var(--color-navy);
+    color: var(--color-ivory);
+  }
+}
