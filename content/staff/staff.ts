@@ -44,7 +44,10 @@ export const staff: StaffMember[] = [
       fromStaffDirectory(
         "Verify current post-holder, degree and title with the department. " +
           "The NAS corresponding-membership honour is a hard claim — confirm against the NAS register. " +
-          "Confirm the preferred EN transliteration of the name.",
+          "Confirm the preferred EN transliteration of the name. " +
+          "Corroboration (2026-06-10): the department's own legacy site names him head since 2005 " +
+          "(history_ukr.html) and hosts his group subsection (fritsky/prof_ukr.html) — strong sourcing, " +
+          "but the CURRENT post still needs a present-day confirmation before flipping to verified.",
       ),
     ),
   },

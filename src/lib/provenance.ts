@@ -80,15 +80,27 @@ export const SOURCES = {
   /** Faculty of Chemistry site — reference/terminology source. */
   chemKnu: { url: "https://chem.knu.ua/", retrieved: "2026-06-09" },
   /**
-   * Official departmental site (operator-provided in the faculty project,
-   * 2026-06-10). Legacy frame-based site; could not be programmatically
-   * confirmed — verify manually.
+   * Official departmental site. Confirmed reachable and self-identifying as
+   * the department on 2026-06-10 («Кафедра фізичної хімії Хімічного
+   * факультету...»). Legacy DW6-template site, ©2009 — authoritative as the
+   * department's own published record, but stale: current-state claims taken
+   * from it still need confirmation with the department. Retrieved page
+   * snapshots live in source-materials/physchem-knu-ua/.
    */
   physchemKnu: {
     url: "https://physchem.knu.ua/index_ua.html",
     retrieved: "2026-06-10",
   },
 } as const;
+
+/**
+ * A `sourced` claim attributed to a specific page of the official department
+ * site (legacy, ©2009). `page` is the path after the origin, e.g.
+ * "history_ukr.html"; a snapshot of each cited page is committed under
+ * source-materials/physchem-knu-ua/.
+ */
+export const fromPhyschem = (page: string, note?: string): Provenance =>
+  sourced(`https://physchem.knu.ua/${page}`, "2026-06-10", note);
 
 /** Convenience: a `sourced` claim attributed to the staff directory document. */
 export const fromStaffDirectory = (note?: string): Provenance =>

@@ -37,6 +37,34 @@ const phone: Claim<string> = claim(
 
 export const contact = { address, email, phone };
 
+// ── Unpublished backlog ──────────────────────────────────────────────────────
+// Department-level contacts found on the legacy official site's contacts page
+// (snapshot: source-materials/physchem-knu-ua/contacts_ukr.html, ©2009).
+// NOT rendered anywhere: the page carries a visible copy-paste error («кафедра
+// органічної хімії» in the heading), an address that conflicts with the
+// current faculty address (Володимирська 62А vs Скоропадського 12), and
+// deprecated @univ.kiev.ua mailboxes. Publishing stale contacts is worse than
+// publishing none. Kept solely as the verification-backlog record — confirm
+// each value with the department, then promote into `contact` above.
+export const legacyDepartmentContacts = {
+  headPhone: claim(
+    "+38 (044) 239-33-93",
+    sourced(
+      "https://physchem.knu.ua/contacts_ukr.html",
+      "2026-06-10",
+      "Legacy (©2009); page heading misnames the department — treat with caution.",
+    ),
+  ),
+  secretaryPhone: claim(
+    "+38 (044) 239-33-70",
+    sourced(
+      "https://physchem.knu.ua/contacts_ukr.html",
+      "2026-06-10",
+      "Legacy (©2009); confirm before publication.",
+    ),
+  ),
+} as const;
+
 // Official sites of record. Navigational, low-stakes claims — rendered
 // regardless of verification state, with provenance kept for review.
 export const officialLinks: OfficialLink[] = [
