@@ -2,6 +2,7 @@ import { Container } from "@/components/layout/container";
 import { ExternalLink } from "@/components/ui/external-link";
 import { ReviewMark } from "@/components/ui/review-mark";
 import { getContact } from "@content/contacts/contacts";
+import { founded } from "@content/history/history";
 import { site } from "@/content/site";
 import { href, type Locale, type Dictionary } from "@/lib/i18n";
 
@@ -82,7 +83,8 @@ export function Footer({ lang, dict }: { lang: Locale; dict: Dictionary }) {
 
         <div className="flex flex-col gap-2 border-t border-navy/10 py-6 text-xs text-slate sm:flex-row sm:justify-between">
           <span>
-            {site.department[lang]} · {site.faculty[lang]}
+            {site.department[lang]} · {dict.footer.founded}
+            <ReviewMark provenance={founded.provenance} />
           </span>
           <span>{site.location[lang]}</span>
         </div>

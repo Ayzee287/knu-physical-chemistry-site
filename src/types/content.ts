@@ -49,10 +49,12 @@ export type ResearchArea = {
   id: string;
   title: Localised;
   summary: Localised;
+  /** Short topic keywords within the direction (conservative, source-backed). */
+  topics?: Localised<string[]>;
   /**
    * editorial — discipline-level framing of the department's field;
-   * sourced   — a direction with a documented signal in the source materials.
-   * Specific groups, topics and publications require department-provided data.
+   * sourced   — taken from the department's own published record.
+   * Specific groups (people, labs, projects) require department-provided data.
    */
   provenance: Provenance;
 };
@@ -61,6 +63,7 @@ export type LocalisedResearchArea = {
   id: string;
   title: string;
   summary: string;
+  topics: string[];
   provenance: Provenance;
 };
 

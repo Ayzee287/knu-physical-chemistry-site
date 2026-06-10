@@ -6,7 +6,9 @@ import { InstitutionalHero } from "@/components/layout/institutional-hero";
 import { SectionHeader } from "@/components/layout/section-header";
 import { ResearchAreaCard } from "@/components/cards/research-area-card";
 import { Figure } from "@/components/ui/figure";
+import { ReviewMark } from "@/components/ui/review-mark";
 import { getResearchAreas } from "@content/research/research";
+import { founded } from "@content/history/history";
 import { site } from "@/content/site";
 import { getDictionary, href, isLocale } from "@/lib/i18n";
 import { buildMetadata } from "@/lib/seo";
@@ -40,27 +42,38 @@ export default async function HomePage({ params }: PageProps) {
       <InstitutionalHero
         eyebrow={t.hero.eyebrow}
         title={t.hero.title}
+        statement={t.hero.statement}
         lead={t.hero.lead}
         primary={{ label: t.hero.ctaResearch, href: href(lang, "/research") }}
         secondary={{ label: t.hero.ctaStaff, href: href(lang, "/staff") }}
-        meta={[
+        keystone={{
+          label: t.hero.foundedLabel,
+          value: founded.value,
+          provenance: founded.provenance,
+        }}
+        facts={[
           { label: t.hero.metaFacultyLabel, value: site.faculty[lang] },
           { label: t.hero.metaUniversityLabel, value: site.university[lang] },
           { label: t.hero.metaLocationLabel, value: site.location[lang] },
         ]}
       />
 
-      {/* Research directions */}
-      <section className="py-20 sm:py-24">
+      {/* Research digest — the page's intellectual core */}
+      <section className="py-16 sm:py-20 lg:py-24">
         <Container>
           <SectionHeader
             eyebrow={t.research.eyebrow}
             title={t.research.title}
             lead={t.research.lead}
           />
-          <div className="mt-12 border-b border-navy/10">
+          <div className="mt-10 border-b border-navy/10 lg:mt-12">
             {areas.map((area, i) => (
-              <ResearchAreaCard key={area.id} area={area} index={i} />
+              <ResearchAreaCard
+                key={area.id}
+                area={area}
+                index={i}
+                href={`${href(lang, "/research")}#${area.id}`}
+              />
             ))}
           </div>
           <p className="mt-8">
@@ -80,8 +93,8 @@ export default async function HomePage({ params }: PageProps) {
         </Container>
       </section>
 
-      {/* The department in its faculty */}
-      <section className="border-t border-navy/10 bg-sand/40 py-20 sm:py-24">
+      {/* A century of the department — warm band */}
+      <section className="border-t border-navy/10 bg-sand/40 py-16 sm:py-20 lg:py-24">
         <Container>
           <div className="grid gap-12 lg:grid-cols-[3fr_2fr] lg:gap-16">
             <div>
@@ -90,15 +103,18 @@ export default async function HomePage({ params }: PageProps) {
                 title={t.department.title}
               />
               <div className="mt-6 max-w-xl space-y-4">
-                {t.department.body.map((paragraph) => (
+                {t.department.body.map((paragraph, i) => (
                   <p key={paragraph} className="text-pretty leading-7 text-slate">
                     {paragraph}
+                    {/* The founding/history sentence summarises the sourced
+                        record — carry its provenance in review mode. */}
+                    {i === 0 ? <ReviewMark provenance={founded.provenance} /> : null}
                   </p>
                 ))}
               </div>
               <p className="mt-8">
                 <Link
-                  href={href(lang, "/about")}
+                  href={`${href(lang, "/about")}#history`}
                   className="group inline-flex items-center gap-2 text-sm font-medium text-navy transition-colors hover:text-slate"
                 >
                   {t.department.cta}
@@ -121,18 +137,19 @@ export default async function HomePage({ params }: PageProps) {
         </Container>
       </section>
 
-      {/* Contact strip */}
-      <section className="border-t border-navy/10 py-20 sm:py-24">
+      {/* Closer — the page's single navy band, bookending the ink masthead */}
+      <section className="bg-navy py-16 text-ivory sm:py-20">
         <Container>
           <SectionHeader
+            tone="dark"
             eyebrow={t.contact.eyebrow}
             title={t.contact.title}
             lead={t.contact.lead}
           />
-          <p className="mt-8">
+          <p className="mt-9">
             <Link
               href={href(lang, "/contacts")}
-              className="inline-block border border-navy/70 px-6 py-3 text-sm font-medium text-navy transition-colors hover:bg-navy hover:text-ivory"
+              className="inline-block border border-ivory/80 px-6 py-3 text-sm font-medium transition-colors hover:bg-ivory hover:text-navy"
             >
               {t.contact.cta}
             </Link>

@@ -1,82 +1,120 @@
 import Link from "next/link";
 import { Container } from "@/components/layout/container";
+import { ReviewMark } from "@/components/ui/review-mark";
+import type { Provenance } from "@/lib/provenance";
 
 type HeroCta = { label: string; href: string };
-type HeroMeta = { label: string; value: string };
+export type HeroFact = { label: string; value: string; provenance?: Provenance };
 
 /**
- * Full-bleed institutional opening on the deep `ink` surface — the one
- * deliberately atmospheric moment of the site. Identity is carried by
- * typography and a copper hairline, not by imagery or animation; the meta rail
- * grounds the statement in institutional fact.
+ * Institutional masthead on the deep `ink` surface — the site's one
+ * deliberately atmospheric moment. Composition: an editorial title block
+ * (eyebrow → masthead title → serif statement → lead → CTAs) beside an
+ * institutional fact rail whose keystone is the department's strongest single
+ * fact (the founding year), set as a large serif numeral.
+ *
+ * Identity is carried by typography, hairlines and one copper accent — no
+ * imagery, no gradients, no animation beyond hover affordances. When real
+ * photography arrives, it belongs in the page sections below, not here: the
+ * masthead stays typographic.
  */
 export function InstitutionalHero({
   eyebrow,
   title,
+  statement,
   lead,
   primary,
   secondary,
-  meta,
+  keystone,
+  facts,
 }: {
   eyebrow: string;
+  /** Masthead line — the institution's name, not a slogan. */
   title: string;
+  /** Serif-italic editorial statement under the masthead. */
+  statement: string;
   lead: string;
   primary: HeroCta;
   secondary?: HeroCta;
-  meta: HeroMeta[];
+  /** The focal fact, set large (e.g. founding year). */
+  keystone?: HeroFact;
+  facts: HeroFact[];
 }) {
   return (
     <section className="bg-ink text-ivory">
       <Container>
-        <div className="max-w-3xl pb-16 pt-20 sm:pt-24 lg:pb-20 lg:pt-32">
-          <div className="flex items-center gap-4">
-            <p className="text-xs uppercase tracking-[0.2em] text-sand/70">
-              {eyebrow}
-            </p>
-            <span aria-hidden className="h-px w-16 bg-copper/70" />
-          </div>
-          <h1 className="mt-6 text-balance font-serif text-4xl font-medium leading-[1.08] tracking-tight sm:text-5xl lg:text-6xl">
-            {title}
-          </h1>
-          <p className="mt-7 max-w-xl text-pretty text-lg leading-8 text-sand/85">
-            {lead}
-          </p>
-          <div className="mt-10 flex flex-wrap items-center gap-x-8 gap-y-4 text-sm font-medium">
-            <Link
-              href={primary.href}
-              className="border border-ivory/80 px-6 py-3 transition-colors hover:bg-ivory hover:text-ink"
-            >
-              {primary.label}
-            </Link>
-            {secondary ? (
-              <Link
-                href={secondary.href}
-                className="group inline-flex items-center gap-2 text-sand/85 transition-colors hover:text-ivory"
-              >
-                {secondary.label}
-                <span
-                  aria-hidden
-                  className="transition-transform duration-200 group-hover:translate-x-0.5"
-                >
-                  →
-                </span>
-              </Link>
-            ) : null}
-          </div>
-        </div>
-
-        <dl className="grid gap-6 border-t border-ivory/15 py-8 sm:grid-cols-3 sm:gap-8">
-          {meta.map((item) => (
-            <div key={item.label}>
-              <dt className="text-xs uppercase tracking-[0.18em] text-sand/55">
-                {item.label}
-              </dt>
-              <dd className="mt-2 text-sm leading-6 text-sand/90">
-                {item.value}
-              </dd>
+        <div className="grid gap-x-16 gap-y-12 pb-16 pt-16 sm:pt-20 lg:grid-cols-[minmax(0,7fr)_minmax(0,3fr)] lg:pb-24 lg:pt-28">
+          {/* Title block */}
+          <div className="max-w-2xl">
+            <div className="flex items-center gap-4">
+              <span aria-hidden className="h-px w-10 bg-copper/80" />
+              <p className="text-xs uppercase tracking-[0.22em] text-sand/70">
+                {eyebrow}
+              </p>
             </div>
-          ))}
-        </dl>
+            <h1 className="mt-7 text-balance font-serif text-5xl font-medium leading-[1.04] tracking-tight sm:text-6xl lg:text-7xl">
+              {title}
+            </h1>
+            <p className="mt-6 max-w-xl text-pretty font-serif text-xl italic leading-snug text-sand/90 sm:text-2xl">
+              {statement}
+            </p>
+            <p className="mt-6 max-w-xl text-pretty leading-7 text-sand/75">
+              {lead}
+            </p>
+            <div className="mt-10 flex flex-wrap items-center gap-x-8 gap-y-4 text-sm font-medium">
+              <Link
+                href={primary.href}
+                className="border border-ivory/80 px-6 py-3 transition-colors hover:bg-ivory hover:text-ink"
+              >
+                {primary.label}
+              </Link>
+              {secondary ? (
+                <Link
+                  href={secondary.href}
+                  className="group inline-flex items-center gap-2 py-3 text-sand/85 transition-colors hover:text-ivory"
+                >
+                  {secondary.label}
+                  <span
+                    aria-hidden
+                    className="transition-transform duration-200 group-hover:translate-x-0.5"
+                  >
+                    →
+                  </span>
+                </Link>
+              ) : null}
+            </div>
+          </div>
+
+          {/* Institutional fact rail */}
+          <dl className="grid content-start gap-x-8 sm:grid-cols-2 lg:grid-cols-1 lg:border-l lg:border-ivory/15 lg:pl-10">
+            {keystone ? (
+              <div className="border-t border-ivory/15 py-5 sm:col-span-2 lg:col-span-1 lg:border-t-0 lg:pt-0">
+                <dt className="text-xs uppercase tracking-[0.18em] text-sand/55">
+                  {keystone.label}
+                </dt>
+                <dd className="mt-2 font-serif text-5xl font-medium tabular-nums text-ivory sm:text-6xl">
+                  {keystone.value}
+                  {keystone.provenance ? (
+                    <ReviewMark provenance={keystone.provenance} />
+                  ) : null}
+                </dd>
+              </div>
+            ) : null}
+            {facts.map((fact) => (
+              <div key={fact.label} className="border-t border-ivory/15 py-5">
+                <dt className="text-xs uppercase tracking-[0.18em] text-sand/55">
+                  {fact.label}
+                </dt>
+                <dd className="mt-2 text-sm leading-6 text-sand/90">
+                  {fact.value}
+                  {fact.provenance ? (
+                    <ReviewMark provenance={fact.provenance} />
+                  ) : null}
+                </dd>
+              </div>
+            ))}
+          </dl>
+        </div>
       </Container>
     </section>
   );

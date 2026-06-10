@@ -2,9 +2,12 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { Container } from "@/components/layout/container";
 import { PageIntro } from "@/components/layout/page-intro";
+import { SectionHeader } from "@/components/layout/section-header";
 import { QuoteBlock } from "@/components/ui/quote-block";
 import { ExternalLink } from "@/components/ui/external-link";
+import { ReviewMark } from "@/components/ui/review-mark";
 import { getContact } from "@content/contacts/contacts";
+import { getHistory } from "@content/history/history";
 import { getDictionary, isLocale } from "@/lib/i18n";
 import { buildMetadata } from "@/lib/seo";
 
@@ -29,6 +32,7 @@ export default async function AboutPage({ params }: PageProps) {
   if (!isLocale(lang)) notFound();
   const dict = getDictionary(lang);
   const contact = getContact(lang);
+  const history = getHistory(lang);
   const t = dict.about;
 
   return (
@@ -50,25 +54,58 @@ export default async function AboutPage({ params }: PageProps) {
               </p>
             ))}
           </div>
+        </div>
 
-          <div className="mt-14 border-t border-navy/10 pt-8">
-            <p className="text-xs uppercase tracking-[0.18em] text-copper">
-              {t.linksTitle}
-            </p>
-            <ul className="mt-4 space-y-2.5">
-              {contact.links.map((link) => (
-                <li key={link.id}>
-                  <ExternalLink
-                    href={link.url}
-                    newTabNote={dict.ui.opensInNewTab}
-                    className="text-sm text-navy transition-colors hover:text-slate"
-                  >
-                    {link.label}
-                  </ExternalLink>
-                </li>
-              ))}
-            </ul>
+        {/* History — the department's published lineage, 1905 to today */}
+        <section id="history" className="mt-20 scroll-mt-24 sm:mt-24">
+          <SectionHeader
+            eyebrow={t.history.eyebrow}
+            title={t.history.title}
+            lead={t.history.lead}
+          />
+          <div className="mt-10 max-w-3xl border-b border-navy/10 lg:mt-12">
+            {history.map((period) => (
+              <article
+                key={period.id}
+                className="grid gap-x-8 gap-y-1 border-t border-navy/10 py-6 sm:grid-cols-[7rem_1fr] sm:py-7"
+              >
+                <p className="font-serif text-lg tabular-nums leading-snug text-copper">
+                  {period.years}
+                </p>
+                <div>
+                  <h3 className="font-medium leading-6 text-navy">
+                    {period.head}
+                    <ReviewMark provenance={period.provenance} />
+                  </h3>
+                  <p className="mt-1.5 max-w-xl text-pretty text-sm leading-6 text-slate">
+                    {period.focus}
+                  </p>
+                </div>
+              </article>
+            ))}
           </div>
+          <p className="mt-5 max-w-xl text-xs leading-5 text-slate/80">
+            {t.history.sourceNote}
+          </p>
+        </section>
+
+        <div className="mt-16 max-w-2xl border-t border-navy/10 pt-8">
+          <p className="text-xs uppercase tracking-[0.18em] text-copper">
+            {t.linksTitle}
+          </p>
+          <ul className="mt-4 space-y-2.5">
+            {contact.links.map((link) => (
+              <li key={link.id}>
+                <ExternalLink
+                  href={link.url}
+                  newTabNote={dict.ui.opensInNewTab}
+                  className="text-sm text-navy transition-colors hover:text-slate"
+                >
+                  {link.label}
+                </ExternalLink>
+              </li>
+            ))}
+          </ul>
         </div>
       </Container>
     </main>
