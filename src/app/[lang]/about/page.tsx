@@ -125,7 +125,7 @@ export default async function AboutPage({ params }: PageProps) {
                 <ExternalLink
                   href={link.url}
                   newTabNote={dict.ui.opensInNewTab}
-                  className="text-sm text-navy transition-colors hover:text-slate"
+                  className="text-sm text-navy hover:text-slate"
                 >
                   {link.label}
                 </ExternalLink>

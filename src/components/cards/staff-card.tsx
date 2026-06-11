@@ -38,7 +38,7 @@ export function StaffCard({ member }: { member: LocalisedStaffMember }) {
           <p className="mt-3 text-sm">
             <a
               href={`mailto:${member.email}`}
-              className="text-slate transition-colors hover:text-navy"
+              className="link-underline text-slate hover:text-navy"
             >
               {member.email}
             </a>
@@ -50,7 +50,7 @@ export function StaffCard({ member }: { member: LocalisedStaffMember }) {
               href={`https://orcid.org/${member.orcid}`}
               target="_blank"
               rel="noopener noreferrer"
-              className="transition-colors hover:text-navy"
+              className="link-underline hover:text-navy"
             >
               ORCID {member.orcid}
             </a>

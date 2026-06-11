@@ -18,6 +18,13 @@
 
   --font-sans: var(--font-inter), system-ui, sans-serif;
   --font-serif: var(--font-cormorant), var(--font-lora), Georgia, serif;
+
+  /* The two easings of the interaction system (ADR-0007). `settle` carries
+     every hover/focus device; `arrive` carries the run-once arrivals in
+     motion.css. Both decelerate — motion on this site comes to rest, it
+     never springs. */
+  --ease-settle: cubic-bezier(0.33, 0, 0.2, 1);
+  --ease-arrive: cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 @layer base {
@@ -32,6 +39,33 @@
     outline: 2px solid var(--color-navy);
     outline-offset: 3px;
     border-radius: 2px;
+  }
+
+  /* The interaction clock (ADR-0007) — one timing system for every
+     interactive element, defined here once; components never set their own
+     transition utilities. The clock is deliberately asymmetric: a hover state
+     is entered quickly but perceptibly (200ms) and released more slowly
+     (300ms), so an interaction reads as state → transition → state rather
+     than off/on. */
+  a,
+  button,
+  summary {
+    transition-property: color, background-color, border-color,
+      text-decoration-color, opacity, background-size;
+    transition-timing-function: var(--ease-settle);
+    transition-duration: 300ms;
+  }
+
+  :is(a, button, summary):is(:hover, :focus-visible) {
+    transition-duration: 200ms;
+  }
+
+  /* Click acknowledgment (ADR-0007): every press is answered with a quiet,
+     immediate dim — the press lands instantly, the release settles back on
+     the clock. Restrained on purpose: feedback that is felt, not watched. */
+  :is(a, button, summary):active {
+    opacity: 0.7;
+    transition: none;
   }
 
   ::selection {

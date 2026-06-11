@@ -30,9 +30,12 @@ export default async function LocaleLayout({
   // and there is no phantom scroll from URL-bar sizing.
   return (
     <div lang={hreflang[lang]} className="flex min-h-dvh flex-col">
+      {/* transition-none: the skip link must appear instantly on focus — a
+          focus jump never animates (D015), so it opts out of the shared
+          interaction clock. */}
       <a
         href="#main"
-        className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-[60] focus:rounded-sm focus:bg-navy focus:px-4 focus:py-2 focus:text-sm focus:text-ivory"
+        className="sr-only transition-none focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-[60] focus:rounded-sm focus:bg-navy focus:px-4 focus:py-2 focus:text-sm focus:text-ivory"
       >
         {dict.ui.skip}
       </a>

@@ -20,18 +20,18 @@ export function ExternalLink({
   newTabNote: string;
 }) {
   return (
+    /* Inline flow (not flex) so the label's underline device clones under
+       every line if the link wraps; the ↗ nudge and underline growth come
+       from the shared device rules in motion.css. */
     <a
       href={href}
       target="_blank"
       rel="noopener noreferrer"
-      className={`group/ext inline-flex items-baseline gap-1 ${className}`}
+      className={className}
       {...rest}
     >
-      <span>{children}</span>
-      <span
-        aria-hidden="true"
-        className="text-[0.8em] transition-transform duration-200 group-hover/ext:-translate-y-px group-hover/ext:translate-x-px"
-      >
+      <span className="link-underline">{children}</span>
+      <span aria-hidden="true" className="link-arrow-ext ml-1 text-[0.8em]">
         ↗
       </span>
       <span className="sr-only">({newTabNote})</span>

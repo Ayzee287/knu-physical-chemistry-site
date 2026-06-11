@@ -1,31 +1,104 @@
-/* Motion layer — the site's complete motion vocabulary (ADR-0006).
+/* Motion layer — the site's complete motion and interaction-device vocabulary
+ * (ADR-0006, amended by ADR-0007).
  *
- * Every keyframe and motion class on the site lives in THIS file; components
- * reference the classes by name and never define their own animations. The
- * hover affordances (200ms color/underline/arrow transitions) remain plain
- * Tailwind transition utilities in the components — they are continuous
- * interaction feedback, not choreography, and stay where the interaction is.
+ * Every keyframe and every named motion/interaction class lives in THIS file;
+ * components reference the classes by name and never define their own
+ * animations or transitions. The shared interaction clock (asymmetric
+ * 200ms-in / 300ms-out timing + instant press dim for a/button/summary)
+ * lives in globals.css @layer base.
  *
- * The vocabulary is deliberately tiny — two classes:
+ * Run-once arrivals:
  *
- *   .motion-page-enter   page arrival: opacity 0→1 + 8px rise, 380ms, once
- *   .motion-image-fade   image materialisation: opacity 0→1, 300ms, once
+ *   .motion-page-enter   page arrival: fade (420ms) + 10px settle (560ms)
+ *   .motion-hero-rail    hero fact rail: the same arrival, +120ms — the
+ *                        masthead column leads, the record follows (hero only)
+ *   .motion-rule-draw    the masthead rule is struck left-to-right (hero only)
+ *   .motion-menu-enter   mobile menu surfaces when its <details> opens
+ *   .motion-image-fade   image materialisation: opacity only, 300ms
  *
- * Principles (ADR-0006, amends ADR-0003's hover-only rule):
- *   - Load-triggered and run-once only. Nothing autonomous, nothing
- *     scroll-triggered, no stagger chains, no exit animations.
- *   - Opacity and transform only (compositor-safe; no layout thrash).
- *   - Decelerating ease-out: motion settles, it never springs.
- *   - Pure CSS: works without JavaScript, and content is always present in
- *     the document — the animation reveals, it never gates.
- *   - `prefers-reduced-motion` disables both classes outright (below), in
- *     addition to the global collapse in globals.css.
+ * Continuous interaction devices (hover/focus-visible):
+ *
+ *   .link-underline      THE text-link device: a hairline that grows from the
+ *                        left, and stays in place under [aria-current] markers
+ *   .link-arrow          internal-link arrow →: 2px forward nudge
+ *   .link-arrow-ext      external-link mark ↗: 1px up-right nudge
+ *   .btn-fill            bordered CTA: the ivory plate rises from the
+ *                        baseline — the button becomes active, it is never
+ *                        switched
+ *
+ * Principles (ADR-0006/0007):
+ *   - Load-triggered animation is run-once only; nothing autonomous, nothing
+ *     scroll-triggered, no exit animations.
+ *   - Opacity, transform and background-size only (compositor/paint-safe).
+ *   - Decelerating arrivals: motion settles, it never springs.
+ *   - Pure CSS: works without JavaScript and reveals content that is already
+ *     in the document, never gates it.
+ *   - `prefers-reduced-motion` removes the run-once classes outright (below)
+ *     and the global collapse in globals.css flattens the hover devices.
  */
 
-@keyframes motion-page-enter {
+/* ---------------------------------------------------------------- arrivals */
+
+@keyframes motion-fade-in {
   from {
     opacity: 0;
-    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes motion-settle-up {
+  from {
+    transform: translateY(10px);
+  }
+  to {
+    transform: none;
+  }
+}
+
+/* Page arrival. Applied by src/app/[lang]/template.tsx, which remounts on
+ * every route render — the entrance plays exactly once per navigation, over
+ * the page content only (the sticky header and footer live in the persistent
+ * layout and never move). The two tracks are deliberately out of step: the
+ * fade completes (420ms) before the rise does (560ms), so the page is
+ * readable quickly and then finishes coming to rest — arrival reads as a
+ * transition into the room, not a document swap. */
+.motion-page-enter {
+  animation:
+    motion-fade-in 420ms var(--ease-settle) both,
+    motion-settle-up 560ms var(--ease-arrive) both;
+}
+
+/* Hero fact rail: the masthead column leads, the institutional record follows
+ * one beat later. Two layers maximum, hero only (ADR-0007) — a composed
+ * arrival, not a stagger chain. */
+.motion-hero-rail {
+  animation:
+    motion-fade-in 420ms var(--ease-settle) 120ms both,
+    motion-settle-up 560ms var(--ease-arrive) 120ms both;
+}
+
+@keyframes motion-rule-draw {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: none;
+  }
+}
+
+/* The masthead rule is struck once, left to right, as the page arrives — a
+ * print gesture (the nameplate rule being drawn), not decoration. Hero only. */
+.motion-rule-draw {
+  transform-origin: 0 50%;
+  animation: motion-rule-draw 640ms var(--ease-arrive) 100ms both;
+}
+
+@keyframes motion-menu-enter {
+  from {
+    opacity: 0;
+    transform: translateY(-4px);
   }
   to {
     opacity: 1;
@@ -33,12 +106,11 @@
   }
 }
 
-/* Page arrival. Applied by src/app/[lang]/template.tsx, which remounts on
- * every route render — so the entrance plays exactly once per navigation,
- * over the page content only (the sticky header and footer live in the
- * persistent layout and never move). */
-.motion-page-enter {
-  animation: motion-page-enter 380ms cubic-bezier(0, 0, 0.2, 1) both;
+/* Mobile menu: the panel surfaces (fade + 4px drop) when the disclosure
+ * opens — opening is an arrival, not a visibility toggle. Closing stays
+ * immediate on purpose: dismissal should not perform. */
+details[open] .motion-menu-enter {
+  animation: motion-menu-enter 220ms var(--ease-settle) both;
 }
 
 @keyframes motion-image-fade {
@@ -53,20 +125,96 @@
 /* Image materialisation: a registered photograph settles into its plate —
  * opacity only, no scale/blur/slide. Applied to the <Image> element inside
  * Portrait and Figure. Note: this plays on mount, not on the network `load`
- * event; for the local, optimised, lazily-loaded images this site serves the
- * difference is rarely visible, but the Phase B photography session must
- * eye-verify with real images and may upgrade to a load-gated transition if
- * pop-in is observed (recorded in ADR-0006). */
+ * event; the Phase B photography session must eye-verify with real images
+ * and may upgrade to a load-gated transition if pop-in is observed
+ * (recorded in ADR-0006). */
 .motion-image-fade {
   animation: motion-image-fade 300ms ease-out both;
 }
 
-/* Reduced motion: both classes are removed entirely — the page and its images
- * are simply there, fully visible. This is first-class, not a shortened
- * animation; the global duration collapse in globals.css is a second net. */
+/* ------------------------------------------------- interaction devices */
+
+/* The site's one text-link device (ADR-0007): a hairline underline that GROWS
+ * from the left on hover/focus and remains in place under [aria-current]
+ * markers — continuity, not a visibility toggle. Drawn as a background
+ * hairline in currentColor so it always matches the link's (transitioning)
+ * text color; the gradient function paints a SOLID line, this is not a visual
+ * gradient. box-decoration-break keeps the line under every fragment of a
+ * wrapped link. The class sits either on the link itself or on the label span
+ * inside a composite (arrow) link — the parent rule covers both. */
+.link-underline {
+  background-image: linear-gradient(currentColor, currentColor);
+  background-size: 0% 1px;
+  background-repeat: no-repeat;
+  background-position: 0 100%;
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+  transition-property: background-size, color;
+  transition-timing-function: var(--ease-settle);
+  transition-duration: 300ms;
+}
+
+.link-underline:is(:hover, :focus-visible),
+:is(a, button, summary):is(:hover, :focus-visible) .link-underline,
+.link-underline[aria-current] {
+  background-size: 100% 1px;
+  transition-duration: 200ms;
+}
+
+/* Link arrows are children of the link, so they carry their own copy of the
+ * interaction clock. → nudges forward, ↗ nudges up-right. The travel is
+ * 2px/1px on purpose: an acknowledgment, not an animation. */
+.link-arrow,
+.link-arrow-ext {
+  display: inline-block;
+  transition: transform 300ms var(--ease-settle);
+}
+
+:is(a, button, summary):is(:hover, :focus-visible) :is(.link-arrow, .link-arrow-ext) {
+  transition-duration: 200ms;
+}
+
+:is(a, button, summary):is(:hover, :focus-visible) .link-arrow {
+  transform: translateX(2px);
+}
+
+:is(a, button, summary):is(:hover, :focus-visible) .link-arrow-ext {
+  transform: translate(1px, -1px);
+}
+
+/* Bordered CTA fill (ADR-0007): the ivory plate RISES from the button's
+ * baseline on hover/focus instead of the background switching on — the
+ * visitor watches the button become active. Painted with background-size on
+ * a solid (gradient-function, not visual-gradient) image; the text color
+ * crossfades on the same clock via the component's hover utility. Slightly
+ * slower than the text devices: a surface has more weight than a hairline.
+ * Opacity is deliberately NOT in the transition list, so the global press
+ * dim stays instantaneous. */
+.btn-fill {
+  background-image: linear-gradient(var(--color-ivory), var(--color-ivory));
+  background-repeat: no-repeat;
+  background-size: 100% 0%;
+  background-position: 0 100%;
+  transition-property: color, background-size, border-color;
+  transition-timing-function: var(--ease-settle);
+  transition-duration: 360ms;
+}
+
+.btn-fill:is(:hover, :focus-visible) {
+  background-size: 100% 100%;
+  transition-duration: 260ms;
+}
+
+/* Reduced motion: the run-once arrivals are removed entirely — the page, its
+ * hero and its images are simply there, fully visible. This is first-class,
+ * not a shortened animation; the global duration collapse in globals.css is
+ * the second net and flattens the hover devices to instant state changes. */
 @media (prefers-reduced-motion: reduce) {
   .motion-page-enter,
-  .motion-image-fade {
+  .motion-hero-rail,
+  .motion-rule-draw,
+  .motion-image-fade,
+  details[open] .motion-menu-enter {
     animation: none;
   }
 }

@@ -8,7 +8,8 @@ src/app/                     routes (App Router, all static)
 src/components/              layout / sections / cards / ui
 src/lib/                     i18n · seo · site · provenance · images · utils
 src/content/site.ts          institutional constants (names, locations)
-src/styles/globals.css       design tokens (@theme) + base layer
+src/styles/globals.css       design tokens (@theme) + base layer (interaction clock, ADR-0007)
+src/styles/motion.css        complete motion + interaction-device vocabulary (ADR-0006/0007)
 content/                     typed bilingual content collections
 source-materials/            committed source snapshots (provenance evidence)
 docs/                        ADRs · audits · deployment · roadmap · this map
@@ -49,7 +50,7 @@ view types consumed by pages.
 **Layout** — `Container` (75rem, px-6/8) · `Header` (sticky, desktop nav +
 `<details>` mobile menu, language switcher preserving path) · `Footer`
 (identity, address, nav, official links) · `InstitutionalHero` (ink masthead:
-eyebrow, double rule, H1, serif statement, CTAs, fact rail with 1905 keystone) ·
+eyebrow, masthead rule [single, drawn once — ADR-0007], H1, serif statement, CTAs, fact rail with 1905 keystone) ·
 `PageIntro` (sub-page opener: eyebrow, serif H1, lead) · `SectionHeader`
 (eyebrow-over-hairline + serif H2; `tone="dark"` for ink/navy bands).
 

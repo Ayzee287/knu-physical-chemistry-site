@@ -47,20 +47,13 @@ export function ResearchAreaCard({
       <div className="max-w-2xl">
         <Heading className="font-serif text-2xl font-medium leading-snug text-navy">
           {href ? (
-            <Link
-              href={href}
-              className="group/area inline-flex items-baseline gap-3 transition-colors hover:text-ink"
-            >
-              {/* Keyboard parity: focus-visible plays the same quiet
-                  affordance as hover — the device is complete, not
-                  pointer-only. */}
-              <span className="underline decoration-navy/0 decoration-1 underline-offset-4 transition-colors group-hover/area:decoration-navy/40 group-focus-visible/area:decoration-navy/40">
-                {title}
-              </span>
-              <span
-                aria-hidden
-                className="text-base text-copper transition-transform duration-200 group-hover/area:translate-x-0.5 group-focus-visible/area:translate-x-0.5"
-              >
+            /* Inline (not flex) so the underline device clones under every
+               line of a wrapped title. Hover/focus-visible parity, the
+               underline growth and the arrow nudge are all driven by the
+               shared device rules in motion.css. */
+            <Link href={href} className="hover:text-ink">
+              <span className="link-underline">{title}</span>
+              <span aria-hidden className="link-arrow ml-3 text-base text-copper">
                 →
               </span>
             </Link>

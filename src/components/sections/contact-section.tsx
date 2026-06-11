@@ -55,7 +55,7 @@ export function ContactSection({
           <p className="mt-3 text-sm leading-6">
             <a
               href={`mailto:${contact.departmentEmail.value}`}
-              className="text-navy transition-colors hover:text-slate"
+              className="link-underline text-navy hover:text-slate"
             >
               {contact.departmentEmail.value}
             </a>
@@ -81,7 +81,7 @@ export function ContactSection({
           <p className="mt-3 text-sm leading-6">
             <a
               href={`mailto:${contact.email.value}`}
-              className="text-navy transition-colors hover:text-slate"
+              className="link-underline text-navy hover:text-slate"
             >
               {contact.email.value}
             </a>
@@ -100,7 +100,7 @@ export function ContactSection({
               <ExternalLink
                 href={link.url}
                 newTabNote={dict.ui.opensInNewTab}
-                className="text-sm text-navy transition-colors hover:text-slate"
+                className="text-sm text-navy hover:text-slate"
               >
                 {link.label}
               </ExternalLink>
