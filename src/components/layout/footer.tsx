@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { Container } from "@/components/layout/container";
 import { ExternalLink } from "@/components/ui/external-link";
 import { ReviewMark } from "@/components/ui/review-mark";
@@ -50,12 +51,12 @@ export function Footer({ lang, dict }: { lang: Locale; dict: Dictionary }) {
             <ul className="mt-4 space-y-2.5">
               {dict.nav.map((item) => (
                 <li key={item.href}>
-                  <a
+                  <Link
                     href={href(lang, item.href)}
                     className="text-sm text-slate transition-colors hover:text-navy"
                   >
                     {item.label}
-                  </a>
+                  </Link>
                 </li>
               ))}
             </ul>

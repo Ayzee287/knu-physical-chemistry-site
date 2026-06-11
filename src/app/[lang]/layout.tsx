@@ -1,7 +1,7 @@
 import { notFound } from "next/navigation";
 import { Header } from "@/components/layout/header";
 import { Footer } from "@/components/layout/footer";
-import { getDictionary, isLocale, locales } from "@/lib/i18n";
+import { getDictionary, hreflang, isLocale, locales } from "@/lib/i18n";
 
 export function generateStaticParams() {
   return locales.map((lang) => ({ lang }));
@@ -23,7 +23,7 @@ export default async function LocaleLayout({
   const dict = getDictionary(lang);
 
   return (
-    <div lang={lang} className="flex min-h-full flex-col">
+    <div lang={hreflang[lang]} className="flex min-h-full flex-col">
       <a
         href="#main"
         className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-[60] focus:rounded-sm focus:bg-navy focus:px-4 focus:py-2 focus:text-sm focus:text-ivory"

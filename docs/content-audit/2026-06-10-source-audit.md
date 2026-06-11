@@ -1,5 +1,12 @@
 # Content audit — what the sources actually provide
 
+> **Dated snapshot (v1-source era).** This audit predates the v2 directory,
+> the v3 department profile, the legacy-site mining and ADR-0005 — the
+> "withheld" statuses below were correct then but are superseded: the curated
+> set now publishes with sourced provenance. Current publication state lives
+> in the vault (`00_MOC/content-status.md`). Kept unmodified below as the
+> record of what the FIRST source did and did not provide.
+
 Date: 2026-06-10 · Source: `source-materials/chemistry_faculty_knu.html`
 (faculty staff directory, auto-generated June 2026 from knu.ua / chem.knu.ua /
 anchem.knu.ua), plus sourced records inherited from the faculty project.

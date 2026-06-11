@@ -55,7 +55,12 @@ export default async function ResearchPage({ params }: PageProps) {
 
         <div className="mt-12 border-b border-navy/10">
           {areas.map((area, i) => (
-            <ResearchAreaCard key={area.id} area={area} index={i} />
+            <ResearchAreaCard
+              key={area.id}
+              area={area}
+              index={i}
+              headingLevel={2}
+            />
           ))}
         </div>
 
@@ -79,7 +84,7 @@ export default async function ResearchPage({ params }: PageProps) {
               >
                 <a
                   href={`#${group.areaId}`}
-                  className="text-xs uppercase tracking-[0.16em] text-copper transition-colors hover:text-ink"
+                  className="text-xs uppercase tracking-[0.18em] text-copper transition-colors hover:text-ink"
                 >
                   {areaTitleById.get(group.areaId)}
                 </a>
@@ -134,10 +139,12 @@ export default async function ResearchPage({ params }: PageProps) {
             </p>
 
             <div className="mt-10 max-w-3xl">
-              <p className="text-xs uppercase tracking-[0.18em] text-copper">
+              {/* h3 under the school band's h2 — the bibliography is a
+                  subsection of the school, and the outline should say so. */}
+              <h3 className="text-xs uppercase tracking-[0.18em] text-copper">
                 {t.school.worksTitle}
                 <ReviewMark provenance={school.provenance.works} />
-              </p>
+              </h3>
               <ul className="mt-4 border-b border-navy/10">
                 {school.works.map((work) => (
                   <li

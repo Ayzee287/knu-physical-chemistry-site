@@ -50,3 +50,21 @@
     color: var(--color-ink);
   }
 }
+
+/* Respect a reduced-motion request: drop the smooth anchor scroll and collapse
+   the hover transitions to near-instant. The design's motion is hover-only by
+   policy, so this changes nothing visual — it just removes the movement for
+   visitors who have asked their system to avoid it. */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

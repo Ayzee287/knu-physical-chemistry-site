@@ -21,9 +21,11 @@ export function ContactSection({
   return (
     <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-4">
       <div>
-        <p className="text-xs uppercase tracking-[0.18em] text-copper">
+        {/* h2 labels (eyebrow-scale, like /staff): the page outline is
+            h1 → one h2 per contact record. */}
+        <h2 className="text-xs uppercase tracking-[0.18em] text-copper">
           {labels.address}
-        </p>
+        </h2>
         <address className="mt-3 text-sm not-italic leading-6 text-navy">
           {contact.address.value.map((line, i) => (
             <span key={line} className="block">
@@ -38,18 +40,18 @@ export function ContactSection({
 
       <div className="space-y-6">
         <div>
-          <p className="text-xs uppercase tracking-[0.18em] text-copper">
+          <h2 className="text-xs uppercase tracking-[0.18em] text-copper">
             {labels.departmentPhone}
-          </p>
+          </h2>
           <p className="mt-3 text-sm leading-6 text-navy">
             {contact.departmentPhone.value}
             <ReviewMark provenance={contact.departmentPhone.provenance} />
           </p>
         </div>
         <div>
-          <p className="text-xs uppercase tracking-[0.18em] text-copper">
+          <h2 className="text-xs uppercase tracking-[0.18em] text-copper">
             {labels.departmentEmail}
-          </p>
+          </h2>
           <p className="mt-3 text-sm leading-6">
             <a
               href={`mailto:${contact.departmentEmail.value}`}
@@ -64,18 +66,18 @@ export function ContactSection({
 
       <div className="space-y-6">
         <div>
-          <p className="text-xs uppercase tracking-[0.18em] text-copper">
+          <h2 className="text-xs uppercase tracking-[0.18em] text-copper">
             {labels.phone}
-          </p>
+          </h2>
           <p className="mt-3 text-sm leading-6 text-navy">
             {contact.phone.value}
             <ReviewMark provenance={contact.phone.provenance} />
           </p>
         </div>
         <div>
-          <p className="text-xs uppercase tracking-[0.18em] text-copper">
+          <h2 className="text-xs uppercase tracking-[0.18em] text-copper">
             {labels.email}
-          </p>
+          </h2>
           <p className="mt-3 text-sm leading-6">
             <a
               href={`mailto:${contact.email.value}`}
@@ -89,9 +91,9 @@ export function ContactSection({
       </div>
 
       <div>
-        <p className="text-xs uppercase tracking-[0.18em] text-copper">
+        <h2 className="text-xs uppercase tracking-[0.18em] text-copper">
           {labels.official}
-        </p>
+        </h2>
         <ul className="mt-3 space-y-2.5">
           {contact.links.map((link) => (
             <li key={link.id}>

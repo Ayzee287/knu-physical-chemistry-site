@@ -40,10 +40,13 @@ docs/               Decisions, roadmap, content audit
 
 Every discrete factual claim (a name, a phone number, an address) carries
 provenance: `verified`, `sourced` (traceable but unverified), `placeholder`, or
-`editorial`. Unverified people are **withheld from the public site** and render
-as honest pending placeholders; the sourced records remain in the collections as
-the verification backlog. In development, inline review marks show the trust
-state of every claim; production builds render none of this tooling.
+`editorial`. People publish through two gates (ADR-0004): an editorial
+visibility gate (`featured`/`internal` — the public site is a curated
+institution, not a directory) and a trust gate — featured records publish with
+`sourced` provenance under explicit operator authorization (ADR-0005), while
+claims with no factual sourcing render as honest pending placeholders. In
+development, inline review marks show the trust state of every claim;
+production builds render none of this tooling.
 
 See `docs/content-audit/` for what the current sources do and do not provide.
 
