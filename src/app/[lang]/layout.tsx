@@ -40,7 +40,16 @@ export default async function LocaleLayout({
         {dict.ui.skip}
       </a>
       <Header lang={lang} dict={dict} />
-      <div id="main" className="flex-1">
+      {/* key={lang} makes a UA↔EN switch replay the composed page arrival
+          (`.motion-page-enter`, ADR-0007). Page-to-page navigation already
+          remounts the [lang] template, but switching only the locale keeps
+          the same downstream route, so the content container was reused and
+          the swap read as an instant replacement — the one navigation that
+          felt like a redirect. Re-keying on the locale remounts this subtree
+          (header/footer stay put, outside it), so the switch arrives like
+          moving between rooms, not teleporting. No state is lost: nothing
+          inside #main is a client component. */}
+      <div id="main" key={lang} className="flex-1">
         {children}
       </div>
       <Footer lang={lang} dict={dict} />

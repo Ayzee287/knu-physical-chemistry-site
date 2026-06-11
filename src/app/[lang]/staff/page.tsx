@@ -57,9 +57,14 @@ export default async function StaffPage({ params }: PageProps) {
           </div>
         </section>
 
-        {/* Leading faculty — the curated set, not a directory. */}
+        {/* Leading faculty — the curated set, not a directory. mt-12 (not
+            mt-16): the head section is a single short card closed by a bottom
+            border, so the wider gap left this heading floating away from the
+            sequence. The card sections sit on a tighter rhythm than the gap
+            below the intro prose (mt-14 sm:mt-16) — the label attaches to its
+            content, the prose-to-section break stays generous. */}
         {featured.length > 0 ? (
-          <section className="mt-16" aria-labelledby="staff-featured">
+          <section className="mt-12" aria-labelledby="staff-featured">
             <h2
               id="staff-featured"
               className="text-xs uppercase tracking-[0.2em] text-copper"
@@ -75,8 +80,10 @@ export default async function StaffPage({ params }: PageProps) {
         ) : null}
 
         {/* Remaining roster — published only as records are confirmed; point
-            to the record of authority rather than padding the page. */}
-        <section className="mt-16" aria-labelledby="staff-roster">
+            to the record of authority rather than padding the page. mt-12
+            matches the leading-faculty rhythm above (consistent card-section
+            cadence). */}
+        <section className="mt-12" aria-labelledby="staff-roster">
           <h2
             id="staff-roster"
             className="text-xs uppercase tracking-[0.2em] text-copper"

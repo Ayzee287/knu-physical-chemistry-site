@@ -86,6 +86,8 @@ client state beyond the header's mobile menu (the only `"use client"` file).
    prefixes internal links.
 3. `[lang]/layout.tsx` renders `<div lang={hreflang[lang]}>` — route segment
    `ua` maps to BCP-47 `uk` (single map in `src/lib/i18n.ts`, shared with SEO).
+   The `#main` wrapper is `key={lang}` so a UA↔EN switch replays the page
+   arrival instead of reusing the container (ADR-0007 follow-up / D017).
 4. Root `<html lang="uk">` (UA-primary); the EN subtree overrides via the div.
 
 ## SEO flow
