@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Cormorant_Garamond, Inter, Lora } from "next/font/google";
+import { Analytics } from "@vercel/analytics/next";
 import { siteUrl } from "@/lib/site";
 import "@/styles/globals.css";
 
@@ -54,6 +55,7 @@ export default function RootLayout({
     >
       <body className="min-h-full bg-ivory font-sans text-navy antialiased">
         {children}
+        <Analytics />
       </body>
     </html>
   );
