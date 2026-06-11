@@ -145,7 +145,12 @@ export default async function ResearchPage({ params }: PageProps) {
                 {t.school.worksTitle}
                 <ReviewMark provenance={school.provenance.works} />
               </h3>
-              <ul className="mt-4 border-b border-navy/10">
+              {/* The bibliography is verbatim Ukrainian by policy (citations
+                  are quoted as the department's materials cite them — see the
+                  adjacent worksNote). lang="uk" keeps screen readers on a
+                  Ukrainian voice when this list renders inside the EN
+                  subtree; inside UA it is redundant but true. */}
+              <ul lang="uk" className="mt-4 border-b border-navy/10">
                 {school.works.map((work) => (
                   <li
                     key={work.citation}

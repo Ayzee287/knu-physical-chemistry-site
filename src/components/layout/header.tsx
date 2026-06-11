@@ -28,7 +28,7 @@ export function Header({ lang, dict }: { lang: Locale; dict: Dictionary }) {
         <div className="flex h-16 items-center justify-between lg:h-20">
           <Link
             href={href(lang, "/")}
-            className="font-serif text-lg tracking-tight text-navy"
+            className="font-serif text-lg tracking-tight text-navy transition-colors hover:text-slate"
           >
             {dict.brand.short}
           </Link>
@@ -82,7 +82,7 @@ export function Header({ lang, dict }: { lang: Locale; dict: Dictionary }) {
 
             {/* Mobile */}
             <details ref={menuRef} className="group relative lg:hidden">
-              <summary className="flex cursor-pointer list-none items-center gap-1.5 text-sm text-navy [&::-webkit-details-marker]:hidden">
+              <summary className="flex cursor-pointer list-none items-center gap-1.5 text-sm text-navy transition-colors hover:text-slate [&::-webkit-details-marker]:hidden">
                 {dict.ui.menu}
                 <span
                   aria-hidden
@@ -119,7 +119,11 @@ export function Header({ lang, dict }: { lang: Locale; dict: Dictionary }) {
                       <Link
                         key={loc}
                         href={`/${loc}${rest}`}
-                        className={loc === lang ? "text-navy" : "text-slate"}
+                        className={
+                          loc === lang
+                            ? "text-navy"
+                            : "text-slate transition-colors hover:text-navy"
+                        }
                       >
                         {loc === "ua" ? "UA" : "EN"}
                       </Link>

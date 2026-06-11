@@ -9,12 +9,17 @@ export const metadata: Metadata = { title: "404" };
 // but outside the [lang] shell, so it stays deliberately minimal.
 export default function NotFound() {
   return (
-    <main className="flex min-h-screen flex-col items-center justify-center px-6 py-24 text-center">
+    // min-h-dvh (not -screen/100vh): the dynamic viewport unit matches the
+    // visible mobile viewport, so the page centres without the classic
+    // URL-bar overshoot scroll.
+    <main className="flex min-h-dvh flex-col items-center justify-center px-6 py-24 text-center">
       <p className="text-xs uppercase tracking-[0.2em] text-slate">404</p>
       <h1 className="mt-5 text-balance font-serif text-3xl text-navy sm:text-4xl">
         Сторінку не знайдено
       </h1>
-      <p className="mt-2 font-serif text-xl italic text-navy/55 sm:text-2xl">
+      {/* The English half of the bilingual page is tagged lang="en" so screen
+          readers switch voices (the document root is lang="uk"). */}
+      <p lang="en" className="mt-2 font-serif text-xl italic text-navy/55 sm:text-2xl">
         Page not found
       </p>
       <nav
@@ -32,6 +37,7 @@ export default function NotFound() {
         </span>
         <Link
           href="/en"
+          lang="en"
           className="text-slate transition-colors hover:text-navy"
         >
           Home page →

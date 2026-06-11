@@ -32,9 +32,11 @@ export function Figure({
   className,
 }: FigureProps) {
   return (
+    // No hover treatment: a figure is not clickable, and feedback on a
+    // non-interactive element is a false affordance.
     <figure
       className={cn(
-        "relative overflow-hidden border border-navy/10 bg-navy/[0.04] transition-colors hover:border-navy/20",
+        "relative overflow-hidden border border-navy/10 bg-navy/[0.04]",
         ratio,
         className,
       )}
