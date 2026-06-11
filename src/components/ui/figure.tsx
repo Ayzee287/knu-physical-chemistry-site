@@ -45,7 +45,7 @@ export function Figure({
           alt={image.alt[lang]}
           width={image.width}
           height={image.height}
-          className="absolute inset-0 h-full w-full object-cover"
+          className="motion-image-fade absolute inset-0 h-full w-full object-cover"
         />
       ) : (
         // Archival reserve: four registration marks at the plate corners.

@@ -1,4 +1,5 @@
 @import "tailwindcss";
+@import "./motion.css";
 
 /* Token layer — inherits the KNU Chemistry family (ivory paper, deep academic
    navy, restrained warm sand) and develops the department's own register:
