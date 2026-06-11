@@ -13,7 +13,12 @@ export function StaffCard({ member }: { member: LocalisedStaffMember }) {
   const image = getImage(member.photo);
 
   return (
-    <article className="flex gap-6 border-t border-navy/10 py-8 sm:gap-10 sm:py-10">
+    /* id = collection id: the homepage research-leaders section deep-links
+       to people here; scroll-mt keeps the landing below the sticky header. */
+    <article
+      id={member.id}
+      className="flex scroll-mt-24 gap-6 border-t border-navy/10 py-8 sm:gap-10 sm:py-10"
+    >
       <Portrait
         image={image}
         className="w-24 flex-shrink-0 self-start sm:w-32"

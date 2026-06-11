@@ -19,7 +19,7 @@ docs/                        ADRs · audits · deployment · roadmap · this map
 
 | Route | File | Composition |
 | --- | --- | --- |
-| `/{lang}` | `src/app/[lang]/page.tsx` | InstitutionalHero (ink) → research digest (5 indexed rows) → research leaders (4 typographic rows, ADR-0008) → recognition record (4 dated rows) → century band (sand, Figure plate, numbers strip, CenturyRule) → navy closer. Cadence: ink → ivory → sand → navy. |
+| `/{lang}` | `src/app/[lang]/page.tsx` | InstitutionalHero (ink) → research digest (5 indexed rows) → research leaders (4 typographic rows, ADR-0008; names deep-link to /staff anchors) → recognition record (4 dated rows) → century band (sand: prose | head lineage register, numbers strip — D020) → navy closer. Cadence: ink → ivory → sand → navy. |
 | `/{lang}/about` | `…/about/page.tsx` | PageIntro → QuoteBlock epigraph → body → LeadershipSection (dean) → history band (sand, 1905 watermark, 8 head periods) → official links. |
 | `/{lang}/research` | `…/research/page.tsx` | PageIntro → scope note → 5 direction rows (h2) → 6 group rows (h3, copper direction eyebrow links) → school band (sand, 1944 watermark, bibliography). |
 | `/{lang}/staff` | `…/staff/page.tsx` | PageIntro → head section → leading faculty (StaffCards) → roster pointer to official site. Deliberately all-quiet. |
@@ -63,10 +63,12 @@ title a link [home digest]; `headingLevel` 2|3 tracks the document outline) ·
 `StaffCard` (Portrait beside record; drops null lines for withheld people).
 
 **UI** — `Portrait` (fixed 3:4 plate; registration-mark reserve) · `Figure`
-(documentary plate with caption bar + plate index) · `CenturyRule` (hairline
-timeline, era ticks; mobile shows major ticks only) · `QuoteBlock` (copper-rule
-epigraph; `cite` only with confirmed attribution) · `ExternalLink` (↗, new tab,
-sr-only note) · `ReviewMark` (dev/review-only provenance tag).
+(documentary plate with caption bar + plate index — currently dormant: no
+render site until Phase B photography returns it to the homepage century
+band) · `QuoteBlock` (copper-rule epigraph; `cite` only with confirmed
+attribution) · `ExternalLink` (↗, new tab, sr-only note) · `ReviewMark`
+(dev/review-only provenance tag). `CenturyRule` retired in D020 — the head
+lineage register carries the same era years with the people.
 
 ## Data flow
 
