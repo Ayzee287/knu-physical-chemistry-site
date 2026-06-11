@@ -1,11 +1,7 @@
 import type { Locale } from "@/lib/i18n";
 import type { LocalisedStaffMember, StaffMember } from "@/types/content";
-import {
-  claim,
-  fromDeptProfile,
-  placeholder,
-  type Localised,
-} from "@/lib/provenance";
+import { claim, fromDeptProfile } from "@/lib/provenance";
+import { resolvePerson } from "@content/staff/publication";
 
 // Academic staff of the Department of Physical Chemistry.
 //
@@ -252,60 +248,19 @@ export const staff: StaffMember[] = [
   },
 ];
 
-// Honest stand-in — now used only for records that are featured but carry a
-// bare placeholder claim (should not normally occur).
-const namePending: Localised = {
-  ua: "Ім’я уточнюється",
-  en: "Name to be confirmed",
-};
-const personWithheld = placeholder(
-  "Person record withheld: claim carries no publishable provenance.",
-);
-
-function resolve(member: StaffMember, lang: Locale): LocalisedStaffMember {
-  // ADR-0005: featured records publish with `sourced` provenance; review
-  // marks carry the trust state. Only claims with no factual sourcing at all
-  // (placeholder/editorial) stay withheld.
-  const state = member.person.provenance.state;
-  const publishable = state === "verified" || state === "sourced";
-  if (!publishable) {
-    return {
-      id: member.id,
-      role: member.role[lang],
-      name: namePending[lang],
-      degree: null,
-      honours: null,
-      email: null,
-      orcid: null,
-      provenance: personWithheld,
-      photo: member.photo,
-    };
-  }
-  const person = member.person.value;
-  return {
-    id: member.id,
-    role: member.role[lang],
-    name: person.name[lang],
-    degree: person.degree?.[lang] ?? null,
-    honours: person.honours?.[lang] ?? null,
-    email: member.email?.value ?? null,
-    orcid: member.orcid?.value ?? null,
-    provenance: member.person.provenance,
-    photo: member.photo,
-  };
-}
-
 /**
  * The CURATED public view: featured records only (ADR-0004/0005). Internal
  * records have no render path — that is the editorial governance, not an
- * accident.
+ * accident. Trust resolution is the shared gate in @content/staff/publication.
  */
 export function getStaff(lang: Locale): LocalisedStaffMember[] {
-  return staff.filter((m) => m.visibility === "featured").map((m) => resolve(m, lang));
+  return staff
+    .filter((m) => m.visibility === "featured")
+    .map((m) => resolvePerson(m, lang));
 }
 
 /** The head-of-department entry, used by the dedicated section on /staff. */
 export function getHead(lang: Locale): LocalisedStaffMember {
   const head = staff.find((m) => m.id === "head") ?? staff[0];
-  return resolve(head, lang);
+  return resolvePerson(head, lang);
 }

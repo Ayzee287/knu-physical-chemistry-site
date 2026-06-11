@@ -148,7 +148,7 @@ export default async function HomePage({ params }: PageProps) {
       </section>
 
       {/* Closer — the page's single navy band, bookending the ink masthead */}
-      <section className="dark-surface bg-navy py-16 text-ivory sm:py-20">
+      <section className="dark-surface bg-navy py-16 text-ivory sm:py-20 lg:py-24">
         <Container>
           <SectionHeader
             tone="dark"

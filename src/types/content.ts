@@ -34,10 +34,12 @@ export type StaffMember = {
   role: Localised;
   /**
    * The person occupying the role — a single factual claim covering name,
-   * degree line and optional honours/focus. Publication policy: a person is
-   * rendered on the public site ONLY when this claim is `verified` AND the
-   * record is `featured`; otherwise an honest pending placeholder is shown
-   * and the record remains the verification backlog (decision 0001).
+   * degree line and optional honours/focus. Publication policy (ADR-0001 as
+   * amended by ADR-0005): a person renders on the public site only when the
+   * record is `featured` AND this claim is `verified` or `sourced` (sourced
+   * publication is operator-authorized; review marks carry the trust state
+   * until verification). Claims with no factual sourcing (placeholder/
+   * editorial) render as an honest pending placeholder.
    */
   person: Claim<{
     name: Localised;

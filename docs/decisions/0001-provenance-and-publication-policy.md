@@ -1,6 +1,8 @@
 # 0001 — Provenance architecture and the withhold-unverified policy
 
-Date: 2026-06-10 · Status: accepted
+Date: 2026-06-10 · Status: accepted · **Amended by ADR-0005** (featured
+records publish with `sourced` provenance on operator authorization; the
+withhold rule below remains the default for everything else)
 
 ## Decision
 

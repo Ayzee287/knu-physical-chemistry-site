@@ -1,6 +1,7 @@
 import type { Locale } from "@/lib/i18n";
 import type { LocalisedStaffMember, StaffMember } from "@/types/content";
-import { claim, fromStaffDirectoryV2, placeholder, type Localised } from "@/lib/provenance";
+import { claim, fromStaffDirectoryV2 } from "@/lib/provenance";
+import { resolvePerson } from "@content/staff/publication";
 
 // Faculty leadership — the institutional context the department works in.
 // Kept SEPARATE from the departmental staff collection: the dean is faculty
@@ -8,9 +9,11 @@ import { claim, fromStaffDirectoryV2, placeholder, type Localised } from "@/lib/
 // leadership block on /about (never as "another staff card").
 //
 // Same two publication gates as content/staff/staff.ts: visibility (curated
-// surface) and provenance (verified-or-withheld). The dean is `featured` —
-// the block itself is institutionally required — but the PERSON renders as
-// an honest pending placeholder until verified (ADR-0001).
+// surface) and provenance. The dean is `featured` and publishes with sourced
+// provenance under ADR-0005 (review marks carry the trust state until
+// verification); a claim with no factual sourcing would render as an honest
+// pending placeholder. Trust resolution is the shared gate in
+// @content/staff/publication.
 
 const v2 = fromStaffDirectoryV2;
 
@@ -73,42 +76,7 @@ export const leadership: StaffMember[] = [
   },
 ];
 
-const namePending: Localised = {
-  ua: "Ім’я уточнюється",
-  en: "Name to be confirmed",
-};
-const personWithheld = placeholder(
-  "Person record withheld: claim carries no publishable provenance.",
-);
-
 /** The dean's public view — publishes sourced records per ADR-0005. */
 export function getDean(lang: Locale): LocalisedStaffMember {
-  const dean = leadership[0];
-  const state = dean.person.provenance.state;
-  const publishable = state === "verified" || state === "sourced";
-  if (!publishable) {
-    return {
-      id: dean.id,
-      role: dean.role[lang],
-      name: namePending[lang],
-      degree: null,
-      honours: null,
-      email: null,
-      orcid: null,
-      provenance: personWithheld,
-      photo: dean.photo,
-    };
-  }
-  const person = dean.person.value;
-  return {
-    id: dean.id,
-    role: dean.role[lang],
-    name: person.name[lang],
-    degree: person.degree?.[lang] ?? null,
-    honours: person.honours?.[lang] ?? null,
-    email: dean.email?.value ?? null,
-    orcid: dean.orcid?.value ?? null,
-    provenance: dean.person.provenance,
-    photo: dean.photo,
-  };
+  return resolvePerson(leadership[0], lang);
 }

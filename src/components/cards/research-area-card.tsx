@@ -12,11 +12,20 @@ export function ResearchAreaCard({
   area,
   index,
   href,
+  headingLevel = 3,
 }: {
   area: LocalisedResearchArea;
   index: number;
   href?: string;
+  /**
+   * Semantic level of the area title. On /research the directions sit directly
+   * under the page <h1>, so they are level 2; on the home digest they sit under
+   * a section <h2>, so they stay level 3 (the default). Visual styling is
+   * identical either way — this only fixes the document outline.
+   */
+  headingLevel?: 2 | 3;
 }) {
+  const Heading = `h${headingLevel}` as "h2" | "h3";
   const title = (
     <>
       {area.title}
@@ -27,7 +36,7 @@ export function ResearchAreaCard({
   return (
     <article
       id={href ? undefined : area.id}
-      className="grid gap-x-8 gap-y-3 border-t border-navy/10 py-8 sm:grid-cols-[3.5rem_1fr] lg:py-10"
+      className="grid scroll-mt-24 gap-x-8 gap-y-3 border-t border-navy/10 py-8 sm:grid-cols-[3.5rem_1fr] lg:py-10"
     >
       <p
         aria-hidden
@@ -36,7 +45,7 @@ export function ResearchAreaCard({
         {String(index + 1).padStart(2, "0")}
       </p>
       <div className="max-w-2xl">
-        <h3 className="font-serif text-2xl font-medium leading-snug text-navy">
+        <Heading className="font-serif text-2xl font-medium leading-snug text-navy">
           {href ? (
             <Link
               href={href}
@@ -55,7 +64,7 @@ export function ResearchAreaCard({
           ) : (
             title
           )}
-        </h3>
+        </Heading>
         <p className="mt-3 text-pretty leading-7 text-slate">{area.summary}</p>
         {area.topics.length > 0 ? (
           <p className="mt-3 text-sm leading-6 text-slate/90">

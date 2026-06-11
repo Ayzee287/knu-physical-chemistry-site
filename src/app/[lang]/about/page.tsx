@@ -114,9 +114,11 @@ export default async function AboutPage({ params }: PageProps) {
 
       <Container>
         <div className="max-w-2xl py-16 sm:py-20">
-          <p className="text-xs uppercase tracking-[0.18em] text-copper">
+          {/* Same h2-as-quiet-label pattern as /staff: real heading semantics,
+              eyebrow-scale visual. */}
+          <h2 className="text-xs uppercase tracking-[0.18em] text-copper">
             {t.linksTitle}
-          </p>
+          </h2>
           <ul className="mt-4 space-y-2.5">
             {contact.links.map((link) => (
               <li key={link.id}>

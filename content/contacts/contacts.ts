@@ -76,7 +76,7 @@ export const officialLinks: OfficialLink[] = [
     provenance: sourced(
       SOURCES.physchemKnu.url,
       SOURCES.physchemKnu.retrieved,
-      "Operator-provided official departmental site; legacy frame-based site could not be programmatically confirmed — verify manually.",
+      "Official departmental site — confirmed reachable and self-identifying 2026-06-10 (vault D003). Legacy DW6 template, ©2009; secondary source.",
     ),
   },
   {
