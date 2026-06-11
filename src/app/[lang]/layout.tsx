@@ -22,8 +22,14 @@ export default async function LocaleLayout({
   if (!isLocale(lang)) notFound();
   const dict = getDictionary(lang);
 
+  // min-h-dvh, not min-h-full: a percentage min-height cannot resolve against
+  // body (its height property is auto even with min-height set), so the old
+  // chain silently collapsed and the footer contract depended on content
+  // height. Dynamic viewport units resolve unconditionally and track the real
+  // visible viewport on mobile — short pages fill exactly, the footer pins,
+  // and there is no phantom scroll from URL-bar sizing.
   return (
-    <div lang={hreflang[lang]} className="flex min-h-full flex-col">
+    <div lang={hreflang[lang]} className="flex min-h-dvh flex-col">
       <a
         href="#main"
         className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-[60] focus:rounded-sm focus:bg-navy focus:px-4 focus:py-2 focus:text-sm focus:text-ivory"
