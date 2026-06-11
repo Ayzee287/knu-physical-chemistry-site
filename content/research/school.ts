@@ -41,6 +41,22 @@ export const schoolLineage: Claim<Localised> = claim(
   ),
 );
 
+/**
+ * Display figures for the homepage record strip («Кафедра у цифрах») —
+ * single numerals lifted from claims already published on /research, so the
+ * strip elevates the existing record without extending the verification
+ * surface (ADR-0008).
+ */
+export const schoolFounded: Claim<string> = claim(
+  "1944",
+  fromDeptProfile("Founding year of the school; the same year is carried by schoolLineage below."),
+);
+
+export const schoolDissertationsCount: Claim<string> = claim(
+  "36",
+  fromDeptProfile("Display figure; the full sentence claim (6 doctoral, 19 candidate) is schoolDissertations below."),
+);
+
 /** Defended dissertations within the school — per the department's own data. */
 export const schoolDissertations: Claim<Localised> = claim(
   {

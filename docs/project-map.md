@@ -19,7 +19,7 @@ docs/                        ADRs · audits · deployment · roadmap · this map
 
 | Route | File | Composition |
 | --- | --- | --- |
-| `/{lang}` | `src/app/[lang]/page.tsx` | InstitutionalHero (ink) → research digest (5 indexed rows) → century band (sand, Figure plate, CenturyRule) → navy closer. Cadence: ink → ivory → sand → navy. |
+| `/{lang}` | `src/app/[lang]/page.tsx` | InstitutionalHero (ink) → research digest (5 indexed rows) → research leaders (4 typographic rows, ADR-0008) → recognition record (4 dated rows) → century band (sand, Figure plate, numbers strip, CenturyRule) → navy closer. Cadence: ink → ivory → sand → navy. |
 | `/{lang}/about` | `…/about/page.tsx` | PageIntro → QuoteBlock epigraph → body → LeadershipSection (dean) → history band (sand, 1905 watermark, 8 head periods) → official links. |
 | `/{lang}/research` | `…/research/page.tsx` | PageIntro → scope note → 5 direction rows (h2) → 6 group rows (h3, copper direction eyebrow links) → school band (sand, 1944 watermark, bibliography). |
 | `/{lang}/staff` | `…/staff/page.tsx` | PageIntro → head section → leading faculty (StaffCards) → roster pointer to official site. Deliberately all-quiet. |
@@ -34,11 +34,12 @@ System surfaces: `src/app/page.tsx` (root → `/ua` redirect), `not-found.tsx`
 | --- | --- | --- |
 | `pages/en.ts`, `pages/ua.ts` | `en`, `ua` dictionaries | EN = canonical shape; `ua: typeof en` enforces parity at compile time. All UI strings live here. |
 | `history/history.ts` | `founded`, `periods`, `getHistory()` | 8 head periods 1905→present; past facts publish with `sourced` provenance (ADR-0001 targets current-personnel claims). |
-| `staff/staff.ts` | `staff`, `getStaff()`, `getHead()` | 11 records; only `featured` resolve publicly (5). `resolve()` enforces both gates. |
+| `staff/staff.ts` | `staff`, `getStaff()`, `getHead()`, `getResearchLeaders()` | 11 records; only `featured` resolve publicly (5). `resolve()` enforces both gates. Leaders = head + group-leading professors, `areaId`-joined (ADR-0008). |
 | `staff/leadership.ts` | `leadership`, `getDean()` | Faculty leadership, separate from departmental staff by design. |
 | `research/research.ts` | `researchAreas`, `getResearchAreas()` | 5 directions from the v3 profile. |
 | `research/groups.ts` | `researchGroups`, `getResearchGroups()` | 6 groups, each `areaId`-linked to its parent direction. |
-| `research/school.ts` | `schoolName/Lineage/Dissertations`, `selectedWorks`, `getSchool()` | 1944 school; UA-language bibliography only (language policy). |
+| `research/school.ts` | `schoolName/Lineage/Dissertations`, `schoolFounded`, `schoolDissertationsCount`, `selectedWorks`, `getSchool()` | 1944 school; UA-language bibliography only (language policy). Display figures feed the homepage numbers strip. |
+| `research/recognition.ts` | `recognition`, `getRecognition()` | 4 dated results/honours (2007–2021), `sourced` under ADR-0008; volatile metrics and undated honours stay in source notes. |
 | `contacts/contacts.ts` | `contact`, `officialLinks`, `legacyDepartmentContacts`, `getContact()` | `legacyDepartmentContacts` = deliberately unpublished backlog. |
 
 Pattern: each collection stores `Localised<T>` (`{ua, en}`) values wrapped in

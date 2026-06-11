@@ -264,3 +264,26 @@ export function getHead(lang: Locale): LocalisedStaffMember {
   const head = staff.find((m) => m.id === "head") ?? staff[0];
   return resolvePerson(head, lang);
 }
+
+// Research leaders — the homepage join between people and directions.
+//
+// The set is the head plus the featured professors who lead research groups,
+// each mapped to the direction their group carries on /research (anchors per
+// content/research/research.ts). Усенко stays off this surface on purpose:
+// her featured role is administrative (vice-dean), and this section presents
+// research identity, not the roster. Both standing gates still apply —
+// featured visibility (ADR-0004) and the shared person-publication gate.
+const leaderAreaById: Record<string, string> = {
+  head: "coordination-spin",
+  ishchenko: "heterogeneous-catalysis",
+  oleksenko: "gas-sensors",
+  roik: "melts-disordered",
+};
+
+export type ResearchLeader = LocalisedStaffMember & { areaId: string };
+
+export function getResearchLeaders(lang: Locale): ResearchLeader[] {
+  return staff
+    .filter((m) => m.visibility === "featured" && leaderAreaById[m.id])
+    .map((m) => ({ ...resolvePerson(m, lang), areaId: leaderAreaById[m.id] }));
+}

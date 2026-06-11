@@ -34,6 +34,9 @@ export function StaffCard({ member }: { member: LocalisedStaffMember }) {
         {member.honours ? (
           <p className="mt-1 text-sm leading-6 text-slate">{member.honours}</p>
         ) : null}
+        {member.focus ? (
+          <p className="mt-1 text-sm leading-6 text-slate/90">{member.focus}</p>
+        ) : null}
         {member.email ? (
           <p className="mt-3 text-sm">
             <a

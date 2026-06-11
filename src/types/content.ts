@@ -64,6 +64,8 @@ export type LocalisedStaffMember = {
   /** null when the person is withheld — render sites drop the line entirely. */
   degree: string | null;
   honours: string | null;
+  /** One-line research identity (from the person claim's focus field). */
+  focus: string | null;
   email: string | null;
   orcid: string | null;
   provenance: Provenance;

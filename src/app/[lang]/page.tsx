@@ -9,9 +9,14 @@ import { CenturyRule } from "@/components/ui/century-rule";
 import { Figure } from "@/components/ui/figure";
 import { ReviewMark } from "@/components/ui/review-mark";
 import { getResearchAreas } from "@content/research/research";
+import { getResearchGroups } from "@content/research/groups";
+import { getRecognition } from "@content/research/recognition";
+import { schoolDissertationsCount, schoolFounded } from "@content/research/school";
+import { getResearchLeaders } from "@content/staff/staff";
 import { founded, periods } from "@content/history/history";
 import { site } from "@/content/site";
 import { getDictionary, href, isLocale } from "@/lib/i18n";
+import { editorial } from "@/lib/provenance";
 import { buildMetadata } from "@/lib/seo";
 
 type PageProps = { params: Promise<{ lang: string }> };
@@ -36,7 +41,40 @@ export default async function HomePage({ params }: PageProps) {
   if (!isLocale(lang)) notFound();
   const dict = getDictionary(lang);
   const areas = getResearchAreas(lang);
+  const leaders = getResearchLeaders(lang);
+  const recognition = getRecognition(lang);
+  const areaTitleById = new Map(areas.map((area) => [area.id, area.title]));
   const t = dict.home;
+
+  // The record strip («Кафедра у цифрах», ADR-0008): published figures only,
+  // each already carried elsewhere on the site — the strip elevates the
+  // record, it does not extend the verification surface.
+  const record = [
+    {
+      id: "founded",
+      label: t.department.numbers.founded,
+      value: founded.value,
+      provenance: founded.provenance,
+    },
+    {
+      id: "school",
+      label: t.department.numbers.school,
+      value: schoolFounded.value,
+      provenance: schoolFounded.provenance,
+    },
+    {
+      id: "groups",
+      label: t.department.numbers.groups,
+      value: String(getResearchGroups(lang).length),
+      provenance: editorial("Derived: count of the published research-group list."),
+    },
+    {
+      id: "dissertations",
+      label: t.department.numbers.dissertations,
+      value: schoolDissertationsCount.value,
+      provenance: schoolDissertationsCount.provenance,
+    },
+  ];
 
   return (
     <main>
@@ -91,6 +129,112 @@ export default async function HomePage({ params }: PageProps) {
         </Container>
       </section>
 
+      {/* Research leaders — the people carrying the directions (ADR-0008).
+          Typographic rows, no portrait plates: photography stays gated on
+          Phase B consent, and the reserved-plate device is deliberately not
+          multiplied on the homepage. Each leader joins to their direction's
+          anchor on /research — people ↔ programme, not a directory. */}
+      <section className="border-t border-navy/10 py-16 sm:py-20 lg:py-24">
+        <Container>
+          <SectionHeader
+            eyebrow={t.leaders.eyebrow}
+            title={t.leaders.title}
+            lead={t.leaders.lead}
+          />
+          <div className="mt-10 border-b border-navy/10 lg:mt-12">
+            {leaders.map((leader) => (
+              <article
+                key={leader.id}
+                className="grid gap-x-8 gap-y-3 border-t border-navy/10 py-8 sm:grid-cols-[2fr_3fr] lg:py-10"
+              >
+                <div>
+                  <h3 className="text-balance font-serif text-2xl font-medium leading-snug text-navy">
+                    {leader.name}
+                    <ReviewMark provenance={leader.provenance} />
+                  </h3>
+                  {leader.degree ? (
+                    <p className="mt-1.5 text-sm italic leading-6 text-slate">
+                      {leader.degree}
+                    </p>
+                  ) : null}
+                  {leader.honours ? (
+                    <p className="mt-1 text-sm leading-6 text-slate">
+                      {leader.honours}
+                    </p>
+                  ) : null}
+                </div>
+                <div className="max-w-xl sm:pt-1.5">
+                  {leader.focus ? (
+                    <p className="text-pretty leading-7 text-slate">
+                      {leader.focus}
+                    </p>
+                  ) : null}
+                  <p className="mt-3 text-sm">
+                    <Link
+                      href={`${href(lang, "/research")}#${leader.areaId}`}
+                      className="inline-flex items-center gap-2 font-medium text-navy hover:text-slate"
+                    >
+                      <span className="link-underline">
+                        {areaTitleById.get(leader.areaId)}
+                      </span>
+                      <span aria-hidden className="link-arrow">
+                        →
+                      </span>
+                    </Link>
+                  </p>
+                </div>
+              </article>
+            ))}
+          </div>
+          <p className="mt-8">
+            <Link
+              href={href(lang, "/staff")}
+              className="inline-flex items-center gap-2 text-sm font-medium text-navy hover:text-slate"
+            >
+              <span className="link-underline">{t.leaders.cta}</span>
+              <span aria-hidden className="link-arrow">
+                →
+              </span>
+            </Link>
+          </p>
+        </Container>
+      </section>
+
+      {/* Recognition record — dated results and honours (ADR-0008), set in
+          the same year|content archival rows as the history and bibliography
+          surfaces. Chronological, sourced, review-marked: a record, not a
+          highlights reel. */}
+      <section className="border-t border-navy/10 py-16 sm:py-20 lg:py-24">
+        <Container>
+          <SectionHeader
+            eyebrow={t.recognition.eyebrow}
+            title={t.recognition.title}
+            lead={t.recognition.lead}
+          />
+          <div className="mt-10 max-w-3xl border-b border-navy/10 lg:mt-12">
+            {recognition.map((entry) => (
+              <article
+                key={entry.id}
+                className="grid gap-x-8 gap-y-1 border-t border-navy/10 py-6 sm:grid-cols-[7rem_1fr] sm:py-7"
+              >
+                <p className="font-serif text-lg tabular-nums leading-snug text-copper">
+                  {entry.years}
+                </p>
+                <div>
+                  <h3 className="font-medium leading-6 text-navy">
+                    {entry.title}
+                    <ReviewMark provenance={entry.provenance} />
+                  </h3>
+                  <p className="mt-1.5 max-w-xl text-pretty text-sm leading-6 text-slate">
+                    {entry.detail}
+                  </p>
+                </div>
+              </article>
+            ))}
+          </div>
+        </Container>
+      </section>
+
       {/* A century of the department — warm band */}
       <section className="border-t border-navy/10 bg-sand/40 py-16 sm:py-20 lg:py-24">
         <Container>
@@ -128,6 +272,28 @@ export default async function HomePage({ params }: PageProps) {
               index="01"
               className="self-start"
             />
+          </div>
+
+          {/* The department in numbers — quiet typographic figures (no
+              counters, by design language). Every figure is a claim already
+              published elsewhere on the site; see the `record` assembly. */}
+          <div className="mt-12 lg:mt-14">
+            <h3 className="text-xs uppercase tracking-[0.18em] text-copper">
+              {t.department.numbers.title}
+            </h3>
+            <dl className="mt-5 grid grid-cols-2 gap-x-8 gap-y-8 border-t border-navy/10 pt-6 sm:grid-cols-4">
+              {record.map((figure) => (
+                <div key={figure.id}>
+                  <dt className="text-xs leading-5 text-slate/90">
+                    {figure.label}
+                  </dt>
+                  <dd className="mt-1.5 font-serif text-3xl font-medium leading-none tracking-tight text-navy tabular-nums sm:text-4xl">
+                    {figure.value}
+                    <ReviewMark provenance={figure.provenance} />
+                  </dd>
+                </div>
+              ))}
+            </dl>
           </div>
 
           {/* The century, as a rule: one tick per era of the record. */}
