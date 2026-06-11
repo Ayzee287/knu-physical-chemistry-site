@@ -51,12 +51,15 @@ export function ResearchAreaCard({
               href={href}
               className="group/area inline-flex items-baseline gap-3 transition-colors hover:text-ink"
             >
-              <span className="underline decoration-navy/0 decoration-1 underline-offset-4 transition-colors group-hover/area:decoration-navy/40">
+              {/* Keyboard parity: focus-visible plays the same quiet
+                  affordance as hover — the device is complete, not
+                  pointer-only. */}
+              <span className="underline decoration-navy/0 decoration-1 underline-offset-4 transition-colors group-hover/area:decoration-navy/40 group-focus-visible/area:decoration-navy/40">
                 {title}
               </span>
               <span
                 aria-hidden
-                className="text-base text-copper transition-transform duration-200 group-hover/area:translate-x-0.5"
+                className="text-base text-copper transition-transform duration-200 group-hover/area:translate-x-0.5 group-focus-visible/area:translate-x-0.5"
               >
                 →
               </span>

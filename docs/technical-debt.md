@@ -13,18 +13,9 @@ recorded decision that it will never be done — never by being forgotten.
 
 ## P0 — immediate risk
 
-### P0.1 Unshipped working-tree batch on a stale branch
-- **What:** the 2026-06-11 work (a11y/semantics polish, documentation system,
-  consolidation pass) sits uncommitted on the local `quality-pass` checkout,
-  whose PR (#6) is already merged. Meanwhile `origin/main` moved ahead
-  (PR #7, Vercel Analytics).
-- **Impact:** total loss exposure for two sessions of work (one `git checkout`
-  away); growing divergence cost; the live site lacks shipped a11y fixes.
-- **Effort:** minutes — fetch, branch off `origin/main`, commit, push, PR.
-  No conflicts: PR #7 touched only the root layout/package files.
-- **Risk if ignored:** work loss; every future session inherits the confusion.
-- **Timing:** immediately — first action of the next session (or this one's
-  operator follow-up).
+### P0.1 Unshipped working-tree batch on a stale branch — RESOLVED 2026-06-11
+- Shipped to `main` via PR #8 (`audit-pass`, merge `182982d`). Tombstone kept
+  because vault notes reference P0 items by number; new debt starts at P0.3.
 
 ### P0.2 Production never verified in a rendering browser
 - **What:** the live, public site has never been rendered by this project's
@@ -132,8 +123,8 @@ recorded decision that it will never be done — never by being forgotten.
 - **Risk if ignored:** none; ~30 lines.
 
 ### P3.2 True orphans
-- `dict.brand.full` (both locales) — never rendered; use it (footer identity
-  line is the natural slot) or drop the key at the next content session.
+- ~~`dict.brand.full`~~ — resolved 2026-06-11 (motion/finishing pass): now
+  renders as the footer identity line, as this entry suggested.
 - `HeroFact` type export + `SITE_URL` const export — exported, never imported
   externally; un-export opportunistically.
 - `getHead()`'s `?? staff[0]` fallback — silently renders the wrong person if

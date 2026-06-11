@@ -15,9 +15,11 @@ export function Footer({ lang, dict }: { lang: Locale; dict: Dictionary }) {
       <Container>
         <div className="grid gap-10 py-16 sm:grid-cols-2 lg:grid-cols-4">
           <div className="sm:col-span-2">
-            <p className="font-serif text-lg text-navy">
-              {site.department[lang]}
-            </p>
+            {/* Footer identity line — rendered from the brand block (the one
+                place the full brand name appears as identity, closing the
+                former dict.brand.full orphan). Slightly larger serif than the
+                body columns: the page should END on the institution's name. */}
+            <p className="font-serif text-xl text-navy">{dict.brand.full}</p>
             <p className="mt-2 max-w-xs text-sm leading-6 text-slate">
               {site.faculty[lang]} · {site.university[lang]}
             </p>

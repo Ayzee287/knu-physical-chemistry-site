@@ -1,0 +1,72 @@
+/* Motion layer — the site's complete motion vocabulary (ADR-0006).
+ *
+ * Every keyframe and motion class on the site lives in THIS file; components
+ * reference the classes by name and never define their own animations. The
+ * hover affordances (200ms color/underline/arrow transitions) remain plain
+ * Tailwind transition utilities in the components — they are continuous
+ * interaction feedback, not choreography, and stay where the interaction is.
+ *
+ * The vocabulary is deliberately tiny — two classes:
+ *
+ *   .motion-page-enter   page arrival: opacity 0→1 + 8px rise, 380ms, once
+ *   .motion-image-fade   image materialisation: opacity 0→1, 300ms, once
+ *
+ * Principles (ADR-0006, amends ADR-0003's hover-only rule):
+ *   - Load-triggered and run-once only. Nothing autonomous, nothing
+ *     scroll-triggered, no stagger chains, no exit animations.
+ *   - Opacity and transform only (compositor-safe; no layout thrash).
+ *   - Decelerating ease-out: motion settles, it never springs.
+ *   - Pure CSS: works without JavaScript, and content is always present in
+ *     the document — the animation reveals, it never gates.
+ *   - `prefers-reduced-motion` disables both classes outright (below), in
+ *     addition to the global collapse in globals.css.
+ */
+
+@keyframes motion-page-enter {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* Page arrival. Applied by src/app/[lang]/template.tsx, which remounts on
+ * every route render — so the entrance plays exactly once per navigation,
+ * over the page content only (the sticky header and footer live in the
+ * persistent layout and never move). */
+.motion-page-enter {
+  animation: motion-page-enter 380ms cubic-bezier(0, 0, 0.2, 1) both;
+}
+
+@keyframes motion-image-fade {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* Image materialisation: a registered photograph settles into its plate —
+ * opacity only, no scale/blur/slide. Applied to the <Image> element inside
+ * Portrait and Figure. Note: this plays on mount, not on the network `load`
+ * event; for the local, optimised, lazily-loaded images this site serves the
+ * difference is rarely visible, but the Phase B photography session must
+ * eye-verify with real images and may upgrade to a load-gated transition if
+ * pop-in is observed (recorded in ADR-0006). */
+.motion-image-fade {
+  animation: motion-image-fade 300ms ease-out both;
+}
+
+/* Reduced motion: both classes are removed entirely — the page and its images
+ * are simply there, fully visible. This is first-class, not a shortened
+ * animation; the global duration collapse in globals.css is a second net. */
+@media (prefers-reduced-motion: reduce) {
+  .motion-page-enter,
+  .motion-image-fade {
+    animation: none;
+  }
+}

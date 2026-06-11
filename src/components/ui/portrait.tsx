@@ -35,7 +35,7 @@ export function Portrait({
           alt={alt}
           fill
           sizes={sizes}
-          className="object-cover"
+          className="motion-image-fade object-cover"
           style={image.position ? { objectPosition: image.position } : undefined}
         />
       ) : (
