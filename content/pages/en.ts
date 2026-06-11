@@ -49,6 +49,17 @@ export const en = {
       lead: "The department's directions as published in its own record — from surface chemistry and catalysis to the thermodynamics of melts — currently being confirmed with the department.",
       cta: "About the research",
     },
+    leaders: {
+      eyebrow: "People",
+      title: "Research leadership",
+      lead: "The department's directions are carried by the research groups of its professors — from coordination chemistry to the structure of melts.",
+      cta: "All academic staff",
+    },
+    recognition: {
+      eyebrow: "Recognition",
+      title: "Results and recognition",
+      lead: "Selected results, projects and honours, from the department's own published record.",
+    },
     department: {
       eyebrow: "The department",
       title: "More than a century of physical chemistry",
@@ -58,6 +69,13 @@ export const en = {
       ],
       cta: "About the department",
       figureCaption: "Departmental photography — in preparation",
+      numbers: {
+        title: "The department in numbers",
+        founded: "Founded",
+        school: "Scientific school since",
+        groups: "Research groups",
+        dissertations: "Dissertations within the school",
+      },
     },
     contact: {
       eyebrow: "Contacts",
