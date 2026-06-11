@@ -1,6 +1,8 @@
 # 0006 — Motion language
 
-Date: 2026-06-11 · Status: accepted · Amends: ADR-0003 (motion rule)
+Date: 2026-06-11 · Status: accepted · Amends: ADR-0003 (motion rule) ·
+Amended by: ADR-0007 (interaction continuity — page-enter v2, hero arrival,
+named hover devices move into motion.css, masthead rule single)
 
 ## Decision
 

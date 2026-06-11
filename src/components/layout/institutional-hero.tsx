@@ -14,7 +14,9 @@ export type HeroFact = { label: string; value: string; provenance?: Provenance }
  * fact (the founding year), set as a large serif numeral.
  *
  * Identity is carried by typography, hairlines and one copper accent — no
- * imagery, no gradients, no animation beyond hover affordances. When real
+ * imagery, no gradients. Motion is limited to the composed arrival (the
+ * masthead column leads, the nameplate rule is struck, the fact rail follows
+ * a beat later — ADR-0007) plus the shared hover devices. When real
  * photography arrives, it belongs in the page sections below, not here: the
  * masthead stays typographic.
  */
@@ -52,11 +54,14 @@ export function InstitutionalHero({
                 {eyebrow}
               </p>
             </div>
-            {/* Masthead double rule — a print-nameplate cue. */}
-            <div aria-hidden className="mt-8">
-              <div className="border-t border-ivory/25" />
-              <div className="mt-[3px] border-t border-ivory/25" />
-            </div>
+            {/* Masthead rule — the print-nameplate cue, struck once left to
+                right as the page arrives. A single hairline: the former
+                double rule read as a redundant double divider in real
+                browsing (operator review, ADR-0007). */}
+            <div
+              aria-hidden
+              className="motion-rule-draw mt-8 border-t border-ivory/25"
+            />
             <h1 className="mt-7 text-balance font-serif text-5xl font-medium leading-[1.04] tracking-tight sm:text-6xl lg:text-7xl">
               {title}
             </h1>
@@ -67,22 +72,22 @@ export function InstitutionalHero({
               {lead}
             </p>
             <div className="mt-10 flex flex-wrap items-center gap-x-8 gap-y-4 text-sm font-medium">
+              {/* btn-fill: the ivory plate rises into the bordered frame on
+                  hover/focus (motion.css) — the button becomes active rather
+                  than switching. */}
               <Link
                 href={primary.href}
-                className="border border-ivory/80 px-6 py-3 transition-colors hover:bg-ivory hover:text-ink"
+                className="btn-fill border border-ivory/80 px-6 py-3 hover:text-ink"
               >
                 {primary.label}
               </Link>
               {secondary ? (
                 <Link
                   href={secondary.href}
-                  className="group inline-flex items-center gap-2 py-3 text-sand/85 transition-colors hover:text-ivory"
+                  className="inline-flex items-center gap-2 py-3 text-sand/85 hover:text-ivory"
                 >
-                  {secondary.label}
-                  <span
-                    aria-hidden
-                    className="transition-transform duration-200 group-hover:translate-x-0.5 group-focus-visible:translate-x-0.5"
-                  >
+                  <span className="link-underline">{secondary.label}</span>
+                  <span aria-hidden className="link-arrow">
                     →
                   </span>
                 </Link>
@@ -90,8 +95,10 @@ export function InstitutionalHero({
             </div>
           </div>
 
-          {/* Institutional fact rail */}
-          <dl className="grid content-start gap-x-8 sm:grid-cols-2 lg:grid-cols-1 lg:border-l lg:border-ivory/15 lg:pl-10">
+          {/* Institutional fact rail — arrives one beat after the masthead
+              column (motion-hero-rail): a composed presentation, not a
+              simultaneous render. */}
+          <dl className="motion-hero-rail grid content-start gap-x-8 sm:grid-cols-2 lg:grid-cols-1 lg:border-l lg:border-ivory/15 lg:pl-10">
             {keystone ? (
               <div className="border-t border-ivory/15 py-5 sm:col-span-2 lg:col-span-1 lg:border-t-0 lg:pt-0">
                 <dt className="text-xs uppercase tracking-[0.18em] text-sand/55">

@@ -89,7 +89,7 @@ export default async function StaffPage({ params }: PageProps) {
               <ExternalLink
                 href={SOURCES.physchemKnu.url}
                 newTabNote={dict.ui.opensInNewTab}
-                className="text-sm font-medium text-navy transition-colors hover:text-slate"
+                className="text-sm font-medium text-navy hover:text-slate"
               >
                 {t.rosterCta}
               </ExternalLink>

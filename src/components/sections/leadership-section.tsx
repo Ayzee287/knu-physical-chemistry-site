@@ -60,7 +60,7 @@ export function LeadershipSection({
             <ExternalLink
               href={facultyLink}
               newTabNote={dict.ui.opensInNewTab}
-              className="text-slate transition-colors hover:text-navy"
+              className="text-slate hover:text-navy"
             >
               {t.facultyCta}
             </ExternalLink>

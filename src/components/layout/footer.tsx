@@ -32,9 +32,11 @@ export function Footer({ lang, dict }: { lang: Locale; dict: Dictionary }) {
                   )}
                 </span>
               ))}
+              {/* inline-block (between block siblings): the underline device
+                  hugs the address text instead of the full column width. */}
               <a
                 href={`mailto:${contact.email.value}`}
-                className="mt-1 block transition-colors hover:text-navy"
+                className="link-underline mt-1 inline-block hover:text-navy"
               >
                 {contact.email.value}
               </a>
@@ -55,7 +57,7 @@ export function Footer({ lang, dict }: { lang: Locale; dict: Dictionary }) {
                 <li key={item.href}>
                   <Link
                     href={href(lang, item.href)}
-                    className="text-sm text-slate transition-colors hover:text-navy"
+                    className="link-underline text-sm text-slate hover:text-navy"
                   >
                     {item.label}
                   </Link>
@@ -74,7 +76,7 @@ export function Footer({ lang, dict }: { lang: Locale; dict: Dictionary }) {
                   <ExternalLink
                     href={link.url}
                     newTabNote={dict.ui.opensInNewTab}
-                    className="text-sm text-slate transition-colors hover:text-navy"
+                    className="text-sm text-slate hover:text-navy"
                   >
                     {link.label}
                   </ExternalLink>

@@ -26,21 +26,20 @@ export default function NotFound() {
         aria-label="404"
         className="mt-10 flex items-center gap-5 text-sm font-medium"
       >
-        <Link
-          href="/ua"
-          className="text-slate transition-colors hover:text-navy"
-        >
-          На головну →
+        <Link href="/ua" className="text-slate hover:text-navy">
+          <span className="link-underline">На головну</span>{" "}
+          <span aria-hidden className="link-arrow">
+            →
+          </span>
         </Link>
         <span aria-hidden className="text-navy/25">
           /
         </span>
-        <Link
-          href="/en"
-          lang="en"
-          className="text-slate transition-colors hover:text-navy"
-        >
-          Home page →
+        <Link href="/en" lang="en" className="text-slate hover:text-navy">
+          <span className="link-underline">Home page</span>{" "}
+          <span aria-hidden className="link-arrow">
+            →
+          </span>
         </Link>
       </nav>
     </main>

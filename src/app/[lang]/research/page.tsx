@@ -84,7 +84,7 @@ export default async function ResearchPage({ params }: PageProps) {
               >
                 <a
                   href={`#${group.areaId}`}
-                  className="text-xs uppercase tracking-[0.18em] text-copper transition-colors hover:text-ink"
+                  className="link-underline text-xs uppercase tracking-[0.18em] text-copper hover:text-ink"
                 >
                   {areaTitleById.get(group.areaId)}
                 </a>

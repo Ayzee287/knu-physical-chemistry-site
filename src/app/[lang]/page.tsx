@@ -80,13 +80,10 @@ export default async function HomePage({ params }: PageProps) {
           <p className="mt-8">
             <Link
               href={href(lang, "/research")}
-              className="group inline-flex items-center gap-2 text-sm font-medium text-navy transition-colors hover:text-slate"
+              className="inline-flex items-center gap-2 text-sm font-medium text-navy hover:text-slate"
             >
-              {t.research.cta}
-              <span
-                aria-hidden
-                className="transition-transform duration-200 group-hover:translate-x-0.5 group-focus-visible:translate-x-0.5"
-              >
+              <span className="link-underline">{t.research.cta}</span>
+              <span aria-hidden className="link-arrow">
                 →
               </span>
             </Link>
@@ -116,13 +113,10 @@ export default async function HomePage({ params }: PageProps) {
               <p className="mt-8">
                 <Link
                   href={`${href(lang, "/about")}#history`}
-                  className="group inline-flex items-center gap-2 text-sm font-medium text-navy transition-colors hover:text-slate"
+                  className="inline-flex items-center gap-2 text-sm font-medium text-navy hover:text-slate"
                 >
-                  {t.department.cta}
-                  <span
-                    aria-hidden
-                    className="transition-transform duration-200 group-hover:translate-x-0.5 group-focus-visible:translate-x-0.5"
-                  >
+                  <span className="link-underline">{t.department.cta}</span>
+                  <span aria-hidden className="link-arrow">
                     →
                   </span>
                 </Link>
@@ -159,7 +153,7 @@ export default async function HomePage({ params }: PageProps) {
           <p className="mt-9">
             <Link
               href={href(lang, "/contacts")}
-              className="inline-block border border-ivory/80 px-6 py-3 text-sm font-medium transition-colors hover:bg-ivory hover:text-navy"
+              className="btn-fill inline-block border border-ivory/80 px-6 py-3 text-sm font-medium hover:text-navy"
             >
               {t.contact.cta}
             </Link>
