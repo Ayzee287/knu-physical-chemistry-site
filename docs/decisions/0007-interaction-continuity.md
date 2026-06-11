@@ -115,3 +115,20 @@ unchanged from the operator's brief: motion felt everywhere, noticed nowhere.
   links — hover-only, cosmetic.
 - The underline hugs the text box (≈2–3px below baseline); the header nav
   adds `pb-1` so its line sits at the former 6px offset.
+
+## Follow-up 2026-06-11 — locale-switch arrival (D017)
+
+Real-device review found one navigation still read as an instant replacement:
+the UA↔EN language switch. Page-to-page navigation remounts the `[lang]`
+template and replays `.motion-page-enter`, but switching only the locale keeps
+the same downstream route (`/ua/staff` → `/en/staff`), so the content
+container was reused and the composed arrival never fired — the switch felt
+like a teleport, not a transition.
+
+Fix: `key={lang}` on the `#main` content wrapper in `[lang]/layout.tsx`. The
+locale change re-keys that subtree, remounting it (header/footer sit outside
+it and stay put), so the existing arrival plays on a locale switch exactly as
+it does between pages. No new motion, no client component, no delay — the
+press dim (already on the `<a>` language links) + the replayed arrival give
+the full press → transition → arrival sequence. The fix is the layout key,
+not any change to the motion itself.
