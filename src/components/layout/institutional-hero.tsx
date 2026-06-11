@@ -14,9 +14,10 @@ export type HeroFact = { label: string; value: string; provenance?: Provenance }
  * fact (the founding year), set as a large serif numeral.
  *
  * Identity is carried by typography, hairlines and one copper accent — no
- * imagery, no gradients. Motion is limited to the composed arrival (the
- * masthead column leads, the nameplate rule is struck, the fact rail follows
- * a beat later — ADR-0007) plus the shared hover devices. When real
+ * imagery, no gradients. Motion is limited to the composed two-beat arrival
+ * (beat 1 — the masthead identity: eyebrow, struck nameplate rule, headline;
+ * beat 2, ~150ms later — the supporting statement, lead, CTAs and fact rail
+ * settle in; ADR-0007/D018) plus the shared hover devices. When real
  * photography arrives, it belongs in the page sections below, not here: the
  * masthead stays typographic.
  */
@@ -62,16 +63,23 @@ export function InstitutionalHero({
               aria-hidden
               className="motion-rule-draw mt-8 border-t border-ivory/25"
             />
+            {/* Beat 1 (identity): eyebrow, struck rule and headline arrive on
+                the page-enter beat. Beat 2 (supporting): the statement, lead,
+                CTAs and fact rail carry motion-hero-follow, settling ~150ms
+                later so the hero reads as a composed two-beat arrival, not one
+                flat fade — perceptible even when UA/EN look identical (D018).
+                Shared delay across the group, so it is one beat, not a
+                stagger. */}
             <h1 className="mt-7 text-balance font-serif text-5xl font-medium leading-[1.04] tracking-tight sm:text-6xl lg:text-7xl">
               {title}
             </h1>
-            <p className="mt-6 max-w-xl text-pretty font-serif text-xl italic leading-snug text-sand/90 sm:text-2xl">
+            <p className="motion-hero-follow mt-6 max-w-xl text-pretty font-serif text-xl italic leading-snug text-sand/90 sm:text-2xl">
               {statement}
             </p>
-            <p className="mt-6 max-w-xl text-pretty leading-7 text-sand/75">
+            <p className="motion-hero-follow mt-6 max-w-xl text-pretty leading-7 text-sand/75">
               {lead}
             </p>
-            <div className="mt-10 flex flex-wrap items-center gap-x-8 gap-y-4 text-sm font-medium">
+            <div className="motion-hero-follow mt-10 flex flex-wrap items-center gap-x-8 gap-y-4 text-sm font-medium">
               {/* btn-fill: the ivory plate rises into the bordered frame on
                   hover/focus (motion.css) — the button becomes active rather
                   than switching. */}
@@ -95,10 +103,11 @@ export function InstitutionalHero({
             </div>
           </div>
 
-          {/* Institutional fact rail — arrives one beat after the masthead
-              column (motion-hero-rail): a composed presentation, not a
+          {/* Institutional fact rail — part of the hero's second beat
+              (motion-hero-follow): it settles with the supporting content, one
+              beat after the masthead identity. A composed presentation, not a
               simultaneous render. */}
-          <dl className="motion-hero-rail grid content-start gap-x-8 sm:grid-cols-2 lg:grid-cols-1 lg:border-l lg:border-ivory/15 lg:pl-10">
+          <dl className="motion-hero-follow grid content-start gap-x-8 sm:grid-cols-2 lg:grid-cols-1 lg:border-l lg:border-ivory/15 lg:pl-10">
             {keystone ? (
               <div className="border-t border-ivory/15 py-5 sm:col-span-2 lg:col-span-1 lg:border-t-0 lg:pt-0">
                 <dt className="text-xs uppercase tracking-[0.18em] text-sand/55">

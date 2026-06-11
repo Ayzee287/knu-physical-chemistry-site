@@ -68,10 +68,13 @@ Run-once arrivals (all `both`-filled, reduced-motion → `animation: none`):
   (`--ease-arrive`). The page is readable quickly, then finishes coming to
   rest — arrival reads as entering a room, not a document swap. Combined
   with the press acknowledgment, navigation is press → release → arrival.
-- **`.motion-hero-rail`** — the hero fact rail arrives one beat (+120ms)
-  after the masthead column. Bounded amendment to ADR-0006's "one layer, no
-  stagger": **two layers maximum, hero only** — a composed presentation, not
-  a stagger chain. The rejection of per-item/per-row stagger stands.
+- **`.motion-hero-follow`** (was `.motion-hero-rail`; renamed/realised in
+  D018) — the hero's second beat: the supporting content (statement, lead,
+  CTAs) and the fact rail arrive one beat (+150ms) after the masthead
+  identity (eyebrow, struck rule, headline). Bounded amendment to ADR-0006's
+  "one layer, no stagger": **two layers maximum, hero only** — a composed
+  presentation, not a stagger chain (every element on the beat shares one
+  delay). The rejection of per-item/per-row stagger stands.
 - **`.motion-rule-draw`** — the masthead rule is struck once, left to right
   (scaleX, 640ms), as the page arrives: a print gesture, hero only.
 - **`.motion-menu-enter`** — the mobile menu panel surfaces (fade + 4px
@@ -132,3 +135,29 @@ it does between pages. No new motion, no client component, no delay — the
 press dim (already on the `<a>` language links) + the replayed arrival give
 the full press → transition → arrival sequence. The fix is the layout key,
 not any change to the motion itself.
+
+## Follow-up 2026-06-11 — homepage hero arrival hierarchy (D018)
+
+After D017, the homepage locale switch still read as a text swap while the
+content pages felt calm. Root cause is **perceptual, not mechanical**: the
+arrival already replays (D017), but the UA and EN homepages are visually
+near-identical (same ink hero, same layout, same positions), and the hero's
+whole column — eyebrow, headline, statement, lead, CTAs — rode the *single
+uniform* `.motion-page-enter` beat. A flat fade between two near-identical
+states is, by definition, hard to perceive; only the fact rail (and the
+struck rule) were a distinct beat, and they are peripheral.
+
+Fix (within the existing system — no new mechanism, no stronger animation):
+make the hero's already-sanctioned two-layer arrival (ADR-0007 §2,
+"two layers max, hero only") carry the *primary* content, not just the rail.
+Beat 1 (identity): eyebrow, struck nameplate rule, headline — on the
+page-enter beat. Beat 2 (`.motion-hero-follow`, +150ms): statement, lead,
+CTAs and the fact rail settle in together. The hero now reads as
+"the institution's name arrives, then its supporting content settles" — a
+perceptible sequence even when the two locales are visually identical, because
+*timing* (not colour or layout) carries it. The 10px follow-settle compounds
+with the page-enter's 10px, so beat-2 content travels ~20px — perceptible
+without being theatrical. Still one shared delay across the beat: a layer, not
+a stagger chain. `.motion-hero-rail` was renamed `.motion-hero-follow` to name
+what it now is. Honest scope: this is a perception refinement, not a fix for a
+broken transition — the D017 mechanism was already correct.
