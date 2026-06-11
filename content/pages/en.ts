@@ -46,7 +46,9 @@ export const en = {
     research: {
       eyebrow: "Research",
       title: "Directions of scientific work",
-      lead: "The department's directions as published in its own record — from surface chemistry and catalysis to the thermodynamics of melts — currently being confirmed with the department.",
+      // The confirmation posture lives in the /research scope note; the
+      // homepage digest does not repeat process language (D020).
+      lead: "The department's directions as published in its own record — from surface chemistry and catalysis to the thermodynamics of melts.",
       cta: "About the research",
     },
     leaders: {
@@ -68,7 +70,7 @@ export const en = {
         "Today it works within the Faculty of Chemistry of Taras Shevchenko National University of Kyiv, alongside the departments of inorganic, organic, analytical and macromolecular chemistry.",
       ],
       cta: "About the department",
-      figureCaption: "Departmental photography — in preparation",
+      lineageTitle: "Heads of the department",
       numbers: {
         title: "The department in numbers",
         founded: "Founded",

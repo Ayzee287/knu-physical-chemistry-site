@@ -5,15 +5,13 @@ import { Container } from "@/components/layout/container";
 import { InstitutionalHero } from "@/components/layout/institutional-hero";
 import { SectionHeader } from "@/components/layout/section-header";
 import { ResearchAreaCard } from "@/components/cards/research-area-card";
-import { CenturyRule } from "@/components/ui/century-rule";
-import { Figure } from "@/components/ui/figure";
 import { ReviewMark } from "@/components/ui/review-mark";
 import { getResearchAreas } from "@content/research/research";
 import { getResearchGroups } from "@content/research/groups";
 import { getRecognition } from "@content/research/recognition";
 import { schoolDissertationsCount, schoolFounded } from "@content/research/school";
 import { getResearchLeaders } from "@content/staff/staff";
-import { founded, periods } from "@content/history/history";
+import { founded, getHistory } from "@content/history/history";
 import { site } from "@/content/site";
 import { getDictionary, href, isLocale } from "@/lib/i18n";
 import { editorial } from "@/lib/provenance";
@@ -43,6 +41,7 @@ export default async function HomePage({ params }: PageProps) {
   const areas = getResearchAreas(lang);
   const leaders = getResearchLeaders(lang);
   const recognition = getRecognition(lang);
+  const history = getHistory(lang);
   const areaTitleById = new Map(areas.map((area) => [area.id, area.title]));
   const t = dict.home;
 
@@ -149,7 +148,16 @@ export default async function HomePage({ params }: PageProps) {
               >
                 <div>
                   <h3 className="text-balance font-serif text-2xl font-medium leading-snug text-navy">
-                    {leader.name}
+                    {/* The name is the way to the person: deep-link to the
+                        record on /staff (anchor = collection id). Quiet
+                        underline device only — the arrow stays reserved for
+                        programme links. */}
+                    <Link
+                      href={`${href(lang, "/staff")}#${leader.id}`}
+                      className="hover:text-ink"
+                    >
+                      <span className="link-underline">{leader.name}</span>
+                    </Link>
                     <ReviewMark provenance={leader.provenance} />
                   </h3>
                   {leader.degree ? (
@@ -266,12 +274,34 @@ export default async function HomePage({ params }: PageProps) {
                 </Link>
               </p>
             </div>
-            <Figure
-              caption={t.department.figureCaption}
-              lang={lang}
-              index="01"
-              className="self-start"
-            />
+            {/* Head lineage register — the century rendered as the
+                succession of the scientists who led it (D020). Same record
+                as /about#history, compact register form; it replaces the
+                reserved Figure plate (the page's one empty surface) and the
+                CenturyRule ticks (same era years, but with the people). When
+                Phase B photography clears, the documentary photograph lands
+                back in this column — see vault homepage-direction. */}
+            <div className="self-start">
+              <h3 className="text-xs uppercase tracking-[0.18em] text-copper">
+                {t.department.lineageTitle}
+              </h3>
+              <ol className="mt-4 border-b border-navy/10">
+                {history.map((period) => (
+                  <li
+                    key={period.id}
+                    className="flex items-baseline gap-5 border-t border-navy/10 py-2.5"
+                  >
+                    <span className="w-[5.25rem] flex-shrink-0 font-serif text-sm tabular-nums leading-snug text-copper">
+                      {period.years}
+                    </span>
+                    <span className="text-sm leading-snug text-navy">
+                      {period.head}
+                      <ReviewMark provenance={period.provenance} />
+                    </span>
+                  </li>
+                ))}
+              </ol>
+            </div>
           </div>
 
           {/* The department in numbers — quiet typographic figures (no
@@ -295,15 +325,6 @@ export default async function HomePage({ params }: PageProps) {
               ))}
             </dl>
           </div>
-
-          {/* The century, as a rule: one tick per era of the record. */}
-          <CenturyRule
-            className="mt-14 lg:mt-16"
-            years={periods.map((p, i) => ({
-              year: p.years.slice(0, 4),
-              major: i === 0 || i === 2 || i === 6 || i === 7,
-            }))}
-          />
         </Container>
       </section>
 
