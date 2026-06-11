@@ -28,11 +28,13 @@ recorded decision that it will never be done — never by being forgotten.
 - **Risk if ignored:** a dean sees a broken site before the project does.
 - **Timing:** next sprint at the latest; ideally combined with P1.1 (same
   instrumented session).
-- **Scope addition (2026-06-11, ADR-0007):** the pass must also eye-verify
-  the interaction continuity system — underline growth (incl. Safari's
-  prefixed `box-decoration-break` on wrapped links), the `.btn-fill` rise,
-  press dim, page-enter v2 pacing, hero rail/rule arrival, mobile-menu
-  surface, and reduced-motion behavior on a real device.
+- **Scope addition (2026-06-11, ADR-0007 / D017 / D018):** the pass must also
+  eye-verify the interaction continuity system — underline growth (incl.
+  Safari's prefixed `box-decoration-break` on wrapped links), the `.btn-fill`
+  rise, press dim, page-enter v2 pacing, the hero two-beat arrival
+  (identity → supporting content + rail, ~150ms) and rule strike, the
+  homepage UA↔EN locale-switch replay specifically, mobile-menu surface, and
+  reduced-motion behavior on a real device.
 
 ## P1 — next sprint
 

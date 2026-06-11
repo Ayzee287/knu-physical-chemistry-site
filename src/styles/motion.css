@@ -10,8 +10,9 @@
  * Run-once arrivals:
  *
  *   .motion-page-enter   page arrival: fade (420ms) + 10px settle (560ms)
- *   .motion-hero-rail    hero fact rail: the same arrival, +120ms — the
- *                        masthead column leads, the record follows (hero only)
+ *   .motion-hero-follow  hero second beat: the same arrival, +150ms — the
+ *                        masthead identity leads, the supporting content and
+ *                        fact rail settle a beat later (hero only)
  *   .motion-rule-draw    the masthead rule is struck left-to-right (hero only)
  *   .motion-menu-enter   mobile menu surfaces when its <details> opens
  *   .motion-image-fade   image materialisation: opacity only, 300ms
@@ -70,13 +71,19 @@
     motion-settle-up 560ms var(--ease-arrive) both;
 }
 
-/* Hero fact rail: the masthead column leads, the institutional record follows
- * one beat later. Two layers maximum, hero only (ADR-0007) — a composed
- * arrival, not a stagger chain. */
-.motion-hero-rail {
+/* Hero second beat: the masthead identity (eyebrow, struck rule, headline)
+ * leads on the page-enter beat; the supporting content — statement, lead,
+ * CTAs and the fact rail — settles ~150ms later, so the hero reads as a
+ * composed two-beat arrival rather than one flat fade. This is the bounded
+ * "two layers max, hero only" exception (ADR-0007); it is NOT a per-item
+ * stagger — every element on this beat shares one delay. The 10px settle
+ * compounds with the page-enter's 10px, so the follow content travels a touch
+ * further (~20px): the second beat stays perceptible even when the two locales
+ * look near-identical (the homepage locale-switch case — D018). */
+.motion-hero-follow {
   animation:
-    motion-fade-in 420ms var(--ease-settle) 120ms both,
-    motion-settle-up 560ms var(--ease-arrive) 120ms both;
+    motion-fade-in 420ms var(--ease-settle) 150ms both,
+    motion-settle-up 560ms var(--ease-arrive) 150ms both;
 }
 
 @keyframes motion-rule-draw {
@@ -211,7 +218,7 @@ details[open] .motion-menu-enter {
  * the second net and flattens the hover devices to instant state changes. */
 @media (prefers-reduced-motion: reduce) {
   .motion-page-enter,
-  .motion-hero-rail,
+  .motion-hero-follow,
   .motion-rule-draw,
   .motion-image-fade,
   details[open] .motion-menu-enter {
