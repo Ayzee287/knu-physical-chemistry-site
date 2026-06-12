@@ -1,8 +1,10 @@
 # 0009 — Progressive portrait publication from official university sources
 
-Date: 2026-06-12 · Status: accepted · Supersedes the Phase B consent gate and
-the D021 all-or-none section rule; amends the photography posture of
-ADR-0001/0005.
+Date: 2026-06-12 · Status: accepted, clause 2 superseded · Supersedes the
+Phase B consent gate and the D021 all-or-none section rule; amends the
+photography posture of ADR-0001/0005. **Clause 2 (the per-asset quality bar
+as a publication gate) is superseded by ADR-0010** — every available official
+portrait publishes; grading is internal documentation only.
 
 ## Decision
 

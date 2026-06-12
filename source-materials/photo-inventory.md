@@ -42,25 +42,29 @@ DIFFERENT files per person — check both before requesting originals.
 | Іщенко | both sources | 137×147 | **F — unusable.** Identical thumbnail in BOTH university systems; no plate size can carry it. Original must come from the department. |
 | Group photo (Фрицький at desk) | vstup `fritskij-chem-fac.jpg` | 519×452 | **B− documentary.** Genuine "scientist at work" register, but low resolution + strong yellow cast; usable small, not as the band figure. |
 
-## Publication state (2026-06-12, ADR-0009 — supersedes the consent-gate plan)
+## Publication state (2026-06-12, ADR-0010 — supersedes the ADR-0009 held list)
 
-Operator directive 2026-06-12: official-source portraits publish as
-**progressive enhancement** — independently per person, no reserved frames,
-mixed sections normal. The dean's portrait was additionally graded:
-knu.ua volovenko.png is **100×150 (F)** — held.
+Operator directive 2026-06-12 (second): **presence over perfection — every
+available official portrait publishes**; the quality bar no longer gates
+rendering and grades are internal documentation only. All portraits render
+through the shared `Portrait` plate as **archival monochrome prints**
+(grayscale grading in the component — the integration layer that lets
+mixed-grade sources share one register).
 
 | Person | Status | File |
 | --- | --- | --- |
 | Фрицький (head) | **PUBLISHED** (grade A) | `public/images/staff/head.jpg` (infopacket 900.jpg, 792×792) |
 | Олексенко | **PUBLISHED** (grade B) | `public/images/staff/oleksenko.jpg` (infopacket 913.jpg, 1200×1600) |
-| Роїк | **PUBLISHED** (grade C+, flagged for replacement) | `public/images/staff/roik.jpg` (physchem Roik.jpg, 363×451) |
-| Іщенко | HELD — 137×147 in BOTH systems | originals-request list |
-| Усенко | HELD — snapshot genre, blown highlights (301×374) | originals-request list |
-| Воловенко (dean) | HELD — 100×150 | originals-request list |
+| Роїк | **PUBLISHED** (grade C+, replacement list) | `public/images/staff/roik.jpg` (physchem Roik.jpg, 363×451) |
+| Іщенко | **PUBLISHED** (grade F, replacement list — FIRST priority) | `public/images/staff/ishchenko.jpg` (physchem/infopacket identical, 137×147) |
+| Усенко | **PUBLISHED** (grade C, replacement list) | `public/images/staff/usenko.jpg` (physchem Usenko.jpg, 301×374) |
+| Воловенко (dean) | **PUBLISHED** (grade F, replacement list) | `public/images/staff/dean.png` (knu.ua volovenko.png, 100×150) |
 
-**Originals request to the department (the remaining human step):** original
-portraits for Іщенко, Усенко and the dean; a better portrait for Роїк; plus
-any documentary department/laboratory photographs for the homepage century
-band (the lineage column receives the first documentary image, D020). The
+**Originals request to the department (the remaining human step — now a
+REPLACEMENT request, publication no longer waits):** originals for Іщенко
+(first priority), the dean and Усенко; a better portrait for Роїк; plus any
+documentary department/laboratory photographs for the homepage century band
+(the lineage column receives the first documentary image, D020). The
 1200×1600 Олексенко file proves the university systems hold originals for
-some staff — ask where that set lives.
+some staff — ask where that set lives. Replacement = one registry edit; no
+layout changes.

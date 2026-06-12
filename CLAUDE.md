@@ -38,9 +38,13 @@ repo under `Workspace/`).
 - Path aliases: `@/*` → `src/*`, `@content/*` → `content/*`.
 - No CMS, no runtime content loaders: **the type system is the content schema.**
 - Images only via the typed registry `src/lib/images.ts` — official-source
-  portraits publish as progressive enhancement (ADR-0009): a plate renders
-  only where a registered asset exists; photo-less records use the
-  typographic layout; reserved frames are abolished; hotlinking forbidden.
+  portraits publish as progressive enhancement (ADR-0009) under the
+  presence-over-perfection rule (ADR-0010: every available official portrait
+  renders; quality grades are internal documentation, never a render gate).
+  A plate renders only where a registered asset exists; photo-less records
+  use the typographic layout; reserved frames are abolished; hotlinking
+  forbidden. All portraits render as archival monochrome prints through the
+  shared `Portrait` plate.
 
 ## i18n (non-negotiable)
 
