@@ -38,11 +38,15 @@ export function LeadershipSection({
       <p className="mt-4 max-w-xl text-pretty leading-7 text-slate">{t.body}</p>
 
       <div className="mt-8 flex items-center gap-6 border-t border-navy/10 pt-8 sm:gap-8">
-        <Portrait
-          image={getImage(dean.photo)}
-          className="w-20 flex-shrink-0 sm:w-24"
-          sizes="(min-width: 640px) 6rem, 5rem"
-        />
+        {/* Plate renders only with a registered image (D021) — same
+            typographic-absence contract as StaffCard. */}
+        {getImage(dean.photo) ? (
+          <Portrait
+            image={getImage(dean.photo)}
+            className="w-20 flex-shrink-0 sm:w-24"
+            sizes="(min-width: 640px) 6rem, 5rem"
+          />
+        ) : null}
         <div className="min-w-0">
           <p className="text-xs uppercase tracking-[0.18em] text-slate">
             {dean.role}

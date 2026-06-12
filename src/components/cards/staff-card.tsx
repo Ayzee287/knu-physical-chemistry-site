@@ -4,10 +4,19 @@ import { getImage } from "@/lib/images";
 import type { LocalisedStaffMember } from "@/types/content";
 
 /**
- * Editorial staff entry: the shared Portrait plate beside the person's
- * record. Honesty contract: this card renders exactly what the staff
- * collection resolves — a withheld (unverified) person arrives with a
- * pending name and null detail lines, and the card simply drops those lines.
+ * Editorial staff entry. Honesty contract: this card renders exactly what
+ * the staff collection resolves — a withheld (unverified) person arrives
+ * with a pending name and null detail lines, and the card simply drops
+ * those lines.
+ *
+ * Portrait contract (D021, supersedes the always-on reserved plate): the
+ * plate renders ONLY when a registered image exists. Until Phase B clears
+ * (consent + originals — see source-materials/photo-inventory.md), the card
+ * is a typographic record — absence stated as typography, not as an empty
+ * frame; the homepage leaders section established the form. When the first
+ * portraits register, restore the plate column for ALL records in a section
+ * (a reserved plate beside filled ones then means "photo coming", and the
+ * rows stay aligned) — do not ship a mixed filled/frameless section.
  */
 export function StaffCard({ member }: { member: LocalisedStaffMember }) {
   const image = getImage(member.photo);
@@ -19,10 +28,12 @@ export function StaffCard({ member }: { member: LocalisedStaffMember }) {
       id={member.id}
       className="flex scroll-mt-24 gap-6 border-t border-navy/10 py-8 sm:gap-10 sm:py-10"
     >
-      <Portrait
-        image={image}
-        className="w-24 flex-shrink-0 self-start sm:w-32"
-      />
+      {image ? (
+        <Portrait
+          image={image}
+          className="w-24 flex-shrink-0 self-start sm:w-32"
+        />
+      ) : null}
       <div className="min-w-0 self-center">
         <p className="text-xs uppercase tracking-[0.18em] text-copper">
           {member.role}
