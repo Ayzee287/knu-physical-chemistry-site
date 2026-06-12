@@ -4,8 +4,14 @@ import type { SiteImage } from "@/lib/images";
 
 /**
  * The single portrait treatment of the site: a fixed 3:4 plate that renders a
- * registered local photograph, or — until one is cleared — an archival
- * reserve with corner registration marks, matching the Figure language.
+ * registered local photograph, or an archival reserve with corner
+ * registration marks, matching the Figure language.
+ *
+ * Render contract since D021: callers mount the plate ONLY when a registered
+ * image exists (or, once a section has its first real portraits, for every
+ * record in that section — the reserve then reads as "photo coming" beside
+ * filled plates). The component never renders an empty frame as a section's
+ * default state again.
  *
  * Width comes from the caller (`className`, e.g. "w-24 sm:w-32"); the aspect
  * ratio is fixed here so real photography drops in with zero layout shift.

@@ -60,9 +60,11 @@ eyebrow, masthead rule [single, drawn once — ADR-0007], H1, serif statement, C
 
 **Cards** — `ResearchAreaCard` (indexed editorial row; optional `href` makes the
 title a link [home digest]; `headingLevel` 2|3 tracks the document outline) ·
-`StaffCard` (Portrait beside record; drops null lines for withheld people).
+`StaffCard` (typographic record; drops null lines for withheld people; the
+Portrait plate mounts only when a registered image exists — D021).
 
-**UI** — `Portrait` (fixed 3:4 plate; registration-mark reserve) · `Figure`
+**UI** — `Portrait` (fixed 3:4 plate; registration-mark reserve; dormant
+until Phase B — mounts only with a registered image, D021) · `Figure`
 (documentary plate with caption bar + plate index — currently dormant: no
 render site until Phase B photography returns it to the homepage century
 band) · `QuoteBlock` (copper-rule epigraph; `cite` only with confirmed
