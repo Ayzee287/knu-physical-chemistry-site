@@ -60,6 +60,7 @@ export const staff: StaffMember[] = [
     ),
     email: claim("ifritsky@univ.kiev.ua", src("Listed by the department as the departmental contact mailbox.")),
     orcid: claim("0000-0002-1092-8035", src()),
+    photo: "head",
   },
   {
     id: "ishchenko",
@@ -98,6 +99,7 @@ export const staff: StaffMember[] = [
     ),
     email: claim("olexludmil@ukr.net", src("Address as listed by the department.")),
     orcid: claim("0000-0002-7970-6895", src()),
+    photo: "oleksenko",
   },
   {
     id: "roik",
@@ -120,6 +122,7 @@ export const staff: StaffMember[] = [
     ),
     email: claim("oleksandr_roik@knu.ua", src()),
     orcid: claim("0000-0001-9705-1100", src()),
+    photo: "roik",
   },
   {
     id: "usenko",

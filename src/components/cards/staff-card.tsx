@@ -9,14 +9,12 @@ import type { LocalisedStaffMember } from "@/types/content";
  * with a pending name and null detail lines, and the card simply drops
  * those lines.
  *
- * Portrait contract (D021, supersedes the always-on reserved plate): the
- * plate renders ONLY when a registered image exists. Until Phase B clears
- * (consent + originals — see source-materials/photo-inventory.md), the card
- * is a typographic record — absence stated as typography, not as an empty
- * frame; the homepage leaders section established the form. When the first
- * portraits register, restore the plate column for ALL records in a section
- * (a reserved plate beside filled ones then means "photo coming", and the
- * rows stay aligned) — do not ship a mixed filled/frameless section.
+ * Portrait contract (ADR-0009, supersedes D021's all-or-none section rule):
+ * portraits are progressive enhancement. The plate renders ONLY where a
+ * registered asset exists; a record without one is a typographic row —
+ * absence stated as typography, never as a reserved frame. Mixed
+ * photo/photo-less sections are the normal state while the portrait set
+ * completes (grades + held assets: source-materials/photo-inventory.md).
  */
 export function StaffCard({ member }: { member: LocalisedStaffMember }) {
   const image = getImage(member.photo);
