@@ -19,7 +19,7 @@ docs/                        ADRs · audits · deployment · roadmap · this map
 
 | Route | File | Composition |
 | --- | --- | --- |
-| `/{lang}` | `src/app/[lang]/page.tsx` | InstitutionalHero (ink) → research digest (5 indexed rows) → research leaders (4 typographic rows, ADR-0008; names deep-link to /staff anchors) → recognition record (4 dated rows) → century band (sand: prose | head lineage register, numbers strip — D020) → navy closer. Cadence: ink → ivory → sand → navy. |
+| `/{lang}` | `src/app/[lang]/page.tsx` | InstitutionalHero (ink) → research leaders (4 portrait rows, ADR-0008/0010; people before programme since D023; names deep-link to /staff anchors) → research digest (5 indexed rows) → recognition record (4 dated rows) → century band (sand: prose | head lineage register, numbers strip — D020) → navy closer. Cadence: ink → ivory → sand → navy. |
 | `/{lang}/about` | `…/about/page.tsx` | PageIntro → QuoteBlock epigraph → body → LeadershipSection (dean) → history band (sand, 1905 watermark, 8 head periods) → official links. |
 | `/{lang}/research` | `…/research/page.tsx` | PageIntro → scope note → 5 direction rows (h2) → 6 group rows (h3, copper direction eyebrow links) → school band (sand, 1944 watermark, bibliography). |
 | `/{lang}/staff` | `…/staff/page.tsx` | PageIntro → head section → leading faculty (StaffCards) → roster pointer to official site. Deliberately all-quiet. |
@@ -64,8 +64,9 @@ title a link [home digest]; `headingLevel` 2|3 tracks the document outline) ·
 Portrait plate mounts only where a registered asset exists — progressive
 enhancement, ADR-0009; mixed sections are normal).
 
-**UI** — `Portrait` (fixed 3:4 plate; ACTIVE since ADR-0009 — image
-required, reserved state removed; mounts only with a registered asset) ·
+**UI** — `Portrait` (fixed 3:4 hairline plate, archival MONOCHROME grading
+sitewide — ADR-0010; image required, reserved state removed; mounts only
+with a registered asset) ·
 `Figure`
 (documentary plate with caption bar + plate index — currently dormant: no
 render site until Phase B photography returns it to the homepage century

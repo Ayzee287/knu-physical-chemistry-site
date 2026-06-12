@@ -14,14 +14,15 @@ import type { Localised } from "@/lib/provenance";
 //   2. Add an entry here with real dimensions and a bilingual alt text.
 //   3. Reference it by key from the content collection (e.g. a staff record).
 //
-// Publication policy (ADR-0009, operator directive 2026-06-12): portraits
-// originating from the university's own official information systems are
-// published as PROGRESSIVE ENHANCEMENT — each portrait independently, the
-// moment a technically usable asset exists. Mixed states are normal; records
-// without an asset render the photo-less layout, never a reserved frame.
-// Quality bar per asset: ≥ ~2× the largest render size, recognizable and
-// undistorted at plate size. Grades + held assets:
-// source-materials/photo-inventory.md.
+// Publication policy (ADR-0010, supersedes ADR-0009's quality bar; operator
+// directive 2026-06-12): portraits originating from the university's own
+// official information systems publish the moment a file EXISTS — a real
+// portrait is preferable to no portrait. Quality is documented per entry
+// (grade + replacement flag) but never gates rendering; low-grade entries
+// stay on the originals-request list and are replaced by one-line edits
+// here. Records without any asset still render the photo-less layout —
+// reserved frames remain abolished (ADR-0009 clause 3 stands).
+// Grades + replacement list: source-materials/photo-inventory.md.
 
 export type SiteImage = {
   /** Path under /public, e.g. "/images/staff/example.jpg". */
@@ -64,6 +65,37 @@ const registry = {
     width: 363,
     height: 451,
     alt: { ua: "Роїк Олександр Сергійович", en: "Oleksandr S. Roik" },
+  },
+  // Official portrait, identical thumbnail in BOTH university systems
+  // (physchem.knu.ua/1/Ishenko.jpg = infopacket 903.jpg; D020 grade F —
+  // 137×147, upscales at plate size). Published under ADR-0010 presence
+  // rule; FIRST on the originals-request list.
+  ishchenko: {
+    src: "/images/staff/ishchenko.jpg",
+    width: 137,
+    height: 147,
+    alt: { ua: "Іщенко Олена Вікторівна", en: "Olena V. Ishchenko" },
+    position: "50% 30%",
+  },
+  // Official portrait, department site (physchem.knu.ua/1/Usenko.jpg; D020
+  // grade C — snapshot genre, tight head crop). Published under ADR-0010;
+  // FLAGGED for replacement.
+  usenko: {
+    src: "/images/staff/usenko.jpg",
+    width: 301,
+    height: 374,
+    alt: { ua: "Усенко Наталія Ігорівна", en: "Nataliia I. Usenko" },
+    position: "50% 35%",
+  },
+  // Official portrait, faculty administration page (knu.ua volovenko.png;
+  // graded F — 100×150, near-1:1 at its /about render size). Published
+  // under ADR-0010; FLAGGED for replacement.
+  dean: {
+    src: "/images/staff/dean.png",
+    width: 100,
+    height: 150,
+    alt: { ua: "Воловенко Юліан Михайлович", en: "Yulian M. Volovenko" },
+    position: "50% 25%",
   },
 } as const satisfies Record<string, SiteImage>;
 

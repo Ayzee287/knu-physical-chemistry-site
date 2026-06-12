@@ -84,14 +84,18 @@ recorded decision that it will never be done — never by being forgotten.
 
 ## P2 — future optimization
 
-### P2.1 Photography pipeline incomplete
-- **What:** zero images site-wide; registry empty by design; inventory ready;
-  consent pending. Reserved plates are intentional and presentable.
-- **Impact:** "feels complete" gap to lay stakeholders — perception, not
-  defect.
-- **Effort:** consent (human) + one integration session (roadmap Phase B).
-- **Risk if ignored:** none technical; the design degrades gracefully forever.
-- **Timing:** Phase B, after/with the verification conversation.
+### P2.1 Low-grade portrait assets published (presence over perfection)
+- **What:** under ADR-0010 the full official set is live, but three files
+  are below the former quality bar — Іщенко 137×147 (upscales at plate
+  size), dean 100×150, Усенко 301×374 snapshot; Роїк 363×451 video frame.
+  Monochrome grading + small plates mask most of it; HiDPI screens will
+  still see softness.
+- **Impact:** perceived sharpness only; presence (the higher-priority goal)
+  is solved. Layout is immune — replacement is a one-line registry edit.
+- **Effort:** human — the replacement/originals request to the department
+  (`source-materials/photo-inventory.md` has the prioritised list).
+- **Risk if ignored:** softness on HiDPI; no failure mode.
+- **Timing:** Phase B, with/after the verification conversation.
 
 ### P2.2 Monolithic dictionaries
 - **What:** all UI strings live in two ~175-line files (`content/pages/`).

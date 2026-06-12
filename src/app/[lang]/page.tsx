@@ -5,6 +5,7 @@ import { Container } from "@/components/layout/container";
 import { InstitutionalHero } from "@/components/layout/institutional-hero";
 import { SectionHeader } from "@/components/layout/section-header";
 import { ResearchAreaCard } from "@/components/cards/research-area-card";
+import { Portrait } from "@/components/ui/portrait";
 import { ReviewMark } from "@/components/ui/review-mark";
 import { getResearchAreas } from "@content/research/research";
 import { getResearchGroups } from "@content/research/groups";
@@ -12,6 +13,7 @@ import { getRecognition } from "@content/research/recognition";
 import { schoolDissertationsCount, schoolFounded } from "@content/research/school";
 import { getResearchLeaders } from "@content/staff/staff";
 import { founded, getHistory } from "@content/history/history";
+import { getImage } from "@/lib/images";
 import { site } from "@/content/site";
 import { getDictionary, href, isLocale } from "@/lib/i18n";
 import { editorial } from "@/lib/provenance";
@@ -96,8 +98,106 @@ export default async function HomePage({ params }: PageProps) {
         ]}
       />
 
-      {/* Research digest — the page's intellectual core */}
+      {/* Research leaders — the people carrying the directions (ADR-0008).
+          FIRST content section since the presence sprint (D023): the page
+          answers "who are the scientists behind this department" before it
+          catalogues the programme — the hero states the institution, this
+          section gives it faces. Portrait plates joined the rows under
+          ADR-0010 (archival monochrome, hairline plate, progressive
+          enhancement — a row without a registered asset stays typographic).
+          Each leader joins to their direction's anchor on /research —
+          people ↔ programme, not a directory. */}
       <section className="py-16 sm:py-20 lg:py-24">
+        <Container>
+          <SectionHeader
+            eyebrow={t.leaders.eyebrow}
+            title={t.leaders.title}
+            lead={t.leaders.lead}
+          />
+          <div className="mt-10 border-b border-navy/10 lg:mt-12">
+            {leaders.map((leader) => {
+              const image = getImage(leader.photo);
+              return (
+                <article
+                  key={leader.id}
+                  className="grid gap-x-8 gap-y-4 border-t border-navy/10 py-8 sm:grid-cols-[2fr_3fr] lg:py-10"
+                >
+                  <div className="flex gap-5 sm:gap-6">
+                    {/* Author-portrait scale (smaller than the /staff plates):
+                        the row stays an editorial row, not a profile card. */}
+                    {image ? (
+                      <Portrait
+                        image={image}
+                        className="w-16 flex-shrink-0 self-start sm:w-20"
+                        sizes="(min-width: 640px) 5rem, 4rem"
+                      />
+                    ) : null}
+                    <div className="min-w-0">
+                      <h3 className="text-balance font-serif text-2xl font-medium leading-snug text-navy">
+                        {/* The name is the way to the person: deep-link to the
+                            record on /staff (anchor = collection id). Quiet
+                            underline device only — the arrow stays reserved for
+                            programme links. */}
+                        <Link
+                          href={`${href(lang, "/staff")}#${leader.id}`}
+                          className="hover:text-ink"
+                        >
+                          <span className="link-underline">{leader.name}</span>
+                        </Link>
+                        <ReviewMark provenance={leader.provenance} />
+                      </h3>
+                      {leader.degree ? (
+                        <p className="mt-1.5 text-sm italic leading-6 text-slate">
+                          {leader.degree}
+                        </p>
+                      ) : null}
+                      {leader.honours ? (
+                        <p className="mt-1 text-sm leading-6 text-slate">
+                          {leader.honours}
+                        </p>
+                      ) : null}
+                    </div>
+                  </div>
+                  <div className="max-w-xl sm:pt-1.5">
+                    {leader.focus ? (
+                      <p className="text-pretty leading-7 text-slate">
+                        {leader.focus}
+                      </p>
+                    ) : null}
+                    <p className="mt-3 text-sm">
+                      <Link
+                        href={`${href(lang, "/research")}#${leader.areaId}`}
+                        className="inline-flex items-center gap-2 font-medium text-navy hover:text-slate"
+                      >
+                        <span className="link-underline">
+                          {areaTitleById.get(leader.areaId)}
+                        </span>
+                        <span aria-hidden className="link-arrow">
+                          →
+                        </span>
+                      </Link>
+                    </p>
+                  </div>
+                </article>
+              );
+            })}
+          </div>
+          <p className="mt-8">
+            <Link
+              href={href(lang, "/staff")}
+              className="inline-flex items-center gap-2 text-sm font-medium text-navy hover:text-slate"
+            >
+              <span className="link-underline">{t.leaders.cta}</span>
+              <span aria-hidden className="link-arrow">
+                →
+              </span>
+            </Link>
+          </p>
+        </Container>
+      </section>
+
+      {/* Research digest — the programme the leaders above carry */}
+      <section className="border-t border-navy/10 py-16 sm:py-20 lg:py-24">
         <Container>
           <SectionHeader
             eyebrow={t.research.eyebrow}
@@ -120,86 +220,6 @@ export default async function HomePage({ params }: PageProps) {
               className="inline-flex items-center gap-2 text-sm font-medium text-navy hover:text-slate"
             >
               <span className="link-underline">{t.research.cta}</span>
-              <span aria-hidden className="link-arrow">
-                →
-              </span>
-            </Link>
-          </p>
-        </Container>
-      </section>
-
-      {/* Research leaders — the people carrying the directions (ADR-0008).
-          Typographic rows, no portrait plates: photography stays gated on
-          Phase B consent, and the reserved-plate device is deliberately not
-          multiplied on the homepage. Each leader joins to their direction's
-          anchor on /research — people ↔ programme, not a directory. */}
-      <section className="border-t border-navy/10 py-16 sm:py-20 lg:py-24">
-        <Container>
-          <SectionHeader
-            eyebrow={t.leaders.eyebrow}
-            title={t.leaders.title}
-            lead={t.leaders.lead}
-          />
-          <div className="mt-10 border-b border-navy/10 lg:mt-12">
-            {leaders.map((leader) => (
-              <article
-                key={leader.id}
-                className="grid gap-x-8 gap-y-3 border-t border-navy/10 py-8 sm:grid-cols-[2fr_3fr] lg:py-10"
-              >
-                <div>
-                  <h3 className="text-balance font-serif text-2xl font-medium leading-snug text-navy">
-                    {/* The name is the way to the person: deep-link to the
-                        record on /staff (anchor = collection id). Quiet
-                        underline device only — the arrow stays reserved for
-                        programme links. */}
-                    <Link
-                      href={`${href(lang, "/staff")}#${leader.id}`}
-                      className="hover:text-ink"
-                    >
-                      <span className="link-underline">{leader.name}</span>
-                    </Link>
-                    <ReviewMark provenance={leader.provenance} />
-                  </h3>
-                  {leader.degree ? (
-                    <p className="mt-1.5 text-sm italic leading-6 text-slate">
-                      {leader.degree}
-                    </p>
-                  ) : null}
-                  {leader.honours ? (
-                    <p className="mt-1 text-sm leading-6 text-slate">
-                      {leader.honours}
-                    </p>
-                  ) : null}
-                </div>
-                <div className="max-w-xl sm:pt-1.5">
-                  {leader.focus ? (
-                    <p className="text-pretty leading-7 text-slate">
-                      {leader.focus}
-                    </p>
-                  ) : null}
-                  <p className="mt-3 text-sm">
-                    <Link
-                      href={`${href(lang, "/research")}#${leader.areaId}`}
-                      className="inline-flex items-center gap-2 font-medium text-navy hover:text-slate"
-                    >
-                      <span className="link-underline">
-                        {areaTitleById.get(leader.areaId)}
-                      </span>
-                      <span aria-hidden className="link-arrow">
-                        →
-                      </span>
-                    </Link>
-                  </p>
-                </div>
-              </article>
-            ))}
-          </div>
-          <p className="mt-8">
-            <Link
-              href={href(lang, "/staff")}
-              className="inline-flex items-center gap-2 text-sm font-medium text-navy hover:text-slate"
-            >
-              <span className="link-underline">{t.leaders.cta}</span>
               <span aria-hidden className="link-arrow">
                 →
               </span>

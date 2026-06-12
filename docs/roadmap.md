@@ -34,30 +34,32 @@ publication legitimate — nothing breaks while waiting).
 mode shows no marks on /staff, /about, /contacts; vault `content-status.md`
 backlog empty.
 
-## Phase B — Photography (rescoped by ADR-0009, 2026-06-12)
+## Phase B — Photography (rescoped again by ADR-0010, 2026-06-12)
 
-**Goal:** complete the portrait set and add documentary imagery. Publication
-itself is no longer gated: official-source portraits publish as progressive
-enhancement (ADR-0009), and three are live (head A, Олексенко B, Роїк C+ —
-flagged for replacement).
+**Goal:** upgrade the portrait set and add documentary imagery. Publication
+is complete: under ADR-0010 (presence over perfection) **every featured
+person carries their official portrait** — /staff ×5, /about dean, homepage
+leaders ×4 — rendered as archival monochrome prints through the shared
+plate. What remains is asset QUALITY, not presence.
 
-**Work:** request from the department — originals for Іщенко (137px
-thumbnail in both university systems), Усенко and the dean (100×150); a
-replacement for Роїк; documentary department/laboratory photographs for the
-homepage century band (first documentary image lands in the lineage column,
-D020). As assets arrive: grade against the ADR-0009 bar, optimise, register
-in `src/lib/images.ts`, reference by key.
+**Work:** replacement request to the department — originals for Іщенко
+(137px, first priority), the dean (100×150) and Усенко; a better portrait
+for Роїк; documentary department/laboratory photographs for the homepage
+century band (first documentary image lands in the lineage column, D020).
+As assets arrive: optimise, swap in `src/lib/images.ts` (one-line edits,
+zero layout change).
 
 **Dependencies:** department response only; the Phase A verification
 conversation is the natural moment to ask (same stakeholder).
 
-**Risks:** below-bar files arriving (the quality bar holds — held portraits
-stay on the request list); department objecting to a published portrait
-(one-line removal; sources documented per registry entry).
+**Risks:** department objecting to a published portrait (one-line removal;
+sources documented per registry entry); upscaled low-res files on HiDPI
+screens (mitigated by plate sizes + monochrome grading; tracked as debt
+P2.1).
 
 **Success criteria:** all featured records carry grade-B-or-better portraits;
-dean's portrait on /about; one documentary image in the century band;
-`npm run build` green with optimised local images only (no hotlinks).
+one documentary image in the century band; `npm run build` green with
+optimised local images only (no hotlinks).
 
 ## Phase C — Accessibility
 

@@ -39,9 +39,10 @@ export function LeadershipSection({
       <p className="mt-4 max-w-xl text-pretty leading-7 text-slate">{t.body}</p>
 
       <div className="mt-8 flex items-center gap-6 border-t border-navy/10 pt-8 sm:gap-8">
-        {/* Progressive-enhancement contract (ADR-0009): plate renders only
-            with a registered asset. The dean's only available official file
-            is 100×150 (grade F) — held until an original arrives. */}
+        {/* Progressive-enhancement contract (ADR-0009/0010): plate renders
+            only with a registered asset. The dean's official faculty-page
+            portrait is published under the ADR-0010 presence rule (100×150 —
+            on the replacement list, swapped by a registry edit). */}
         {deanImage ? (
           <Portrait
             image={deanImage}

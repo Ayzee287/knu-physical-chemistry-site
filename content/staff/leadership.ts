@@ -42,6 +42,7 @@ export const leadership: StaffMember[] = [
       ),
     ),
     email: claim("volovenko@knu.ua", v2()),
+    photo: "dean",
   },
   {
     id: "vice-dean-education",
