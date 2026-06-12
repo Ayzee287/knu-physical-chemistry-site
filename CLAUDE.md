@@ -37,8 +37,10 @@ repo under `Workspace/`).
   documents in `source-materials/` (committed snapshots — provenance evidence).
 - Path aliases: `@/*` → `src/*`, `@content/*` → `content/*`.
 - No CMS, no runtime content loaders: **the type system is the content schema.**
-- Images only via the typed registry `src/lib/images.ts` (empty until
-  photography clears consent); components render designed reserved states.
+- Images only via the typed registry `src/lib/images.ts` — official-source
+  portraits publish as progressive enhancement (ADR-0009): a plate renders
+  only where a registered asset exists; photo-less records use the
+  typographic layout; reserved frames are abolished; hotlinking forbidden.
 
 ## i18n (non-negotiable)
 

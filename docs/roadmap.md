@@ -34,29 +34,30 @@ publication legitimate — nothing breaks while waiting).
 mode shows no marks on /staff, /about, /contacts; vault `content-status.md`
 backlog empty.
 
-## Phase B — Photography
+## Phase B — Photography (rescoped by ADR-0009, 2026-06-12)
 
-**Goal:** real, locally-hosted, consented imagery in the existing plates —
-portraits (head, dean, faculty) and at least one documentary image in the
-homepage century band (the first place a real image must land, per
-homepage-direction).
+**Goal:** complete the portrait set and add documentary imagery. Publication
+itself is no longer gated: official-source portraits publish as progressive
+enhancement (ADR-0009), and three are live (head A, Олексенко B, Роїк C+ —
+flagged for replacement).
 
-**Work:** consent collection per `source-materials/photo-inventory.md`;
-download/optimise; register in `src/lib/images.ts` (dimensions + bilingual
-alt); reference by key from collections. Components already render real images
-with zero layout shift.
+**Work:** request from the department — originals for Іщенко (137px
+thumbnail in both university systems), Усенко and the dean (100×150); a
+replacement for Роїк; documentary department/laboratory photographs for the
+homepage century band (first documentary image lands in the lineage column,
+D020). As assets arrive: grade against the ADR-0009 bar, optimise, register
+in `src/lib/images.ts`, reference by key.
 
-**Dependencies:** Phase A conversation is the natural moment to collect
-consent (same stakeholder), but no hard dependency.
+**Dependencies:** department response only; the Phase A verification
+conversation is the natural moment to ask (same stakeholder).
 
-**Risks:** poor-quality source photography undermining the archival aesthetic
-(mitigate: art-direct crops via the registry `position` field; monochrome
-treatment is allowed by the design language); consent never arriving (the
-reserved-plate system is designed to be presentable indefinitely).
+**Risks:** below-bar files arriving (the quality bar holds — held portraits
+stay on the request list); department objecting to a published portrait
+(one-line removal; sources documented per registry entry).
 
-**Success criteria:** image registry non-empty; portraits render on /staff and
-/about; century-band plate replaced; `npm run build` green with optimised
-local images only (no hotlinks).
+**Success criteria:** all featured records carry grade-B-or-better portraits;
+dean's portrait on /about; one documentary image in the century band;
+`npm run build` green with optimised local images only (no hotlinks).
 
 ## Phase C — Accessibility
 

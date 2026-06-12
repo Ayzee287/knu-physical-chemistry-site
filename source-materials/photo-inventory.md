@@ -42,12 +42,25 @@ DIFFERENT files per person — check both before requesting originals.
 | Іщенко | both sources | 137×147 | **F — unusable.** Identical thumbnail in BOTH university systems; no plate size can carry it. Original must come from the department. |
 | Group photo (Фрицький at desk) | vstup `fritskij-chem-fac.jpg` | 519×452 | **B− documentary.** Genuine "scientist at work" register, but low resolution + strong yellow cast; usable small, not as the band figure. |
 
-**Consequence for the pipeline:** even WITH consent, publishing today would
-put thumbnail-class files into designed plates for 3 of 5 people — worse than
-the reserved state. The Phase B conversation is therefore a **consent +
-originals** request, not consent alone (the 1200×1600 Олексенко file proves
-the university systems hold originals for at least some staff). Readiness
-order once originals+consent arrive: head (immediate, file already
-publication-grade) → others as originals clear the bar. The homepage band
-slot (now the head-lineage register, D020) receives the first documentary
-image; portrait plates on /staff fill per person.
+## Publication state (2026-06-12, ADR-0009 — supersedes the consent-gate plan)
+
+Operator directive 2026-06-12: official-source portraits publish as
+**progressive enhancement** — independently per person, no reserved frames,
+mixed sections normal. The dean's portrait was additionally graded:
+knu.ua volovenko.png is **100×150 (F)** — held.
+
+| Person | Status | File |
+| --- | --- | --- |
+| Фрицький (head) | **PUBLISHED** (grade A) | `public/images/staff/head.jpg` (infopacket 900.jpg, 792×792) |
+| Олексенко | **PUBLISHED** (grade B) | `public/images/staff/oleksenko.jpg` (infopacket 913.jpg, 1200×1600) |
+| Роїк | **PUBLISHED** (grade C+, flagged for replacement) | `public/images/staff/roik.jpg` (physchem Roik.jpg, 363×451) |
+| Іщенко | HELD — 137×147 in BOTH systems | originals-request list |
+| Усенко | HELD — snapshot genre, blown highlights (301×374) | originals-request list |
+| Воловенко (dean) | HELD — 100×150 | originals-request list |
+
+**Originals request to the department (the remaining human step):** original
+portraits for Іщенко, Усенко and the dean; a better portrait for Роїк; plus
+any documentary department/laboratory photographs for the homepage century
+band (the lineage column receives the first documentary image, D020). The
+1200×1600 Олексенко file proves the university systems hold originals for
+some staff — ask where that set lives.

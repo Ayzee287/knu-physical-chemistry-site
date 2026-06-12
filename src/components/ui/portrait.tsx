@@ -3,19 +3,19 @@ import { cn } from "@/lib/utils";
 import type { SiteImage } from "@/lib/images";
 
 /**
- * The single portrait treatment of the site: a fixed 3:4 plate that renders a
- * registered local photograph, or an archival reserve with corner
- * registration marks, matching the Figure language.
+ * The single portrait treatment of the site: a fixed 3:4 plate rendering a
+ * registered local photograph.
  *
- * Render contract since D021: callers mount the plate ONLY when a registered
- * image exists (or, once a section has its first real portraits, for every
- * record in that section — the reserve then reads as "photo coming" beside
- * filled plates). The component never renders an empty frame as a section's
- * default state again.
+ * Render contract (ADR-0009, supersedes the D021 all-or-none section rule):
+ * portraits are progressive enhancement — a plate mounts ONLY where a
+ * registered asset exists; records without one use the photo-less layout.
+ * Reserved frames / "photo coming" placeholders are abolished, so `image`
+ * is required here and the conditional lives at the call site.
  *
  * Width comes from the caller (`className`, e.g. "w-24 sm:w-32"); the aspect
- * ratio is fixed here so real photography drops in with zero layout shift.
- * Pass `alt=""` when the person's name is adjacent in the document flow.
+ * ratio is fixed here so every portrait crops identically and mixed
+ * photo/photo-less rows stay calm. Pass `alt=""` when the person's name is
+ * adjacent in the document flow.
  */
 export function Portrait({
   image,
@@ -23,7 +23,7 @@ export function Portrait({
   className,
   sizes = "(min-width: 640px) 8rem, 6rem",
 }: {
-  image?: SiteImage;
+  image: SiteImage;
   alt?: string;
   className?: string;
   sizes?: string;
@@ -35,23 +35,14 @@ export function Portrait({
         className,
       )}
     >
-      {image ? (
-        <Image
-          src={image.src}
-          alt={alt}
-          fill
-          sizes={sizes}
-          className="motion-image-fade object-cover"
-          style={image.position ? { objectPosition: image.position } : undefined}
-        />
-      ) : (
-        <span aria-hidden className="pointer-events-none">
-          <span className="absolute left-2 top-2 h-2 w-2 border-l border-t border-navy/25" />
-          <span className="absolute right-2 top-2 h-2 w-2 border-r border-t border-navy/25" />
-          <span className="absolute bottom-2 left-2 h-2 w-2 border-b border-l border-navy/25" />
-          <span className="absolute bottom-2 right-2 h-2 w-2 border-b border-r border-navy/25" />
-        </span>
-      )}
+      <Image
+        src={image.src}
+        alt={alt}
+        fill
+        sizes={sizes}
+        className="motion-image-fade object-cover"
+        style={image.position ? { objectPosition: image.position } : undefined}
+      />
     </div>
   );
 }

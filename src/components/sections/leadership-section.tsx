@@ -23,6 +23,7 @@ export function LeadershipSection({
 }) {
   const t = dict.about.leadership;
   const dean = getDean(lang);
+  const deanImage = getImage(dean.photo);
   const facultyLink =
     officialLinks.find((link) => link.id === "faculty")?.url ??
     "https://chem.knu.ua/";
@@ -38,11 +39,12 @@ export function LeadershipSection({
       <p className="mt-4 max-w-xl text-pretty leading-7 text-slate">{t.body}</p>
 
       <div className="mt-8 flex items-center gap-6 border-t border-navy/10 pt-8 sm:gap-8">
-        {/* Plate renders only with a registered image (D021) — same
-            typographic-absence contract as StaffCard. */}
-        {getImage(dean.photo) ? (
+        {/* Progressive-enhancement contract (ADR-0009): plate renders only
+            with a registered asset. The dean's only available official file
+            is 100×150 (grade F) — held until an original arrives. */}
+        {deanImage ? (
           <Portrait
-            image={getImage(dean.photo)}
+            image={deanImage}
             className="w-20 flex-shrink-0 sm:w-24"
             sizes="(min-width: 640px) 6rem, 5rem"
           />
