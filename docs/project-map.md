@@ -22,8 +22,8 @@ docs/                        ADRs · audits · deployment · roadmap · this map
 | `/{lang}` | `src/app/[lang]/page.tsx` | InstitutionalHero (ink) → research leaders (4 portrait rows, ADR-0008/0010; people before programme since D023; names deep-link to /staff anchors) → research digest (5 indexed rows) → recognition record (4 dated rows) → century band (sand: prose | head lineage register, numbers strip — D020) → navy closer. Cadence: ink → ivory → sand → navy. |
 | `/{lang}/about` | `…/about/page.tsx` | PageIntro → QuoteBlock epigraph → body → LeadershipSection (dean) → history band (sand, 1905 watermark, 8 head periods) → official links. |
 | `/{lang}/research` | `…/research/page.tsx` | PageIntro → scope note → 5 direction rows (h2) → 6 group rows (h3, copper direction eyebrow links) → school band (sand, 1944 watermark, bibliography). |
-| `/{lang}/staff` | `…/staff/page.tsx` | PageIntro → head section → leading faculty (StaffCards) → roster pointer to official site. Deliberately all-quiet. |
-| `/{lang}/contacts` | `…/contacts/page.tsx` | PageIntro → ContactSection (4-col grid: address, dept phone/email, faculty phone/email, official links). All-quiet. |
+| `/{lang}/staff` | `…/staff/page.tsx` | PageIntro → head section → leading faculty (StaffCards) → teaching & research staff (StaffCards) → pointer to official site. The COMPLETE teaching-staff directory (11 records, ADR-0012); homepage stays curated (4). All-quiet. |
+| `/{lang}/contacts` | `…/contacts/page.tsx` | PageIntro → ContactSection (3-col: address + OSM map link · dept phone/email · faculty phone/email — D025/ADR-0013). All-quiet. |
 
 System surfaces: `src/app/page.tsx` (root → `/ua` redirect), `not-found.tsx`
 (bilingual 404, outside `[lang]`), `robots.ts`, `sitemap.ts`, `icon.svg`.
@@ -34,7 +34,7 @@ System surfaces: `src/app/page.tsx` (root → `/ua` redirect), `not-found.tsx`
 | --- | --- | --- |
 | `pages/en.ts`, `pages/ua.ts` | `en`, `ua` dictionaries | EN = canonical shape; `ua: typeof en` enforces parity at compile time. All UI strings live here. |
 | `history/history.ts` | `founded`, `periods`, `getHistory()` | 8 head periods 1905→present; past facts publish with `sourced` provenance (ADR-0001 targets current-personnel claims). |
-| `staff/staff.ts` | `staff`, `getStaff()`, `getHead()`, `getResearchLeaders()` | 11 records; only `featured` resolve publicly (5). `resolve()` enforces both gates. Leaders = head + group-leading professors, `areaId`-joined (ADR-0008). |
+| `staff/staff.ts` | `staff`, `getStaff()`, `getTeachingStaff()`, `getHead()`, `getResearchLeaders()` | 11 records, visibility `featured`(5)\|`staff`(6); ALL render on /staff (ADR-0012), `featured` also on the homepage. Leaders = head + group-leading professors, `areaId`-joined (ADR-0008). |
 | `staff/leadership.ts` | `leadership`, `getDean()` | Faculty leadership, separate from departmental staff by design. |
 | `research/research.ts` | `researchAreas`, `getResearchAreas()` | 5 directions from the v3 profile. |
 | `research/groups.ts` | `researchGroups`, `getResearchGroups()` | 6 groups, each `areaId`-linked to its parent direction. |
@@ -50,7 +50,8 @@ view types consumed by pages.
 
 **Layout** — `Container` (75rem, px-6/8) · `Header` (sticky, desktop nav +
 `<details>` mobile menu, language switcher preserving path) · `Footer`
-(identity, address, nav, official links) · `InstitutionalHero` (ink masthead:
+(identity + city, nav, official links — NOT a contact card; the street address
+lives only on /contacts, D025) · `InstitutionalHero` (ink masthead:
 eyebrow, masthead rule [single, drawn once — ADR-0007], H1, serif statement, CTAs, fact rail with 1905 keystone) ·
 `PageIntro` (sub-page opener: eyebrow, serif H1, lead) · `SectionHeader`
 (eyebrow-over-hairline + serif H2; `tone="dark"` for ink/navy bands).
@@ -64,9 +65,10 @@ title a link [home digest]; `headingLevel` 2|3 tracks the document outline) ·
 Portrait plate mounts only where a registered asset exists — progressive
 enhancement, ADR-0009; mixed sections are normal).
 
-**UI** — `Portrait` (fixed 3:4 hairline plate, archival MONOCHROME grading
-sitewide — ADR-0010; image required, reserved state removed; mounts only
-with a registered asset) ·
+**UI** — `Portrait` (fixed 3:4 hairline plate, shared muted-COLOUR grading
+sitewide — `saturate-[0.85] contrast-[0.97]`, ADR-0011 supersedes ADR-0010's
+grayscale; image required, reserved state removed; mounts only with a
+registered asset) ·
 `Figure`
 (documentary plate with caption bar + plate index — currently dormant: no
 render site until Phase B photography returns it to the homepage century
@@ -118,23 +120,27 @@ editorial`; `Claim<T>` pairs value + provenance; constructors (`sourced()`,
 `verified()`, …) and per-source conveniences (`fromDeptProfile`, `fromPhyschem`,
 `fromChemKnu`, `fromStaffDirectory[V2]`). `SOURCES` registers every reference
 document with retrieval dates; snapshots live in `source-materials/`.
-`isReviewMode()` gates `ReviewMark` rendering (dev or
-`NEXT_PUBLIC_PROVENANCE_REVIEW=1`; resolved at build time).
+`isReviewMode()` gates `ReviewMark` rendering — **development only**
+(`NODE_ENV !== "production"`, D026); every production/preview build renders no
+marks (the env-var override was removed so review state cannot leak).
 
 ## Publication gates (who renders publicly)
 
 ```
 StaffMember
-  ├─ visibility: "featured" | "internal"   ← editorial curation (ADR-0004)
-  │     internal → NO render path at all
+  ├─ visibility: "featured"|"staff"|"internal"  ← editorial placement (ADR-0004/0012)
+  │     featured → homepage + /staff (leadership)
+  │     staff    → /staff only (complete teaching directory)
+  │     internal → NO render path at all (faculty-level records)
   └─ person: Claim<…>.provenance.state     ← trust gate (ADR-0001 + 0005)
         verified | sourced → renders (review mark until verified)
         placeholder/editorial → honest pending placeholder ("Ім'я уточнюється")
 ```
 
-Curated public set (operator-authorized, ADR-0005): dean (about), head + 4 key
-faculty (staff), 6 group designations (research). Bio statistics never publish.
-The remaining roster is normalized as `internal` — archived, unrendered.
+Homepage curated set (operator-authorized, ADR-0005): dean (about), head + 4
+research leaders (home), 6 group designations (research). /staff is the COMPLETE
+teaching staff — head + 4 leading faculty + 6 teaching staff = 11 (ADR-0012).
+Bio statistics never publish. `internal` is now faculty-level records only.
 
 ## Where the truth lives
 

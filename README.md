@@ -61,4 +61,5 @@ npm run build      # production build
 ```
 
 `NEXT_PUBLIC_SITE_URL` sets the canonical origin in production.
-`NEXT_PUBLIC_PROVENANCE_REVIEW=1` enables provenance review marks in a preview build.
+Provenance review marks render in **local development only** (`npm run dev`);
+production and preview builds never show them (D026).

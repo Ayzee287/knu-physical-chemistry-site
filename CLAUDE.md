@@ -43,8 +43,9 @@ repo under `Workspace/`).
   renders; quality grades are internal documentation, never a render gate).
   A plate renders only where a registered asset exists; photo-less records
   use the typographic layout; reserved frames are abolished; hotlinking
-  forbidden. All portraits render as archival monochrome prints through the
-  shared `Portrait` plate.
+  forbidden. All portraits render through the shared `Portrait` plate as a
+  single, gently muted colour print (`saturate-[0.85] contrast-[0.97]`,
+  ADR-0011 supersedes ADR-0010's grayscale — colour, not monochrome).
 
 ## i18n (non-negotiable)
 
@@ -65,16 +66,21 @@ repo under `Workspace/`).
   independently confirmed. Verified = independently confirmed. Verification
   removes review marks; it is performed by a HUMAN with the department, never
   by an AI session deciding a claim "looks right".
-- Two independent publication gates for people (ADR-0004):
-  1. **visibility** — only `featured` records render; `internal` records have
-     no render path (curated institution, not a directory).
-  2. **provenance** — featured records publish with `sourced` provenance under
+- Two independent publication gates for people (ADR-0004, visibility extended
+  by ADR-0012):
+  1. **visibility** — three tiers. `featured` renders on the curated homepage
+     AND /staff (leadership). `staff` renders on /staff only — section 3 makes
+     it the COMPLETE teaching-staff directory (ADR-0012), but stays off the
+     homepage. `internal` has no public render path (faculty-level records).
+  2. **provenance** — records publish with `sourced` provenance under
      explicit operator authorization (ADR-0005 amendment); records with no
      factual sourcing render as honest pending placeholders (ADR-0001).
 - Volatile bio statistics (h-index, publication counts, prizes) are **never**
   published — source notes only.
-- `ReviewMark` renders trust-state tags in dev/review builds only
-  (`NEXT_PUBLIC_PROVENANCE_REVIEW=1`); production renders nothing.
+- `ReviewMark` renders trust-state tags in **local development only**
+  (`isReviewMode()` = `NODE_ENV !== "production"`, D026). Any production build —
+  production or preview — renders nothing; the env-var override was removed so
+  no review-state label can leak into a deployed site.
 
 ## Design language (summary — full rules in vault design-language + ADR-0003)
 

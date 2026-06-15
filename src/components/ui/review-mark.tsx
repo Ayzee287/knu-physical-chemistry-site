@@ -8,8 +8,9 @@ import {
 /**
  * Inline provenance marker for editors. Renders a small tag next to any claim
  * whose trust state is not "verified", so unverified facts and placeholders are
- * obvious during review. It is gated by isReviewMode(): in production builds it
- * renders nothing, so it never reaches the public site.
+ * obvious during review. Gated by isReviewMode() — DEVELOPMENT ONLY (D026): in
+ * any production build (production or preview) it renders nothing, so no
+ * review-state label can ever reach a deployed site.
  *
  * Intentionally outside the institutional palette (amber, not navy/slate) — it
  * reads as tooling, not as content.

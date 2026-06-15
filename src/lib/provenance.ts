@@ -161,17 +161,17 @@ export const STATE_TAGS: Record<ProvenanceState, string> = {
 /**
  * Whether provenance markers should render.
  *
- * Markers are an editor/reviewer aid and must NOT reach the public site. They
- * render in development by default, and can be turned on for a specific
- * (preview) build by setting NEXT_PUBLIC_PROVENANCE_REVIEW=1. Because the
- * institutional pages are statically generated, this is resolved at build time,
- * so toggling it on a deployed preview requires a rebuild.
+ * Markers are a LOCAL editor/reviewer aid and must NEVER reach a production
+ * build of any kind (production OR preview deploy). The gate is therefore
+ * strictly development-only: it returns true only when NODE_ENV is not
+ * "production". The former NEXT_PUBLIC_PROVENANCE_REVIEW production override
+ * was removed (D026, Task D) — it was the one path by which a "UNVERIFIED"
+ * tag could appear in a deployed build, and the operator requires zero
+ * review-state content in production UI. Editors still see the marks on the
+ * local dev server (`next dev`).
  */
 export function isReviewMode(): boolean {
-  return (
-    process.env.NEXT_PUBLIC_PROVENANCE_REVIEW === "1" ||
-    process.env.NODE_ENV !== "production"
-  );
+  return process.env.NODE_ENV !== "production";
 }
 
 // Re-exported here so content modules have one import for the locale-keyed

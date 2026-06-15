@@ -19,12 +19,16 @@ export type StaffRank =
 
 /**
  * Editorial publication governance (separate from provenance):
- * - featured — belongs to the CURATED public surface (head, dean, selected
- *   key figures). Still subject to the verified-only rule for the person.
+ * - featured — the CURATED leadership surface: head, dean, the leading faculty
+ *   shown on the homepage / "Провідні викладачі". Still subject to the
+ *   verified-or-sourced rule for the person.
+ * - staff — the department's teaching & research staff. Renders on /staff
+ *   (the complete teaching-staff directory, ADR-0012) but NOT on the curated
+ *   homepage. Same person gate as featured.
  * - internal — normalized and archived in the collection, never rendered
- *   publicly. The public site is a curated institution, not a directory.
+ *   publicly (e.g. faculty-level records that are not departmental staff).
  */
-export type StaffVisibility = "featured" | "internal";
+export type StaffVisibility = "featured" | "staff" | "internal";
 
 /** A member of the department's academic staff (or faculty leadership). */
 export type StaffMember = {

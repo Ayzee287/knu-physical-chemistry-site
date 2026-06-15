@@ -20,32 +20,15 @@ export function Footer({ lang, dict }: { lang: Locale; dict: Dictionary }) {
                 former dict.brand.full orphan). Slightly larger serif than the
                 body columns: the page should END on the institution's name. */}
             <p className="font-serif text-xl text-navy">{dict.brand.full}</p>
+            {/* Identity only. The footer is an identity / navigation surface,
+                not a contact resource (D025, Task F): the full postal address
+                and all channels live once, on /contacts (one nav click). The
+                general location stays in the founded·city strip below — so no
+                contact fact is repeated within the footer or between it and
+                /contacts. */}
             <p className="mt-2 max-w-xs text-sm leading-6 text-slate">
               {site.faculty[lang]} · {site.university[lang]}
             </p>
-            <address className="mt-5 text-sm not-italic leading-6 text-slate">
-              {contact.address.value.map((line, i) => (
-                <span key={line} className="block">
-                  {line}
-                  {i === contact.address.value.length - 1 && (
-                    <ReviewMark provenance={contact.address.provenance} />
-                  )}
-                </span>
-              ))}
-              {/* inline-block (between block siblings): the underline device
-                  hugs the address text instead of the full column width. */}
-              <a
-                href={`mailto:${contact.email.value}`}
-                className="link-underline mt-1 inline-block hover:text-navy"
-              >
-                {contact.email.value}
-              </a>
-              <ReviewMark provenance={contact.email.provenance} />
-              <span className="block">
-                {contact.phone.value}
-                <ReviewMark provenance={contact.phone.provenance} />
-              </span>
-            </address>
           </div>
 
           <div>

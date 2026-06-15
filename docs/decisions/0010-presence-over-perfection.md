@@ -1,7 +1,11 @@
 # 0010 — Presence over perfection: every available official portrait publishes, as an archival monochrome print
 
-Date: 2026-06-12 · Status: accepted · Supersedes the per-asset quality bar of
-ADR-0009 (its clause 2); all other ADR-0009 clauses stand.
+Date: 2026-06-12 · Status: accepted, clause 3 superseded · Supersedes the
+per-asset quality bar of ADR-0009 (its clause 2); all other ADR-0009 clauses
+stand. **Clause 3 (the grayscale/archival-monochrome grading) is superseded by
+ADR-0011 (2026-06-15)** — the print is now gently muted *colour*, not
+monochrome; everything else here (presence rule, hairline plate, surfaces,
+per-asset replacement) stands.
 
 ## Decision
 

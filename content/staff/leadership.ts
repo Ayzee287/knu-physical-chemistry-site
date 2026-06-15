@@ -27,12 +27,12 @@ export const leadership: StaffMember[] = [
       {
         name: { ua: "Воловенко Юліан Михайлович", en: "Yulian M. Volovenko" },
         degree: {
-          ua: "доктор хімічних наук, професор, заслужений професор КНУ",
+          ua: "Доктор хімічних наук, професор, заслужений професор КНУ",
           en: "Dr. Sc. (Chemistry), Professor, Distinguished Professor of KNU",
         },
         focus: {
-          ua: "гетероциклічна хімія та синтез нових органічних сполук",
-          en: "heterocyclic chemistry and the synthesis of new organic compounds",
+          ua: "Гетероциклічна хімія та синтез нових органічних сполук",
+          en: "Heterocyclic chemistry and the synthesis of new organic compounds",
         },
       },
       v2(
@@ -52,7 +52,7 @@ export const leadership: StaffMember[] = [
     person: claim(
       {
         name: { ua: "Усенко Наталія Ігорівна", en: "Nataliia I. Usenko" },
-        degree: { ua: "кандидат хімічних наук, доцент", en: "Cand. Sc. (Chemistry), Associate Professor" },
+        degree: { ua: "Кандидат хімічних наук, доцент", en: "Cand. Sc. (Chemistry), Associate Professor" },
       },
       v2("Same person as the departmental record content/staff/staff.ts#usenko — verify once, publish in both roles."),
     ),
@@ -67,7 +67,7 @@ export const leadership: StaffMember[] = [
       {
         name: { ua: "Куцевол Наталія Володимирівна", en: "Nataliia V. Kutsevol" },
         degree: {
-          ua: "доктор хімічних наук, провідний науковий співробітник",
+          ua: "Доктор хімічних наук, провідний науковий співробітник",
           en: "Dr. Sc. (Chemistry), Leading Researcher",
         },
       },
