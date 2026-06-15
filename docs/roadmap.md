@@ -39,8 +39,9 @@ backlog empty.
 **Goal:** upgrade the portrait set and add documentary imagery. Publication
 is complete: under ADR-0010 (presence over perfection) **every featured
 person carries their official portrait** — /staff ×5, /about dean, homepage
-leaders ×4 — rendered as archival monochrome prints through the shared
-plate. What remains is asset QUALITY, not presence.
+leaders ×4 — rendered through the shared plate as a gently muted colour print
+(ADR-0011, supersedes ADR-0010's grayscale). What remains is asset QUALITY,
+not presence.
 
 **Work:** replacement request to the department — originals for Іщенко
 (137px, first priority), the dean (100×150) and Усенко; a better portrait
@@ -54,7 +55,7 @@ conversation is the natural moment to ask (same stakeholder).
 
 **Risks:** department objecting to a published portrait (one-line removal;
 sources documented per registry entry); upscaled low-res files on HiDPI
-screens (mitigated by plate sizes + monochrome grading; tracked as debt
+screens (mitigated by plate sizes + the muted-colour grading; tracked as debt
 P2.1).
 
 **Success criteria:** all featured records carry grade-B-or-better portraits;

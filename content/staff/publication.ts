@@ -11,8 +11,9 @@ import { placeholder, type Localised } from "@/lib/provenance";
 //   - `placeholder`/`editorial` (no factual sourcing) → an honest pending
 //     placeholder; null detail lines, which render sites drop entirely.
 //
-// The visibility gate (featured/internal, ADR-0004) stays with the callers —
-// it is editorial curation, not trust resolution.
+// The visibility gate (featured / staff / internal — ADR-0004, extended by
+// ADR-0012) stays with the callers via the getters — it is editorial
+// curation/placement, not trust resolution, and is orthogonal to this gate.
 
 const namePending: Localised = {
   ua: "Ім’я уточнюється",

@@ -103,8 +103,9 @@ export default async function HomePage({ params }: PageProps) {
           answers "who are the scientists behind this department" before it
           catalogues the programme — the hero states the institution, this
           section gives it faces. Portrait plates joined the rows under
-          ADR-0010 (archival monochrome, hairline plate, progressive
-          enhancement — a row without a registered asset stays typographic).
+          ADR-0010 (hairline plate, progressive enhancement — a row without a
+          registered asset stays typographic); the muted-colour grading is
+          ADR-0011.
           Each leader joins to their direction's anchor on /research —
           people ↔ programme, not a directory. */}
       <section className="py-16 sm:py-20 lg:py-24">

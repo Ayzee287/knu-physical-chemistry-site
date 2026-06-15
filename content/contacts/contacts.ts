@@ -46,7 +46,16 @@ const phone: Claim<string> = claim(
   fromChemKnu("Faculty number."),
 );
 
-export const contact = { address, email, phone, departmentPhone, departmentEmail };
+// Department location → the official Google Maps place link supplied by the
+// operator (ADR-0013, revised D026). It is an external LINK, not an embedded
+// iframe: no Google script, cookie, or tracking pixel loads on our page —
+// privacy and performance are preserved (the visitor only meets Google after
+// they click, in their own tab). The short link resolves to the verified
+// place pin, so we still assert no hand-entered coordinates. Replacement /
+// reverting to OSM is a one-line edit here.
+const mapUrl = "https://maps.app.goo.gl/GopvEMmZJcgTeKtK6";
+
+export const contact = { address, email, phone, departmentPhone, departmentEmail, mapUrl };
 
 // ── Unpublished backlog ──────────────────────────────────────────────────────
 // The legacy head-office phone was PROMOTED to `departmentPhone` above after
@@ -105,6 +114,7 @@ export type LocalisedContact = {
   phone: { value: string; provenance: Provenance };
   departmentPhone: { value: string; provenance: Provenance };
   departmentEmail: { value: string; provenance: Provenance };
+  mapUrl: string;
   links: Array<{ id: string; label: string; url: string; provenance: Provenance }>;
 };
 
@@ -115,6 +125,7 @@ export function getContact(lang: Locale): LocalisedContact {
     phone,
     departmentPhone,
     departmentEmail,
+    mapUrl,
     links: officialLinks.map((link) => ({
       id: link.id,
       label: link.label[lang],

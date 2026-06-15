@@ -97,6 +97,50 @@ const registry = {
     alt: { ua: "Воловенко Юліан Михайлович", en: "Yulian M. Volovenko" },
     position: "50% 25%",
   },
+  // Teaching-staff portraits, localised from official sources (D026, ADR-0012
+  // directory). physchem.knu.ua/1/* pre-framed portraits, infopacket fallback;
+  // muted-colour grading + plate size carry the lower-res files (ADR-0011).
+  // Replacement = one-line edit; crop tuning (position) rides the P0.2 eye-pass.
+  diyuk: {
+    src: "/images/staff/diyuk.jpg",
+    width: 305,
+    height: 381,
+    alt: { ua: "Діюк Віталій Євгенович", en: "Vitalii Ye. Diyuk" },
+  },
+  boldyrieva: {
+    src: "/images/staff/boldyrieva.jpg",
+    width: 258,
+    height: 328,
+    alt: { ua: "Болдирєва Ольга Юріївна", en: "Olha Yu. Boldyrieva" },
+  },
+  haidai: {
+    src: "/images/staff/haidai.jpg",
+    width: 394,
+    height: 525,
+    alt: { ua: "Гайдай Сніжана Вікторівна", en: "Snizhana V. Haidai" },
+  },
+  // Lowest-res of the set (physchem 209×263 pre-framed portrait; the infopacket
+  // original is a 2592×1944 landscape — rejected: a 3:4 crop of it needs
+  // browser-verified positioning we cannot do here). Acceptable under the
+  // presence rule (larger than the published Іщенко 137px).
+  malysheva: {
+    src: "/images/staff/malysheva.jpg",
+    width: 209,
+    height: 263,
+    alt: { ua: "Малишева Марія Львівна", en: "Mariia L. Malysheva" },
+  },
+  yatsymyrskyi: {
+    src: "/images/staff/yatsymyrskyi.jpg",
+    width: 794,
+    height: 978,
+    alt: { ua: "Яцимирський Андрій Віталійович", en: "Andrii V. Yatsymyrskyi" },
+  },
+  guralskyi: {
+    src: "/images/staff/guralskyi.jpg",
+    width: 354,
+    height: 472,
+    alt: { ua: "Гуральський Ілля Олександрович", en: "Illia O. Guralskyi" },
+  },
 } as const satisfies Record<string, SiteImage>;
 
 export type ImageKey = keyof typeof registry & string;

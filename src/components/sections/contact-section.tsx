@@ -4,9 +4,27 @@ import { getContact } from "@content/contacts/contacts";
 import type { Locale, Dictionary } from "@/lib/i18n";
 
 /**
- * The department's contact record: departmental phone/email (v3 profile),
- * the building address, faculty-level fallback channels, and the official
- * sites of record. Every fact renders with its provenance mark in review mode.
+ * The department's contact record — the page's UNIQUE value over the footer
+ * (Task B / D025). The footer is the site-wide ambient surface: identity,
+ * address, navigation, official resources. This page is the authoritative
+ * record of HOW and WHO, ordered by hierarchy rather than mirrored from the
+ * footer grid:
+ *
+ *   where  → the building address (also the footer's identity address, but
+ *            here it is the page's anchor, not a chrome line);
+ *   how    → the DEPARTMENT channels first (phone, head's-office mailbox) —
+ *            the primary way to reach the department;
+ *   who    → the FACULTY channels as the labelled fallback.
+ *
+ * The official-resources column was REMOVED: it duplicated the footer block
+ * that renders directly below this page (D025) — the footer owns site-wide
+ * external links, and /about carries them too. The address carries a "view on
+ * the map" external link (OpenStreetMap, ADR-0013) — the location experience
+ * is a privacy-respecting link, not an embed. Office hours are not in any
+ * source, so none is invented (no "coming soon" placeholders — the
+ * curation-is-deliberate posture). Every fact keeps its provenance mark in
+ * review mode. Department before faculty is the whole hierarchy device — no
+ * new visual element, just order and the labels that already name each tier.
  */
 export function ContactSection({
   lang,
@@ -19,10 +37,10 @@ export function ContactSection({
   const labels = dict.contacts.labels;
 
   return (
-    <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-4">
+    <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-3 lg:gap-12">
+      {/* Where — the address anchors the record. h2 labels (eyebrow-scale,
+          like /staff): the page outline is h1 → one h2 per contact field. */}
       <div>
-        {/* h2 labels (eyebrow-scale, like /staff): the page outline is
-            h1 → one h2 per contact record. */}
         <h2 className="text-xs uppercase tracking-[0.18em] text-copper">
           {labels.address}
         </h2>
@@ -36,8 +54,21 @@ export function ContactSection({
             </span>
           ))}
         </address>
+        {/* Location experience (ADR-0013): a privacy-respecting external map
+            link, not an embed. The query is the address itself — OSM geocodes
+            it, so no unverified coordinates are asserted. */}
+        <p className="mt-3 text-sm">
+          <ExternalLink
+            href={contact.mapUrl}
+            newTabNote={dict.ui.opensInNewTab}
+            className="text-navy hover:text-slate"
+          >
+            {dict.contacts.mapLabel}
+          </ExternalLink>
+        </p>
       </div>
 
+      {/* How — the department's own channels, the primary way to reach it. */}
       <div className="space-y-6">
         <div>
           <h2 className="text-xs uppercase tracking-[0.18em] text-copper">
@@ -64,6 +95,7 @@ export function ContactSection({
         </div>
       </div>
 
+      {/* Who — the faculty channels, the institutional fallback (labelled). */}
       <div className="space-y-6">
         <div>
           <h2 className="text-xs uppercase tracking-[0.18em] text-copper">
@@ -88,25 +120,6 @@ export function ContactSection({
             <ReviewMark provenance={contact.email.provenance} />
           </p>
         </div>
-      </div>
-
-      <div>
-        <h2 className="text-xs uppercase tracking-[0.18em] text-copper">
-          {labels.official}
-        </h2>
-        <ul className="mt-3 space-y-2.5">
-          {contact.links.map((link) => (
-            <li key={link.id}>
-              <ExternalLink
-                href={link.url}
-                newTabNote={dict.ui.opensInNewTab}
-                className="text-sm text-navy hover:text-slate"
-              >
-                {link.label}
-              </ExternalLink>
-            </li>
-          ))}
-        </ul>
       </div>
     </div>
   );

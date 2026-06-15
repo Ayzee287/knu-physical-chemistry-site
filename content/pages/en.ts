@@ -135,8 +135,8 @@ export const en = {
     headSection: "Head of Department",
     featuredSection: "Leading faculty",
     rosterSection: "Teaching and research staff",
-    rosterPending:
-      "Profiles of the department's other staff are added as records are confirmed with the department. The full roster of record is available on the department's official website.",
+    rosterNote:
+      "Beyond its teaching faculty, the department also has research staff, whose record is kept on the official department website.",
     rosterCta: "Official department website",
   },
 
@@ -175,7 +175,7 @@ export const en = {
     intro: {
       eyebrow: "Contacts",
       title: "Department contacts",
-      lead: "The department is located in the Faculty of Chemistry building; departmental and faculty contacts are below.",
+      lead: "Write or call the department directly — the faculty channels are a fallback. The department is in the Faculty of Chemistry building; its address and map are below.",
     },
     labels: {
       address: "Address",
@@ -183,8 +183,8 @@ export const en = {
       departmentEmail: "Department email",
       phone: "Faculty phone",
       email: "Faculty email",
-      official: "Official resources",
     },
+    mapLabel: "View on the map",
   },
 
   footer: {
