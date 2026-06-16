@@ -34,6 +34,7 @@ export function resolvePerson(
   if (!publishable) {
     return {
       id: member.id,
+      slug: member.slug,
       role: member.role[lang],
       name: namePending[lang],
       degree: null,
@@ -48,6 +49,7 @@ export function resolvePerson(
   const person = member.person.value;
   return {
     id: member.id,
+    slug: member.slug,
     role: member.role[lang],
     name: person.name[lang],
     degree: person.degree?.[lang] ?? null,

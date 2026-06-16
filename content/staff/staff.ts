@@ -42,6 +42,7 @@ const confirmNote = "Verify with the department; published as sourced under ADR-
 export const staff: StaffMember[] = [
   {
     id: "head",
+    slug: "fritskyi",
     rank: "head",
     visibility: "featured",
     role: { ua: "Завідувач кафедри", en: "Head of Department" },
@@ -74,6 +75,7 @@ export const staff: StaffMember[] = [
   },
   {
     id: "ishchenko",
+    slug: "ishchenko",
     rank: "professor",
     visibility: "featured",
     role: { ua: "Професор кафедри", en: "Professor" },
@@ -94,6 +96,7 @@ export const staff: StaffMember[] = [
   },
   {
     id: "oleksenko",
+    slug: "oleksenko",
     rank: "professor",
     visibility: "featured",
     role: { ua: "Професор кафедри", en: "Professor" },
@@ -114,6 +117,7 @@ export const staff: StaffMember[] = [
   },
   {
     id: "roik",
+    slug: "roik",
     rank: "professor",
     visibility: "featured",
     role: { ua: "Професор кафедри", en: "Professor" },
@@ -137,6 +141,7 @@ export const staff: StaffMember[] = [
   },
   {
     id: "usenko",
+    slug: "usenko",
     rank: "docent",
     visibility: "featured",
     role: {
@@ -158,6 +163,7 @@ export const staff: StaffMember[] = [
   },
   {
     id: "haidai",
+    slug: "haidai",
     rank: "docent",
     visibility: "staff",
     role: { ua: "Доцент кафедри · секретар кафедри", en: "Associate Professor · Department Secretary" },
@@ -178,6 +184,7 @@ export const staff: StaffMember[] = [
   },
   {
     id: "malysheva",
+    slug: "malysheva",
     rank: "docent",
     visibility: "staff",
     role: { ua: "Доцент кафедри", en: "Associate Professor" },
@@ -198,6 +205,7 @@ export const staff: StaffMember[] = [
   },
   {
     id: "diyuk",
+    slug: "diyuk",
     rank: "docent",
     visibility: "staff",
     role: { ua: "Доцент кафедри", en: "Associate Professor" },
@@ -218,6 +226,7 @@ export const staff: StaffMember[] = [
   },
   {
     id: "boldyrieva",
+    slug: "boldyrieva",
     rank: "docent",
     visibility: "staff",
     role: { ua: "Доцент кафедри", en: "Associate Professor" },
@@ -234,6 +243,7 @@ export const staff: StaffMember[] = [
   },
   {
     id: "yatsymyrskyi",
+    slug: "yatsymyrskyi",
     rank: "docent",
     visibility: "staff",
     role: { ua: "Доцент кафедри", en: "Associate Professor" },
@@ -254,6 +264,7 @@ export const staff: StaffMember[] = [
   },
   {
     id: "guralskyi",
+    slug: "guralskyi",
     rank: "docent",
     visibility: "staff",
     role: { ua: "Доцент кафедри", en: "Associate Professor" },
@@ -322,4 +333,34 @@ export function getResearchLeaders(lang: Locale): ResearchLeader[] {
   return staff
     .filter((m) => m.visibility === "featured" && leaderAreaById[m.id])
     .map((m) => ({ ...resolvePerson(m, lang), areaId: leaderAreaById[m.id] }));
+}
+
+// ── Profile routing (ADR-0014) ──────────────────────────────────────────────
+//
+// Every PUBLISHED member (featured + staff) has a `/staff/<slug>` profile page.
+// `internal` records never route (no public render path). These helpers are the
+// single source of "who is routable" — the route's generateStaticParams and the
+// sitemap both derive from them, so the route set cannot drift from the policy.
+
+/** Members that have a public profile page: the visible directory (not internal). */
+const routable = (m: StaffMember): boolean =>
+  m.visibility === "featured" || m.visibility === "staff";
+
+/** Profile slugs of every published member — drives generateStaticParams. */
+export function getRoutableStaffSlugs(): string[] {
+  return staff.filter(routable).map((m) => m.slug);
+}
+
+/** Indexable profile app-paths (`/staff/<slug>`) — appended to the sitemap. */
+export function getStaffProfilePaths(): string[] {
+  return getRoutableStaffSlugs().map((slug) => `/staff/${slug}`);
+}
+
+/** Resolve a published member by profile slug; undefined when unknown/internal. */
+export function findStaffBySlug(
+  slug: string,
+  lang: Locale,
+): LocalisedStaffMember | undefined {
+  const member = staff.find((m) => m.slug === slug && routable(m));
+  return member ? resolvePerson(member, lang) : undefined;
 }

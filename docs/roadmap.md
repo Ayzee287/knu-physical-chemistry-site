@@ -10,6 +10,14 @@ every phase must preserve: provenance discipline, curated publication
 governance (ADR-0004/0005), bilingual parity, zero russian-language content,
 and the archival design language (ADR-0003).
 
+**Shipped capability — staff research profiles (ADR-0014).** Every published
+member now has a dedicated `/staff/<slug>` page; rich profile content lives in an
+optional `content/staff/profiles.ts` collection (Fritskyi authored as the
+reference). Authoring the remaining ten is **content, not engineering** — a keyed
+entry, no code — and is gated on the same department-confirmation work as Phases A
+and D below (the new profile fields publish `sourced` until verified, and volatile
+statistics are deliberately not modelled).
+
 ---
 
 ## Phase A — Verification

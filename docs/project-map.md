@@ -1,6 +1,6 @@
 # Project map
 
-One-document architecture orientation. Updated 2026-06-11. If this drifts from
+One-document architecture orientation. Updated 2026-06-16. If this drifts from
 the code, the code wins — fix the map.
 
 ```
@@ -15,14 +15,15 @@ source-materials/            committed source snapshots (provenance evidence)
 docs/                        ADRs · audits · deployment · roadmap · this map
 ```
 
-## Pages (5 routes × 2 locales, all SSG)
+## Pages (5 fixed routes + per-person profiles, × 2 locales, all SSG)
 
 | Route | File | Composition |
 | --- | --- | --- |
 | `/{lang}` | `src/app/[lang]/page.tsx` | InstitutionalHero (ink) → research leaders (4 portrait rows, ADR-0008/0010; people before programme since D023; names deep-link to /staff anchors) → research digest (5 indexed rows) → recognition record (4 dated rows) → century band (sand: prose | head lineage register, numbers strip — D020) → navy closer. Cadence: ink → ivory → sand → navy. |
 | `/{lang}/about` | `…/about/page.tsx` | PageIntro → QuoteBlock epigraph → body → LeadershipSection (dean) → history band (sand, 1905 watermark, 8 head periods) → official links. |
 | `/{lang}/research` | `…/research/page.tsx` | PageIntro → scope note → 5 direction rows (h2) → 6 group rows (h3, copper direction eyebrow links) → school band (sand, 1944 watermark, bibliography). |
-| `/{lang}/staff` | `…/staff/page.tsx` | PageIntro → head section → leading faculty (StaffCards) → teaching & research staff (StaffCards) → pointer to official site. The COMPLETE teaching-staff directory (11 records, ADR-0012); homepage stays curated (4). All-quiet. |
+| `/{lang}/staff` | `…/staff/page.tsx` | PageIntro → head section → leading faculty (StaffCards) → teaching & research staff (StaffCards) → pointer to official site. The COMPLETE teaching-staff directory (11 records, ADR-0012); homepage stays curated (4). Each card carries a `Детальніше →` link to the profile (ADR-0014). All-quiet. |
+| `/{lang}/staff/<slug>` | `…/staff/[slug]/page.tsx` | StaffProfileView: back-link → masthead (large portrait, directory identity) → overview lede → research → achievements (dated rows) → courses (hairline list) → biography (collapsed `<details>`) → publications (when held) → contacts → department-site link. One page per published member (11 ×2, ADR-0014); `dynamicParams = false`, fully static. Rich where authored (Fritskyi), directory-level otherwise. |
 | `/{lang}/contacts` | `…/contacts/page.tsx` | PageIntro → ContactSection (3-col: address + OSM map link · dept phone/email · faculty phone/email — D025/ADR-0013). All-quiet. |
 
 System surfaces: `src/app/page.tsx` (root → `/ua` redirect), `not-found.tsx`
@@ -34,8 +35,9 @@ System surfaces: `src/app/page.tsx` (root → `/ua` redirect), `not-found.tsx`
 | --- | --- | --- |
 | `pages/en.ts`, `pages/ua.ts` | `en`, `ua` dictionaries | EN = canonical shape; `ua: typeof en` enforces parity at compile time. All UI strings live here. |
 | `history/history.ts` | `founded`, `periods`, `getHistory()` | 8 head periods 1905→present; past facts publish with `sourced` provenance (ADR-0001 targets current-personnel claims). |
-| `staff/staff.ts` | `staff`, `getStaff()`, `getTeachingStaff()`, `getHead()`, `getResearchLeaders()` | 11 records, visibility `featured`(5)\|`staff`(6); ALL render on /staff (ADR-0012), `featured` also on the homepage. Leaders = head + group-leading professors, `areaId`-joined (ADR-0008). |
-| `staff/leadership.ts` | `leadership`, `getDean()` | Faculty leadership, separate from departmental staff by design. |
+| `staff/staff.ts` | `staff`, `getStaff()`, `getTeachingStaff()`, `getHead()`, `getResearchLeaders()`, `getRoutableStaffSlugs()`, `getStaffProfilePaths()`, `findStaffBySlug()` | 11 records, each with a `slug` (profile route, ADR-0014), visibility `featured`(5)\|`staff`(6); ALL render on /staff (ADR-0012), `featured` also on the homepage. Leaders = head + group-leading professors, `areaId`-joined (ADR-0008). The routable getters drive the profile route + sitemap. |
+| `staff/profiles.ts` | `profiles`, `resolveProfile()` | OPTIONAL rich profiles keyed by `StaffMember.id` (ADR-0014). Separate from the directory so the lean record/card stay lean. Fields each a `Claim` (overview, research, biography, achievements, courses, publications, links, office, phone); `sourced`, volatile stats excluded. All 11 authored; 10/11 enriched from the department's OFFICIAL per-person pages + CVs (`fromPhyschem`, decoded from cp1251 — snapshots in `source-materials/physchem-knu-ua/perperson/`, D029). Per-person tracker in vault `00_MOC/staff-enrichment-backlog.md`. |
+| `staff/leadership.ts` | `leadership`, `getDean()` | Faculty leadership, separate from departmental staff by design (carries `slug` for type parity; never routes). |
 | `research/research.ts` | `researchAreas`, `getResearchAreas()` | 5 directions from the v3 profile. |
 | `research/groups.ts` | `researchGroups`, `getResearchGroups()` | 6 groups, each `areaId`-linked to its parent direction. |
 | `research/school.ts` | `schoolName/Lineage/Dissertations`, `schoolFounded`, `schoolDissertationsCount`, `selectedWorks`, `getSchool()` | 1944 school; UA-language bibliography only (language policy). Display figures feed the homepage numbers strip. |
@@ -57,13 +59,16 @@ eyebrow, masthead rule [single, drawn once — ADR-0007], H1, serif statement, C
 (eyebrow-over-hairline + serif H2; `tone="dark"` for ink/navy bands).
 
 **Sections** — `LeadershipSection` (quiet dean block on /about) ·
-`ContactSection` (contact record grid).
+`ContactSection` (contact record grid) · `StaffProfileView` (the whole
+`/staff/<slug>` composition: masthead + profile sections + collapsed `<details>`
+biography, ADR-0014).
 
 **Cards** — `ResearchAreaCard` (indexed editorial row; optional `href` makes the
 title a link [home digest]; `headingLevel` 2|3 tracks the document outline) ·
 `StaffCard` (typographic record; drops null lines for withheld people; the
 Portrait plate mounts only where a registered asset exists — progressive
-enhancement, ADR-0009; mixed sections are normal).
+enhancement, ADR-0009; mixed sections are normal; carries a `Детальніше →`
+link to the person's profile, ADR-0014).
 
 **UI** — `Portrait` (fixed 3:4 hairline plate, shared muted-COLOUR grading
 sitewide — `saturate-[0.85] contrast-[0.97]`, ADR-0011 supersedes ADR-0010's
@@ -110,7 +115,8 @@ client state beyond the header's mobile menu (the only `"use client"` file).
   titles. Never rely on layout metadata inheritance — it would make every
   sub-page claim the home page as canonical.
 - `INDEXABLE_PATHS` in seo.ts drives `sitemap.ts` (one entry per locale×route
-  with full hreflang alternates). Keep in sync with `src/app/[lang]/` routes.
+  with full hreflang alternates); the per-person profile routes are appended via
+  `getStaffProfilePaths()` (ADR-0014). Keep in sync with `src/app/[lang]/` routes.
 - `robots.ts`: blanket disallow unless `VERCEL_ENV === "production"`.
 
 ## Provenance system
@@ -149,8 +155,11 @@ Bio statistics never publish. `internal` is now faculty-level records only.
 | Why this architecture? | `docs/decisions/0002` |
 | Why this design? | `docs/decisions/0003` + vault `04_Design/design-language.md` |
 | Who may be published? | `docs/decisions/0001`, `0004`, `0005` |
+| Why per-person profiles? | `docs/decisions/0014` |
 | What is the live state? | vault `00_MOC/current-state.md` |
 | What happened, when? | vault `05_Operations/decision-log.md` + sprint board |
 | What sources exist? | `docs/content-audit/` + `source-materials/README.md` |
 | What's next? | `docs/roadmap.md` (product) + vault `00_MOC/roadmap.md` (sessions) |
 | What's still owed? | `docs/technical-debt.md` |
+| Per-person profile gaps + sources? | vault `00_MOC/staff-enrichment-backlog.md` (audit + completeness matrix, D028) |
+| How to request missing staff data? | vault `02_Content/department-data-request-template.md` (D028) |

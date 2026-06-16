@@ -33,6 +33,12 @@ export type StaffVisibility = "featured" | "staff" | "internal";
 /** A member of the department's academic staff (or faculty leadership). */
 export type StaffMember = {
   id: string;
+  /**
+   * URL slug for the person's profile route (`/staff/<slug>`). Part of the
+   * directory identity, not a fact about the person — it is the stable public
+   * address of the record (ADR-0014). Transliterated from the surname.
+   */
+  slug: string;
   rank: StaffRank;
   /** Structural role label (e.g. "Завідувач кафедри") — editorial, always shown. */
   role: Localised;
@@ -62,6 +68,8 @@ export type StaffMember = {
 /** The public, locale-resolved view of a staff member. */
 export type LocalisedStaffMember = {
   id: string;
+  /** Profile-route slug, carried through so cards/links can address the page. */
+  slug: string;
   role: string;
   /** Placeholder text when the underlying person claim is not verified. */
   name: string;
@@ -74,6 +82,80 @@ export type LocalisedStaffMember = {
   orcid: string | null;
   provenance: Provenance;
   photo?: ImageKey;
+};
+
+// ── Staff research profiles (ADR-0014) ──────────────────────────────────────
+//
+// A dedicated `/staff/<slug>` page per published member. The rich, long-form
+// profile content lives in a SEPARATE, OPTIONAL collection keyed by the
+// StaffMember.id (content/staff/profiles.ts), so the lean directory record and
+// its compact card are never inflated (Phase A rule). Every discrete profile
+// fact is a `Claim` carrying its own provenance, published `sourced` until a
+// human verifies it with the department — never AI-verified. Volatile
+// statistics (h-index, publication/dissertation counts) are NOT modelled as
+// publishable fields and must not be added here.
+
+/** A titled biography section — rendered collapsed in the profile UI. */
+export type BioSection = { heading: Localised; body: Localised<string[]> };
+
+/**
+ * A dated honour or recognised result. NON-volatile by contract: a discrete,
+ * datable distinction (a prize, an election) — never a running count.
+ */
+export type Achievement = { year?: string; text: Localised };
+
+/**
+ * External scholarly profile links. Each is an independent `Claim` because each
+ * is a distinct sourced (or verified) URL; populated only where a real address
+ * is sourced — never fabricated. ORCID stays on the StaffMember record.
+ */
+export type ScholarlyLinks = {
+  scholar?: Claim<string>;
+  scopus?: Claim<string>;
+  researchgate?: Claim<string>;
+};
+
+/**
+ * The rich research profile of a staff member — keyed by `id` to a StaffMember,
+ * OPTIONAL per person. A profile page renders the directory identity always and
+ * these fields where authored; adding a profile is purely additive content, no
+ * code change (the migration path for the remaining staff, ADR-0014).
+ */
+export type StaffProfile = {
+  /** Must match a StaffMember.id. */
+  id: string;
+  /** Two–three sentence lede; the only prominent prose, shown first. */
+  overview?: Claim<Localised>;
+  /** Research focus expanded beyond the one-line directory `focus`. */
+  research?: Claim<Localised>;
+  /** Long biography, split into titled sections, collapsed in the UI. */
+  biography?: Claim<BioSection[]>;
+  /** Dated honours / recognised results (non-volatile). */
+  achievements?: Claim<Achievement[]>;
+  /** Taught courses, verbatim titles. */
+  courses?: Claim<Localised<string[]>>;
+  /** Selected publications — verbatim citations (locale-agnostic). */
+  publications?: Claim<string[]>;
+  /** Google Scholar / Scopus / ResearchGate, where sourced. */
+  links?: ScholarlyLinks;
+  /** Office / room. */
+  office?: Claim<Localised>;
+  /** Direct phone. */
+  phone?: Claim<string>;
+};
+
+/** The public, locale-resolved view of a staff profile (sections → one locale). */
+export type LocalisedStaffProfile = {
+  id: string;
+  overview: { text: string; provenance: Provenance } | null;
+  research: { text: string; provenance: Provenance } | null;
+  biography: { sections: { heading: string; body: string[] }[]; provenance: Provenance } | null;
+  achievements: { items: { year: string | null; text: string }[]; provenance: Provenance } | null;
+  courses: { items: string[]; provenance: Provenance } | null;
+  publications: { items: string[]; provenance: Provenance } | null;
+  links: { label: "scholar" | "scopus" | "researchgate"; url: string; provenance: Provenance }[];
+  office: { text: string; provenance: Provenance } | null;
+  phone: { text: string; provenance: Provenance } | null;
 };
 
 /** A research direction of the department. */

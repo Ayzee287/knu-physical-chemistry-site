@@ -1,6 +1,8 @@
+import Link from "next/link";
 import { Portrait } from "@/components/ui/portrait";
 import { ReviewMark } from "@/components/ui/review-mark";
 import { getImage } from "@/lib/images";
+import { href, type Locale } from "@/lib/i18n";
 import type { LocalisedStaffMember } from "@/types/content";
 
 /**
@@ -15,8 +17,19 @@ import type { LocalisedStaffMember } from "@/types/content";
  * absence stated as typography, never as a reserved frame. Mixed
  * photo/photo-less sections are the normal state while the portrait set
  * completes (grades + held assets: source-materials/photo-inventory.md).
+ *
+ * Each card carries one quiet link into the person's dedicated profile page
+ * (`/staff/<slug>`, ADR-0014); the row stays a compact directory entry.
  */
-export function StaffCard({ member }: { member: LocalisedStaffMember }) {
+export function StaffCard({
+  member,
+  lang,
+  cta,
+}: {
+  member: LocalisedStaffMember;
+  lang: Locale;
+  cta: string;
+}) {
   const image = getImage(member.photo);
 
   return (
@@ -73,6 +86,17 @@ export function StaffCard({ member }: { member: LocalisedStaffMember }) {
             </a>
           </p>
         ) : null}
+        <p className="mt-3 text-sm">
+          <Link
+            href={`${href(lang, "/staff")}/${member.slug}`}
+            className="inline-flex items-center gap-2 font-medium text-navy hover:text-slate"
+          >
+            <span className="link-underline">{cta}</span>
+            <span aria-hidden className="link-arrow">
+              →
+            </span>
+          </Link>
+        </p>
       </div>
     </article>
   );

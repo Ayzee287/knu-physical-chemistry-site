@@ -20,6 +20,7 @@ const v2 = fromStaffDirectoryV2;
 export const leadership: StaffMember[] = [
   {
     id: "dean",
+    slug: "volovenko",
     rank: "dean",
     visibility: "featured",
     role: { ua: "Декан хімічного факультету", en: "Dean of the Faculty of Chemistry" },
@@ -46,6 +47,7 @@ export const leadership: StaffMember[] = [
   },
   {
     id: "vice-dean-education",
+    slug: "usenko-vice-dean",
     rank: "vice-dean",
     visibility: "internal",
     role: { ua: "Заступник декана з навчальної роботи", en: "Vice-Dean for Education" },
@@ -60,6 +62,7 @@ export const leadership: StaffMember[] = [
   },
   {
     id: "vice-dean-science",
+    slug: "kutsevol",
     rank: "vice-dean",
     visibility: "internal",
     role: { ua: "Заступник декана з наукової роботи", en: "Vice-Dean for Research" },

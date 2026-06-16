@@ -139,6 +139,22 @@ export const ua: typeof en = {
     rosterNote:
       "Окрім викладацького складу, кафедра має наукових співробітників. Їхній перелік ведеться на офіційному сайті кафедри.",
     rosterCta: "Офіційний сайт кафедри",
+    card: {
+      // Посилання картки на окрему сторінку профілю (ADR-0014).
+      profileCta: "Детальніше",
+    },
+    profile: {
+      back: "Усі співробітники",
+      researchTitle: "Наукові інтереси",
+      achievementsTitle: "Відзнаки та визнання",
+      coursesTitle: "Навчальні курси",
+      biographyTitle: "Біографія",
+      publicationsTitle: "Вибрані публікації",
+      contactTitle: "Контакти",
+      officeLabel: "Кабінет",
+      phoneLabel: "Телефон",
+      officialCta: "На сайті кафедри",
+    },
   },
 
   research: {
