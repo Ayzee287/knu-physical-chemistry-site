@@ -127,10 +127,11 @@ recorded decision that it will never be done — never by being forgotten.
 ## P3 — optional
 
 ### P3.1 Deliberate dormant API surface (keep; re-justify annually)
-- `verified()` — waits for Phase A. `editorial()` — trust-vocabulary
-  completeness. `fromStaffDirectory` (v1) — kept while v1 remains a cited
-  document in `SOURCES`. `QuoteBlock.cite` — honesty affordance.
+- `verified()` — waits for Phase A. `fromStaffDirectory` (v1) — kept while v1
+  remains a cited document in `SOURCES`. `QuoteBlock.cite` — honesty affordance.
   `legacyDepartmentContacts` — documented unpublished backlog.
+  (`editorial()` left this list 2026-06-16 — it is in use on the homepage for
+  the derived research-group count, `src/app/[lang]/page.tsx`.)
 - **Risk if ignored:** none; ~30 lines.
 
 ### P3.2 True orphans

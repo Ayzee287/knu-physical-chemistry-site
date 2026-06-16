@@ -22,6 +22,35 @@ export function Header({ lang, dict }: { lang: Locale; dict: Dictionary }) {
     menuRef.current?.removeAttribute("open");
   }, [pathname]);
 
+  // Native <details> closes on neither Escape nor an outside click, so an open
+  // mobile menu would trap keyboard users and linger over the page. Add both
+  // (dependency-free): Escape closes and returns focus to the summary trigger;
+  // a pointer press anywhere outside the menu closes it. Both no-op while the
+  // menu is shut, so desktop and reduced-interaction users are unaffected.
+  useEffect(() => {
+    const menu = menuRef.current;
+    if (!menu) return;
+
+    function onKeyDown(event: KeyboardEvent) {
+      if (event.key === "Escape" && menu!.open) {
+        menu!.removeAttribute("open");
+        menu!.querySelector("summary")?.focus();
+      }
+    }
+    function onPointerDown(event: PointerEvent) {
+      if (menu!.open && !menu!.contains(event.target as Node)) {
+        menu!.removeAttribute("open");
+      }
+    }
+
+    document.addEventListener("keydown", onKeyDown);
+    document.addEventListener("pointerdown", onPointerDown);
+    return () => {
+      document.removeEventListener("keydown", onKeyDown);
+      document.removeEventListener("pointerdown", onPointerDown);
+    };
+  }, []);
+
   return (
     <header className="sticky top-0 z-50 border-b border-navy/10 bg-ivory">
       <Container>
