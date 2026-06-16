@@ -80,7 +80,7 @@ export default async function StaffPage({ params }: PageProps) {
             <span aria-hidden className="h-px flex-1 bg-navy/10" />
           </div>
           <div className="mt-6 border-b border-navy/10">
-            <StaffCard member={head} />
+            <StaffCard member={head} lang={lang} cta={t.card.profileCta} />
           </div>
         </section>
 
@@ -99,7 +99,12 @@ export default async function StaffPage({ params }: PageProps) {
             </div>
             <div className="mt-6 border-b border-navy/10">
               {featured.map((member) => (
-                <StaffCard key={member.id} member={member} />
+                <StaffCard
+                  key={member.id}
+                  member={member}
+                  lang={lang}
+                  cta={t.card.profileCta}
+                />
               ))}
             </div>
           </section>
@@ -124,7 +129,12 @@ export default async function StaffPage({ params }: PageProps) {
             </div>
             <div className="mt-6 border-b border-navy/10">
               {teaching.map((member) => (
-                <StaffCard key={member.id} member={member} />
+                <StaffCard
+                  key={member.id}
+                  member={member}
+                  lang={lang}
+                  cta={t.card.profileCta}
+                />
               ))}
             </div>
             {/* The teaching staff is complete; the official site remains the

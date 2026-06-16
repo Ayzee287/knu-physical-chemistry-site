@@ -135,12 +135,12 @@ export default async function HomePage({ params }: PageProps) {
                     ) : null}
                     <div className="min-w-0">
                       <h3 className="text-balance font-serif text-2xl font-medium leading-snug text-navy">
-                        {/* The name is the way to the person: deep-link to the
-                            record on /staff (anchor = collection id). Quiet
-                            underline device only — the arrow stays reserved for
-                            programme links. */}
+                        {/* The name is the way to the person: it now lands on
+                            their dedicated profile page (ADR-0014), the canonical
+                            home for the record. Quiet underline device only — the
+                            arrow stays reserved for programme links. */}
                         <Link
-                          href={`${href(lang, "/staff")}#${leader.id}`}
+                          href={`${href(lang, "/staff")}/${leader.slug}`}
                           className="hover:text-ink"
                         >
                           <span className="link-underline">{leader.name}</span>

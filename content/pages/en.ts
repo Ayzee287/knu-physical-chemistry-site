@@ -138,6 +138,22 @@ export const en = {
     rosterNote:
       "Beyond its teaching faculty, the department also has research staff, whose record is kept on the official department website.",
     rosterCta: "Official department website",
+    card: {
+      // The per-card link into the dedicated profile page (ADR-0014).
+      profileCta: "Read more",
+    },
+    profile: {
+      back: "All staff",
+      researchTitle: "Research interests",
+      achievementsTitle: "Awards and recognition",
+      coursesTitle: "Courses taught",
+      biographyTitle: "Biography",
+      publicationsTitle: "Selected publications",
+      contactTitle: "Contact",
+      officeLabel: "Office",
+      phoneLabel: "Phone",
+      officialCta: "On the department website",
+    },
   },
 
   research: {
