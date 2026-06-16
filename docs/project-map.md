@@ -27,7 +27,9 @@ docs/                        ADRs · audits · deployment · roadmap · this map
 | `/{lang}/contacts` | `…/contacts/page.tsx` | PageIntro → ContactSection (3-col: address + OSM map link · dept phone/email · faculty phone/email — D025/ADR-0013). All-quiet. |
 
 System surfaces: `src/app/page.tsx` (root → `/ua` redirect), `not-found.tsx`
-(bilingual 404, outside `[lang]`), `robots.ts`, `sitemap.ts`, `icon.svg`.
+(bilingual 404, outside `[lang]`), `robots.ts`, `sitemap.ts`, `icon.svg`,
+`opengraph-image.tsx` (site-wide OG/Twitter card, generated at build via
+`next/og` — typographic, no binary asset, D031).
 
 ## Content collections (`content/`)
 
@@ -118,6 +120,15 @@ client state beyond the header's mobile menu (the only `"use client"` file).
   with full hreflang alternates); the per-person profile routes are appended via
   `getStaffProfilePaths()` (ADR-0014). Keep in sync with `src/app/[lang]/` routes.
 - `robots.ts`: blanket disallow unless `VERCEL_ENV === "production"`.
+- OG/Twitter card: `src/app/opengraph-image.tsx` generates one site-wide
+  card; `buildMetadata` references it explicitly (`/opengraph-image`) on every
+  page because the per-page `openGraph` object suppresses the file-convention
+  merge. Twitter card is `summary_large_image` (D031).
+- Structured data: `[lang]/layout.tsx` emits a minimal `EducationalOrganization`
+  JSON-LD — identity facts ONLY (name, parent university, official sites). No
+  person/contact/historical claim (those are `sourced`, not `verified`;
+  structured data must never assert an unverified fact). Person/`verified`
+  JSON-LD stays gated on Phase A (roadmap Phase E). D031.
 
 ## Provenance system
 

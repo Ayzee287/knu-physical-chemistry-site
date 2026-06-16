@@ -120,6 +120,14 @@ not grids); no orphaned anchors.
 **Goal:** the site is found for the searches a prospective student or
 collaborator actually makes, in both languages.
 
+**Shipped early (D031, release hardening):** the site-wide OpenGraph/Twitter
+card (`opengraph-image.tsx`, typographic, both locales via one identity card)
+and a minimal **identity-only** `Organization` JSON-LD (name, parent
+university, official sites — no person/contact/historical fact). These carried
+no verification dependency. The rest of this phase (production-domain Search
+Console, `Person`/`verified` structured data, inbound links) still stands and
+remains gated on Phase A.
+
 **Work:** verify production indexing (Search Console for the production
 domain; sitemap fetch; hreflang cluster validation); structured data
 (`Organization`/`CollegeOrUniversity` + `Person` for verified staff — only

@@ -19,6 +19,19 @@ import {
 
 const SITE_NAME = "KNU Physical Chemistry";
 
+// The site-wide OG card (src/app/opengraph-image.tsx, D031). Each page sets its
+// own `openGraph` object here, which suppresses the file-convention image merge,
+// so the card is referenced explicitly. The bare route path (no cache-busting
+// hash) is served by the static image handler and resolves to an absolute URL
+// against `metadataBase`. The alt text is the institution's Latin identity —
+// the card carries no page-specific or unverified content.
+const OG_IMAGE = {
+  url: "/opengraph-image",
+  width: 1200,
+  height: 630,
+  alt: "Department of Physical Chemistry — Taras Shevchenko National University of Kyiv",
+} as const;
+
 /**
  * Indexable app paths (after the locale segment), in sitemap order. The home is
  * "". Keep this in sync with the routes under `src/app/[lang]/`; it drives the sitemap.
@@ -80,11 +93,15 @@ export function buildMetadata({
       locale: ogLocale[lang],
       alternateLocale: alternateLocales,
       type: "website",
+      images: [OG_IMAGE],
     },
     twitter: {
-      card: "summary",
+      // summary_large_image pairs with the site-wide opengraph-image card
+      // (src/app/opengraph-image.tsx, D031).
+      card: "summary_large_image",
       title,
       description,
+      images: [OG_IMAGE.url],
     },
   };
 }

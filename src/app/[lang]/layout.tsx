@@ -1,10 +1,40 @@
 import { notFound } from "next/navigation";
 import { Header } from "@/components/layout/header";
 import { Footer } from "@/components/layout/footer";
-import { getDictionary, hreflang, isLocale, locales } from "@/lib/i18n";
+import { site } from "@/content/site";
+import { absoluteUrl } from "@/lib/site";
+import {
+  getDictionary,
+  hreflang,
+  isLocale,
+  locales,
+  type Locale,
+} from "@/lib/i18n";
 
 export function generateStaticParams() {
   return locales.map((lang) => ({ lang }));
+}
+
+// Minimal Organization structured data (D031). Identity facts only — the
+// department's name, its parent university, and its official sites of record.
+// No person, contact, address or historical claim is asserted here: those are
+// `sourced`, not `verified`, and structured data must never publish an
+// unverified fact (roadmap Phase E hard rule). Serialised as plain text
+// children of the script (no dangerouslySetInnerHTML — forbidden); the data
+// contains no `<`, `>` or `&`, so React's text escaping cannot corrupt it.
+function organizationLd(lang: Locale) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "EducationalOrganization",
+    name: site.department[lang],
+    url: absoluteUrl(`/${lang}`),
+    parentOrganization: {
+      "@type": "CollegeOrUniversity",
+      name: site.university[lang],
+      url: "https://knu.ua/",
+    },
+    sameAs: ["https://physchem.knu.ua/index_ua.html", "https://chem.knu.ua/"],
+  };
 }
 
 // Note: canonical / hreflang / OpenGraph are intentionally NOT set here. Layout
@@ -30,6 +60,9 @@ export default async function LocaleLayout({
   // and there is no phantom scroll from URL-bar sizing.
   return (
     <div lang={hreflang[lang]} className="flex min-h-dvh flex-col">
+      <script type="application/ld+json">
+        {JSON.stringify(organizationLd(lang))}
+      </script>
       {/* transition-none: the skip link must appear instantly on focus — a
           focus jump never animates (D015), so it opts out of the shared
           interaction clock. */}
