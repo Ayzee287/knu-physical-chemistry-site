@@ -1,6 +1,7 @@
 import type { ReactNode } from "react";
 import Link from "next/link";
 import { Container } from "@/components/layout/container";
+import { SectionSpread } from "@/components/layout/section-spread";
 import { Portrait } from "@/components/ui/portrait";
 import { ReviewMark } from "@/components/ui/review-mark";
 import { ExternalLink } from "@/components/ui/external-link";
@@ -33,7 +34,15 @@ const SCHOLAR_LABELS: Record<
   researchgate: "ResearchGate",
 };
 
-/** Section opener: eyebrow label + trailing hairline (the site-wide device). */
+/**
+ * Section opener: eyebrow label + trailing hairline (the site-wide device),
+ * set as a spread (ADR-0015) so the label stands in the margin and the section's
+ * content takes the measure. On a profile page this matters more than anywhere
+ * else on the site: a reading page of six or seven short sections stacked
+ * label-over-content puts a horizontal rule across the page every ~120px, and
+ * the eye has to re-find the left edge each time. In the margin, the labels
+ * form one quiet index down the side and the record reads as a single column.
+ */
 function Section({
   title,
   provenance,
@@ -45,14 +54,19 @@ function Section({
 }) {
   return (
     <section className="mt-12">
-      <div className="flex items-center gap-4">
-        <h2 className="text-xs uppercase tracking-[0.2em] text-copper">
-          {title}
-          {provenance ? <ReviewMark provenance={provenance} /> : null}
-        </h2>
-        <span aria-hidden className="h-px flex-1 bg-navy/10" />
-      </div>
-      <div className="mt-6">{children}</div>
+      <SectionSpread
+        header={
+          <div className="flex items-center gap-4">
+            <h2 className="text-xs uppercase tracking-[0.2em] text-copper">
+              {title}
+              {provenance ? <ReviewMark provenance={provenance} /> : null}
+            </h2>
+            <span aria-hidden className="h-px flex-1 bg-navy/10" />
+          </div>
+        }
+      >
+        {children}
+      </SectionSpread>
     </section>
   );
 }
@@ -117,7 +131,7 @@ export function StaffProfileView({
             {/* The one-line focus is the masthead subtitle only when no fuller
                 overview follows — rich pages must not duplicate it. */}
             {!profile?.overview && member.focus ? (
-              <p className="mt-2 text-sm leading-6 text-slate/90">
+              <p className="mt-2 text-sm leading-6 text-slate">
                 {member.focus}
               </p>
             ) : null}
@@ -236,7 +250,10 @@ export function StaffProfileView({
 
         {/* Contacts — directory + profile contact facts */}
         <Section title={t.contactTitle}>
-          <div className="max-w-2xl space-y-1.5 text-sm leading-6">
+          {/* Every line here is one of the page's few interactive targets, so
+              they are spaced (leading-6 + space-y-2 ⇒ ≥24px between centres) to
+              satisfy WCAG 2.2 · 2.5.8 by the spacing route. */}
+          <div className="max-w-2xl space-y-2 text-sm leading-6">
             {member.email ? (
               <p>
                 <a
@@ -248,7 +265,7 @@ export function StaffProfileView({
               </p>
             ) : null}
             {member.orcid ? (
-              <p className="text-slate/90">
+              <p className="text-slate">
                 <a
                   href={`https://orcid.org/${member.orcid}`}
                   target="_blank"
@@ -260,7 +277,7 @@ export function StaffProfileView({
               </p>
             ) : null}
             {profile?.links.map((link) => (
-              <p key={link.label} className="text-slate/90">
+              <p key={link.label} className="text-slate">
                 <a
                   href={link.url}
                   target="_blank"
@@ -272,17 +289,21 @@ export function StaffProfileView({
                 <ReviewMark provenance={link.provenance} />
               </p>
             ))}
+            {/* Label ≠ value is carried by COLOUR WEIGHT (quiet slate label,
+                navy value), not by fading the label toward the paper. The
+                previous `text-slate/70` label measured 2.93:1 — a distinction
+                bought by making one of the two words hard to read. */}
             {profile?.office ? (
               <p className="text-slate">
-                <span className="text-slate/70">{t.officeLabel}: </span>
-                {profile.office.text}
+                {t.officeLabel}:{" "}
+                <span className="text-navy">{profile.office.text}</span>
                 <ReviewMark provenance={profile.office.provenance} />
               </p>
             ) : null}
             {profile?.phone ? (
               <p className="text-slate">
-                <span className="text-slate/70">{t.phoneLabel}: </span>
-                {profile.phone.text}
+                {t.phoneLabel}:{" "}
+                <span className="text-navy">{profile.phone.text}</span>
                 <ReviewMark provenance={profile.phone.provenance} />
               </p>
             ) : null}

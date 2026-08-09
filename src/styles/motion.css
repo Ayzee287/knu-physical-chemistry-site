@@ -1,5 +1,5 @@
 /* Motion layer — the site's complete motion and interaction-device vocabulary
- * (ADR-0006, amended by ADR-0007).
+ * (ADR-0006, amended by ADR-0007, extended by ADR-0015).
  *
  * Every keyframe and every named motion/interaction class lives in THIS file;
  * components reference the classes by name and never define their own
@@ -14,8 +14,18 @@
  *                        masthead identity leads, the supporting content and
  *                        fact rail settle a beat later (hero only)
  *   .motion-rule-draw    the masthead rule is struck left-to-right (hero only)
+ *   .motion-field-develop the hero measurement field develops like a plate
+ *                        (hero only, 1.6s, one time)
  *   .motion-menu-enter   mobile menu surfaces when its <details> opens
  *   .motion-image-fade   image materialisation: opacity only, 300ms
+ *
+ * Scroll-progress devices (ADR-0015 — CSS scroll-driven, never JavaScript):
+ *
+ *   .reveal              the ONE reveal device: a row-scale element settles
+ *                        in as it enters the viewport (opacity + 12px rise)
+ *   .reveal-rule         a hairline is struck left-to-right as its row enters
+ *   .header-elevate      the masthead gains a soft under-shadow once the page
+ *                        has scrolled beneath it (opacity only)
  *
  * Continuous interaction devices (hover/focus-visible):
  *
@@ -26,10 +36,13 @@
  *   .btn-fill            bordered CTA: the ivory plate rises from the
  *                        baseline — the button becomes active, it is never
  *                        switched
+ *   .row-engage          an editorial row answers engagement as a whole: its
+ *                        portrait comes to full colour and its rule warms
  *
- * Principles (ADR-0006/0007):
- *   - Load-triggered animation is run-once only; nothing autonomous, nothing
- *     scroll-triggered, no exit animations.
+ * Principles (ADR-0006/0007, amended by ADR-0015):
+ *   - Load-triggered animation is run-once only; nothing autonomous, no exit
+ *     animations. Scroll-driven devices are PROGRESS, not triggers: they are
+ *     bound to the reader's own scrolling and reverse with it.
  *   - Opacity, transform and background-size only (compositor/paint-safe).
  *   - Decelerating arrivals: motion settles, it never springs.
  *   - Pure CSS: works without JavaScript and reveals content that is already
@@ -102,6 +115,16 @@
   animation: motion-rule-draw 640ms var(--ease-arrive) 100ms both;
 }
 
+/* The hero's measurement field (globals.css `.hero-field`) does not arrive with
+ * the text — it DEVELOPS: a slow opacity ramp that begins after the masthead
+ * has landed and takes 1.6s to reach its (already very low) final density. The
+ * effect is a plate coming up in a tray, or a trace being plotted; it reads as
+ * the surface acquiring depth rather than as an element animating in. Hero
+ * only, once, opacity only. */
+.motion-field-develop {
+  animation: motion-fade-in 1600ms var(--ease-settle) 260ms both;
+}
+
 @keyframes motion-menu-enter {
   from {
     opacity: 0;
@@ -137,6 +160,108 @@ details[open] .motion-menu-enter {
  * (recorded in ADR-0006). */
 .motion-image-fade {
   animation: motion-image-fade 300ms ease-out both;
+}
+
+/* --------------------------------------------- scroll-progress devices */
+
+/* ADR-0015. The site's second motion tier, and the only one bound to reading
+ * rather than to arrival.
+ *
+ * WHY CSS SCROLL TIMELINES AND NOT JAVASCRIPT. These devices are decoration
+ * over content that is already complete in the document. An IntersectionObserver
+ * implementation would have to start elements at `opacity: 0` in the markup and
+ * rely on script to reveal them — one script error, one slow hydration, one
+ * scraper without a layout engine, and the page is blank. A scroll timeline
+ * cannot fail that way: it is guarded by `@supports`, so a browser that does not
+ * implement it never applies the rule and simply renders the finished page.
+ *
+ * WHAT THAT COSTS. `animation-timeline` is not Baseline — Chrome/Edge 115+ and
+ * Safari 18+ ship it; Firefox still has it behind a flag (~84% of sessions at
+ * the time of writing). The remaining ~16% get the site without the reveal.
+ * That is the correct trade for an institutional publication: the reveal is a
+ * grace note, not the content, and no visitor is ever shown less information.
+ *
+ * RANGE. `entry 0% entry 65%` — the element begins settling the moment its top
+ * edge crosses the viewport bottom and is FULLY opaque by the time two thirds of
+ * it has entered, which is still well below the comfortable reading zone. This
+ * bound is a legibility requirement, not a taste one: while a reveal is in
+ * flight the text is composited at partial opacity and its contrast is
+ * correspondingly reduced (a Lighthouse pass mid-scroll caught exactly this,
+ * sampling 12px copper at 3.7:1 instead of its resting 5.0:1). Ending the ramp
+ * early means no text a reader is plausibly reading is ever below its measured
+ * resting contrast — only text still arriving at the bottom edge of the screen.
+ *
+ * The range is expressed against the ELEMENT's own entry, so it must only be
+ * applied at row scale (an editorial row, a figure). On a section-tall block the
+ * entry range is the block's own height and the reveal would drag across the
+ * whole scroll — the class is deliberately not a section-level device.
+ *
+ * TIMING. `linear` on purpose: a scroll-driven animation is scrubbed by the
+ * reader's own hand, and an eased curve makes their scroll feel non-linear —
+ * the easing belongs on time-driven motion, not on progress-driven motion. */
+
+@keyframes motion-reveal {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* PRINT AND CAPTURE. A scroll-progress animation is bound to a scroll position,
+ * and a printed page does not have one — so every row below the first screen
+ * would be committed to paper at 0% progress, i.e. blank. This was found by
+ * taking a full-page screenshot and watching two thirds of the homepage come
+ * back empty; the same mechanism applies to `window.print()`, to "save as PDF",
+ * and to any capture tool. On a site whose content people print (a staff
+ * directory, a bibliography, a contact record) that is a data-loss bug, not a
+ * cosmetic one. The reveal is switched off outright for print: paper gets the
+ * finished page. */
+@media print {
+  .reveal,
+  .reveal-rule {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}
+
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .reveal {
+      animation: motion-reveal linear both;
+      animation-timeline: view();
+      animation-range: entry 0% entry 65%;
+    }
+
+    /* The rule-strike of the masthead, generalised to the page: a section's
+     * hairline is drawn left-to-right as its header enters. Same print gesture,
+     * now carried by the reader's scroll instead of by page load. */
+    .reveal-rule {
+      transform-origin: 0 50%;
+      animation: motion-rule-draw linear both;
+      animation-timeline: view();
+      animation-range: entry 0% entry 80%;
+    }
+  }
+
+  /* Masthead elevation. Not a reveal and not movement — a depth cue: once the
+   * page has begun to travel underneath the sticky header, a soft shadow
+   * separates the two planes, and it retracts as you return to the top. Opacity
+   * on a pseudo-element (compositor-only); `scroll(root block)` binds it to the
+   * document scroll rather than to the header's own (non-existent) entry.
+   *
+   * Deliberately NOT gated on prefers-reduced-motion: nothing moves. Suppressing
+   * it would remove a layering affordance from exactly the readers most likely
+   * to need the page's structure stated plainly. */
+  .header-elevate::after {
+    animation: motion-fade-in linear both;
+    animation-timeline: scroll(root block);
+    animation-range: 0 96px;
+  }
 }
 
 /* ------------------------------------------------- interaction devices */
@@ -212,14 +337,54 @@ details[open] .motion-menu-enter {
   transition-duration: 260ms;
 }
 
+/* Row engagement (ADR-0015). An editorial row is a single object, so it should
+ * answer engagement as one — not as three independent hover states firing at
+ * once. Pointing at (or tabbing into) a row does two quiet things:
+ *
+ *   1. the portrait comes to full colour. Portraits are printed at
+ *      `saturate(.85) contrast(.97)` so the mixed official sources read as one
+ *      register (ADR-0011); on engagement that grading relaxes and the person
+ *      is simply themselves. It is the site's only "image interaction", and it
+ *      is reversible, subtle, and about the person rather than about the effect.
+ *   2. the row's leading hairline warms from navy to copper — the same accent
+ *      the row's own index numeral and eyebrow already use, so the row states
+ *      that it is the active one using the vocabulary it was drawn with.
+ *
+ * `:focus-within` carries keyboard parity: tabbing to a name inside the row
+ * lights the row exactly as hovering does. */
+.row-engage {
+  transition: border-color 300ms var(--ease-settle);
+}
+
+.row-engage :is(img) {
+  transition: filter 300ms var(--ease-settle);
+}
+
+.row-engage:is(:hover, :focus-within) {
+  border-top-color: color-mix(in srgb, var(--color-copper) 45%, transparent);
+  transition-duration: 200ms;
+}
+
+.row-engage:is(:hover, :focus-within) :is(img) {
+  filter: saturate(1) contrast(1);
+  transition-duration: 200ms;
+}
+
 /* Reduced motion: the run-once arrivals are removed entirely — the page, its
  * hero and its images are simply there, fully visible. This is first-class,
  * not a shortened animation; the global duration collapse in globals.css is
- * the second net and flattens the hover devices to instant state changes. */
+ * the second net and flattens the hover devices to instant state changes.
+ *
+ * The scroll-progress reveals (`.reveal`, `.reveal-rule`) are not listed here:
+ * they are declared inside `prefers-reduced-motion: no-preference` above, so
+ * for these visitors the rules are never emitted at all and the content has no
+ * animated state to undo. `.header-elevate` is intentionally retained — see
+ * its note; it is a depth cue, not motion. */
 @media (prefers-reduced-motion: reduce) {
   .motion-page-enter,
   .motion-hero-follow,
   .motion-rule-draw,
+  .motion-field-develop,
   .motion-image-fade,
   details[open] .motion-menu-enter {
     animation: none;

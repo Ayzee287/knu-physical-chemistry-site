@@ -13,7 +13,17 @@
   --color-navy: #14254a;
   --color-ivory: #f4f0e8;
   --color-sand: #e8e0d0;
-  --color-copper: #9a6a3f;
+  /* Copper was #9a6a3f, which measures 4.10:1 on ivory and 3.88:1 on the sand
+     band — under WCAG AA (4.5:1) for normal-size text. It carries every eyebrow
+     and every section label on the site, all of them 12px, which makes it the
+     single most-repeated text style here and the worst possible place to be
+     under the line. #8a5d36 measures 4.99:1 on ivory and 4.73:1 on sand/40 —
+     the darkest surface the accent has to sit on — so it clears AA on BOTH
+     paper surfaces (ADR-0015). Same hue and chroma family; a reader who knows
+     the old value would have to be told. Decorative copper (the aria-hidden
+     index numerals at /80, the `·` separators at /60) is exempt from the
+     contrast minimum and inherits the shift harmlessly. */
+  --color-copper: #8a5d36;
   --color-slate: #5a6275;
 
   --font-sans: var(--font-inter), system-ui, sans-serif;
@@ -73,6 +83,18 @@
     color: var(--color-ivory);
   }
 
+  /* Sticky section rails clear the sticky masthead (h-16 / lg:h-20) plus a
+     breath, so a rail label never sits flush against the header rule. */
+  :root {
+    --rail-top: 5.5rem;
+  }
+
+  @media (min-width: 1024px) {
+    :root {
+      --rail-top: 7rem;
+    }
+  }
+
   /* Dark surfaces (ink masthead, navy closer) invert the interaction details —
      a navy focus ring or selection is invisible there. Small things like this
      are where the surface either feels designed or doesn't. */
@@ -84,6 +106,81 @@
     background-color: var(--color-ivory);
     color: var(--color-ink);
   }
+}
+
+/* ------------------------------------------------------------------ surfaces
+   Two painted surfaces the token layer alone cannot express. Both are pure
+   CSS (no image requests, no JavaScript, no extra DOM beyond one aria-hidden
+   div) and both are compositor-cheap: they paint once and never repaint. */
+
+/* The hero's measurement field (ADR-0015). The masthead was described from the
+   start as "the site's one deliberately atmospheric moment", but it was a flat
+   rectangle of ink — the atmosphere was asserted, not drawn. This supplies it
+   in the department's own idiom: a plotting graticule, the ruled field a
+   physical chemist reads a measurement off, dissolved by a radial mask so it
+   never reaches the headline and never touches the band's edges.
+
+   Discipline: the grid is a 72px square at ~5% ivory — under the threshold
+   where it competes with type, above the threshold where it would be invisible
+   on a calibrated display. It is masked toward the fact rail (top-right), the
+   quiet half of the composition, so the title block stays on clean ink. No
+   gradient reads as a gradient; no element moves. */
+.hero-field {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-image:
+    linear-gradient(to right, rgb(244 240 232 / 0.05) 1px, transparent 1px),
+    linear-gradient(to bottom, rgb(244 240 232 / 0.05) 1px, transparent 1px);
+  background-size: 4.5rem 4.5rem;
+  -webkit-mask-image: radial-gradient(
+    75% 105% at 82% 4%,
+    #000 0%,
+    rgb(0 0 0 / 0.8) 34%,
+    transparent 76%
+  );
+  mask-image: radial-gradient(
+    52% 88% at 92% 2%,
+    #000 0%,
+    rgb(0 0 0 / 0.7) 32%,
+    transparent 72%
+  );
+}
+
+/* Depth wash for the ink masthead: a single very soft lift from `ink` toward
+   `navy` at the upper left, so the deepest surface on the site has a light
+   source instead of being an even fill. This is what makes the band read as a
+   plane in a room rather than as a colour swatch. */
+.hero-depth {
+  background-image: radial-gradient(
+    115% 85% at 14% -12%,
+    rgb(26 44 84 / 0.85) 0%,
+    rgb(20 37 74 / 0.35) 38%,
+    transparent 68%
+  );
+}
+
+/* Masthead elevation plate (animated by `.header-elevate` in motion.css). A
+   shadow cast DOWNWARD from the header onto the page, drawn as a gradient on a
+   pseudo-element rather than as a `box-shadow` so the scroll-driven change is a
+   pure opacity crossfade and never triggers a repaint of the header itself. */
+.header-elevate {
+  position: relative;
+}
+
+.header-elevate::after {
+  content: "";
+  position: absolute;
+  inset-inline: 0;
+  top: 100%;
+  height: 1.5rem;
+  opacity: 0;
+  pointer-events: none;
+  background-image: linear-gradient(
+    to bottom,
+    rgb(20 37 74 / 0.07),
+    transparent
+  );
 }
 
 /* Respect a reduced-motion request: drop the smooth anchor scroll and collapse

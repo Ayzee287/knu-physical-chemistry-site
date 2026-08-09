@@ -52,7 +52,14 @@ export function Header({ lang, dict }: { lang: Locale; dict: Dictionary }) {
   }, []);
 
   return (
-    <header className="sticky top-0 z-50 border-b border-navy/10 bg-ivory">
+    /* header-elevate (ADR-0015): once the page has begun to travel underneath
+       the masthead, a soft shadow is cast onto the content and retracts again at
+       the top of the page. The bar was previously indistinguishable whether it
+       was overlapping content or sitting on the hero, so it read as part of the
+       page rather than as a layer above it. Driven by a CSS scroll timeline —
+       no scroll listener, no state, no re-render; the class is inert in browsers
+       without scroll-driven animations. */
+    <header className="header-elevate sticky top-0 z-50 border-b border-navy/10 bg-ivory">
       <Container>
         <div className="flex h-16 items-center justify-between lg:h-20">
           {/* Brand is an identity mark, not a nav item — color shift only,

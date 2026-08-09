@@ -4,6 +4,7 @@ import { notFound } from "next/navigation";
 import { Container } from "@/components/layout/container";
 import { InstitutionalHero } from "@/components/layout/institutional-hero";
 import { SectionHeader } from "@/components/layout/section-header";
+import { SectionSpread } from "@/components/layout/section-spread";
 import { ResearchAreaCard } from "@/components/cards/research-area-card";
 import { Portrait } from "@/components/ui/portrait";
 import { ReviewMark } from "@/components/ui/review-mark";
@@ -98,6 +99,17 @@ export default async function HomePage({ params }: PageProps) {
         ]}
       />
 
+      {/* ————————————————————————————————————————————————————————————————
+          The register (ADR-0015). The three list sections — people, programme,
+          record — are set as editorial SPREADS: the section's identity holds in
+          a sticky left rail while its rows travel past in the wide column. They
+          share one shape on purpose. The page's variety is at page scale (ink
+          masthead → quiet register → sand century band → navy closer), not at
+          section scale; three list sections that each invented their own
+          geometry would be noise, and the old flat stack — five sections of a
+          narrow left column adrift in a wide container — was the actual problem.
+          ———————————————————————————————————————————————————————————————— */}
+
       {/* Research leaders — the people carrying the directions (ADR-0008).
           FIRST content section since the presence sprint (D023): the page
           answers "who are the scientists behind this department" before it
@@ -105,37 +117,50 @@ export default async function HomePage({ params }: PageProps) {
           section gives it faces. Portrait plates joined the rows under
           ADR-0010 (hairline plate, progressive enhancement — a row without a
           registered asset stays typographic); the muted-colour grading is
-          ADR-0011.
+          ADR-0011, and it relaxes to full colour when the row is engaged
+          (`row-engage`, ADR-0015).
           Each leader joins to their direction's anchor on /research —
           people ↔ programme, not a directory. */}
       <section className="py-16 sm:py-20 lg:py-24">
         <Container>
-          <SectionHeader
-            eyebrow={t.leaders.eyebrow}
-            title={t.leaders.title}
-            lead={t.leaders.lead}
-          />
-          <div className="mt-10 border-b border-navy/10 lg:mt-12">
-            {leaders.map((leader) => {
-              const image = getImage(leader.photo);
-              return (
-                <article
-                  key={leader.id}
-                  className="grid gap-x-8 gap-y-4 border-t border-navy/10 py-8 sm:grid-cols-[2fr_3fr] lg:py-10"
-                >
-                  <div className="flex gap-5 sm:gap-6">
-                    {/* Author-portrait scale (smaller than the /staff plates):
-                        the row stays an editorial row, not a profile card. */}
-                    {image ? (
-                      <Portrait
-                        image={image}
-                        className="w-16 flex-shrink-0 self-start sm:w-20"
-                        sizes="(min-width: 640px) 5rem, 4rem"
-                      />
-                    ) : null}
-                    <div className="min-w-0">
+          <SectionSpread
+            header={
+              <SectionHeader
+                size="rail"
+                eyebrow={t.leaders.eyebrow}
+                title={t.leaders.title}
+                lead={t.leaders.lead}
+              />
+            }
+          >
+            <div className="border-b border-navy/10">
+              {leaders.map((leader) => {
+                const image = getImage(leader.photo);
+                return (
+                  /* Same grammar as the research row: the record in the measure,
+                     the cross-reference in the margin. Portrait, identity and
+                     focus belong to the person and stay together; the direction
+                     link points OUT of the row, so it is set as marginal
+                     apparatus behind the margin's own hairline. Below `lg` the
+                     tracks collapse and the link falls under the record, where
+                     a phone reads it in document order. */
+                  <article
+                    key={leader.id}
+                    className="reveal row-engage border-t border-navy/10 py-8 lg:grid lg:grid-cols-[minmax(0,1fr)_minmax(0,13rem)] lg:gap-x-10 lg:py-10"
+                  >
+                    <div className="flex gap-5 sm:gap-6">
+                      {/* Author-portrait scale (smaller than the /staff plates):
+                          the row stays an editorial row, not a profile card. */}
+                      {image ? (
+                        <Portrait
+                          image={image}
+                          className="w-16 flex-shrink-0 self-start sm:w-20"
+                          sizes="(min-width: 640px) 5rem, 4rem"
+                        />
+                      ) : null}
+                      <div className="min-w-0">
                       <h3 className="text-balance font-serif text-2xl font-medium leading-snug text-navy">
-                        {/* The name is the way to the person: it now lands on
+                        {/* The name is the way to the person: it lands on
                             their dedicated profile page (ADR-0014), the canonical
                             home for the record. Quiet underline device only — the
                             arrow stays reserved for programme links. */}
@@ -157,110 +182,128 @@ export default async function HomePage({ params }: PageProps) {
                           {leader.honours}
                         </p>
                       ) : null}
+                        {leader.focus ? (
+                          <p className="mt-3 max-w-xl text-pretty leading-7 text-slate">
+                            {leader.focus}
+                          </p>
+                        ) : null}
+                      </div>
                     </div>
-                  </div>
-                  <div className="max-w-xl sm:pt-1.5">
-                    {leader.focus ? (
-                      <p className="text-pretty leading-7 text-slate">
-                        {leader.focus}
-                      </p>
-                    ) : null}
-                    <p className="mt-3 text-sm">
+                    {/* Inline (not flex) so the arrow follows the last word of a
+                        wrapped title instead of being pushed to the margin's
+                        right edge, and so the underline device clones under every
+                        line. Sentence case on purpose: Ukrainian set in caps runs
+                        ~15% wider and this is a LINK, not one of the small-caps
+                        labels — the margin's hairline already says "apparatus". */}
+                    <p className="mt-4 text-sm leading-6 lg:mt-0 lg:border-l lg:border-navy/10 lg:pl-6 lg:pt-1 lg:text-[0.8125rem] lg:leading-5">
                       <Link
                         href={`${href(lang, "/research")}#${leader.areaId}`}
-                        className="inline-flex items-center gap-2 font-medium text-navy hover:text-slate"
+                        className="font-medium text-navy hover:text-slate"
                       >
                         <span className="link-underline">
                           {areaTitleById.get(leader.areaId)}
                         </span>
-                        <span aria-hidden className="link-arrow">
+                        <span aria-hidden className="link-arrow ml-2">
                           →
                         </span>
                       </Link>
                     </p>
-                  </div>
-                </article>
-              );
-            })}
-          </div>
-          <p className="mt-8">
-            <Link
-              href={href(lang, "/staff")}
-              className="inline-flex items-center gap-2 text-sm font-medium text-navy hover:text-slate"
-            >
-              <span className="link-underline">{t.leaders.cta}</span>
-              <span aria-hidden className="link-arrow">
-                →
-              </span>
-            </Link>
-          </p>
+                  </article>
+                );
+              })}
+            </div>
+            <p className="mt-8">
+              <Link
+                href={href(lang, "/staff")}
+                className="inline-flex items-center gap-2 text-sm font-medium text-navy hover:text-slate"
+              >
+                <span className="link-underline">{t.leaders.cta}</span>
+                <span aria-hidden className="link-arrow">
+                  →
+                </span>
+              </Link>
+            </p>
+          </SectionSpread>
         </Container>
       </section>
 
       {/* Research digest — the programme the leaders above carry */}
       <section className="border-t border-navy/10 py-16 sm:py-20 lg:py-24">
         <Container>
-          <SectionHeader
-            eyebrow={t.research.eyebrow}
-            title={t.research.title}
-            lead={t.research.lead}
-          />
-          <div className="mt-10 border-b border-navy/10 lg:mt-12">
-            {areas.map((area, i) => (
-              <ResearchAreaCard
-                key={area.id}
-                area={area}
-                index={i}
-                href={`${href(lang, "/research")}#${area.id}`}
+          <SectionSpread
+            header={
+              <SectionHeader
+                size="rail"
+                eyebrow={t.research.eyebrow}
+                title={t.research.title}
+                lead={t.research.lead}
               />
-            ))}
-          </div>
-          <p className="mt-8">
-            <Link
-              href={href(lang, "/research")}
-              className="inline-flex items-center gap-2 text-sm font-medium text-navy hover:text-slate"
-            >
-              <span className="link-underline">{t.research.cta}</span>
-              <span aria-hidden className="link-arrow">
-                →
-              </span>
-            </Link>
-          </p>
+            }
+          >
+            <div className="border-b border-navy/10">
+              {areas.map((area, i) => (
+                <ResearchAreaCard
+                  key={area.id}
+                  area={area}
+                  index={i}
+                  href={`${href(lang, "/research")}#${area.id}`}
+                />
+              ))}
+            </div>
+            <p className="mt-8">
+              <Link
+                href={href(lang, "/research")}
+                className="inline-flex items-center gap-2 text-sm font-medium text-navy hover:text-slate"
+              >
+                <span className="link-underline">{t.research.cta}</span>
+                <span aria-hidden className="link-arrow">
+                  →
+                </span>
+              </Link>
+            </p>
+          </SectionSpread>
         </Container>
       </section>
 
       {/* Recognition record — dated results and honours (ADR-0008), set in
           the same year|content archival rows as the history and bibliography
           surfaces. Chronological, sourced, review-marked: a record, not a
-          highlights reel. */}
+          highlights reel. The years sit in their own folio column so the record
+          can be read as a chronology without reading the entries. */}
       <section className="border-t border-navy/10 py-16 sm:py-20 lg:py-24">
         <Container>
-          <SectionHeader
-            eyebrow={t.recognition.eyebrow}
-            title={t.recognition.title}
-            lead={t.recognition.lead}
-          />
-          <div className="mt-10 max-w-3xl border-b border-navy/10 lg:mt-12">
-            {recognition.map((entry) => (
-              <article
-                key={entry.id}
-                className="grid gap-x-8 gap-y-1 border-t border-navy/10 py-6 sm:grid-cols-[7rem_1fr] sm:py-7"
-              >
-                <p className="font-serif text-lg tabular-nums leading-snug text-copper">
-                  {entry.years}
-                </p>
-                <div>
-                  <h3 className="font-medium leading-6 text-navy">
-                    {entry.title}
-                    <ReviewMark provenance={entry.provenance} />
-                  </h3>
-                  <p className="mt-1.5 max-w-xl text-pretty text-sm leading-6 text-slate">
-                    {entry.detail}
+          <SectionSpread
+            header={
+              <SectionHeader
+                size="rail"
+                eyebrow={t.recognition.eyebrow}
+                title={t.recognition.title}
+                lead={t.recognition.lead}
+              />
+            }
+          >
+            <div className="border-b border-navy/10">
+              {recognition.map((entry) => (
+                <article
+                  key={entry.id}
+                  className="reveal row-engage grid gap-x-8 gap-y-1 border-t border-navy/10 py-6 sm:grid-cols-[7rem_minmax(0,1fr)] sm:py-7"
+                >
+                  <p className="font-serif text-lg tabular-nums leading-snug text-copper">
+                    {entry.years}
                   </p>
-                </div>
-              </article>
-            ))}
-          </div>
+                  <div>
+                    <h3 className="font-medium leading-6 text-navy">
+                      {entry.title}
+                      <ReviewMark provenance={entry.provenance} />
+                    </h3>
+                    <p className="mt-1.5 max-w-2xl text-pretty text-sm leading-6 text-slate">
+                      {entry.detail}
+                    </p>
+                  </div>
+                </article>
+              ))}
+            </div>
+          </SectionSpread>
         </Container>
       </section>
 
@@ -325,20 +368,37 @@ export default async function HomePage({ params }: PageProps) {
             </div>
           </div>
 
-          {/* The department in numbers — quiet typographic figures (no
-              counters, by design language). Every figure is a claim already
-              published elsewhere on the site; see the `record` assembly. */}
-          <div className="mt-12 lg:mt-14">
-            <h3 className="text-xs uppercase tracking-[0.18em] text-copper">
-              {t.department.numbers.title}
-            </h3>
-            <dl className="mt-5 grid grid-cols-2 gap-x-8 gap-y-8 border-t border-navy/10 pt-6 sm:grid-cols-4">
+          {/* The department in numbers — quiet typographic figures (no counters,
+              by design language). Every figure is a claim already published
+              elsewhere on the site; see the `record` assembly.
+
+              Set as a RULED REGISTER (ADR-0015). Four figures floating in a bare
+              grid read as a footnote: the labels were the same size as the
+              figures' own review marks, the values were ragged (1905 beside 6),
+              and nothing tied a value to its label except proximity. Now each
+              entry is a cell of an engraved plinth — hairline-divided at `sm`,
+              label above rule, figure below, everything baseline-consistent. The
+              figures carry the page's largest non-heading serif because they are
+              the department's strongest quantitative claims and they should
+              close the century band with weight. Still no counters: a figure
+              that counts up is a figure performing, and these are records. */}
+          <div className="mt-14 lg:mt-16">
+            <div className="flex items-center gap-4">
+              <h3 className="text-xs uppercase tracking-[0.18em] text-copper">
+                {t.department.numbers.title}
+              </h3>
+              <span aria-hidden className="h-px flex-1 bg-navy/10" />
+            </div>
+            <dl className="mt-6 grid grid-cols-2 border-t border-navy/15 sm:grid-cols-4">
               {record.map((figure) => (
-                <div key={figure.id}>
-                  <dt className="text-xs leading-5 text-slate/90">
+                <div
+                  key={figure.id}
+                  className="reveal border-navy/10 px-0 py-6 sm:border-l sm:px-7 sm:first:border-l-0 sm:first:pl-0"
+                >
+                  <dt className="text-xs leading-5 text-slate">
                     {figure.label}
                   </dt>
-                  <dd className="mt-1.5 font-serif text-3xl font-medium leading-none tracking-tight text-navy tabular-nums sm:text-4xl">
+                  <dd className="mt-3 font-serif text-4xl font-medium leading-none tracking-tight text-navy tabular-nums sm:text-[2.75rem]">
                     {figure.value}
                     <ReviewMark provenance={figure.provenance} />
                   </dd>
@@ -349,23 +409,33 @@ export default async function HomePage({ params }: PageProps) {
         </Container>
       </section>
 
-      {/* Closer — the page's single navy band, bookending the ink masthead */}
+      {/* Closer — the page's single navy band, bookending the ink masthead.
+          Composed as a balance rather than a stack (ADR-0015): the invitation
+          holds the measure on the left and the action stands as a counterweight
+          in the right margin, aligned to the same rail edge the register
+          sections use. Stacked left-aligned, this band was three short lines and
+          a small button adrift in a very large field of navy — the emptiest
+          surface on the site, at the moment the page is asking for contact. No
+          contact FACT is repeated here: the footer owns identity and /contacts
+          owns the record (D025); this band owns the invitation only. */}
       <section className="dark-surface bg-navy py-16 text-ivory sm:py-20 lg:py-24">
         <Container>
-          <SectionHeader
-            tone="dark"
-            eyebrow={t.contact.eyebrow}
-            title={t.contact.title}
-            lead={t.contact.lead}
-          />
-          <p className="mt-9">
-            <Link
-              href={href(lang, "/contacts")}
-              className="btn-fill inline-block border border-ivory/80 px-6 py-3 text-sm font-medium hover:text-navy"
-            >
-              {t.contact.cta}
-            </Link>
-          </p>
+          <div className="lg:grid lg:grid-cols-[minmax(0,1fr)_auto] lg:items-end lg:gap-x-16">
+            <SectionHeader
+              tone="dark"
+              eyebrow={t.contact.eyebrow}
+              title={t.contact.title}
+              lead={t.contact.lead}
+            />
+            <p className="mt-9 lg:mt-0">
+              <Link
+                href={href(lang, "/contacts")}
+                className="btn-fill inline-block border border-ivory/80 px-6 py-3 text-sm font-medium hover:text-navy"
+              >
+                {t.contact.cta}
+              </Link>
+            </p>
+          </div>
         </Container>
       </section>
     </main>

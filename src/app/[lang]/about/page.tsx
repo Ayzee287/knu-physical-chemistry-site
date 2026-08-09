@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import { Container } from "@/components/layout/container";
 import { PageIntro } from "@/components/layout/page-intro";
 import { SectionHeader } from "@/components/layout/section-header";
+import { SectionSpread } from "@/components/layout/section-spread";
 import { LeadershipSection } from "@/components/sections/leadership-section";
 import { QuoteBlock } from "@/components/ui/quote-block";
 import { ExternalLink } from "@/components/ui/external-link";
@@ -66,48 +67,76 @@ export default async function AboutPage({ params }: PageProps) {
 
       {/* History — the page's monumental moment: a full-bleed archival band.
           The founding year is set as a watermark numeral behind the record —
-          information elsewhere, atmosphere here. */}
+          information elsewhere, atmosphere here.
+
+          overflow-CLIP, not hidden (ADR-0015): `overflow: hidden` makes a box a
+          scroll container, which would bind every `view()` timeline inside it to
+          a container that never scrolls and would cut the sticky rail off at the
+          band edge. `clip` clips the watermark identically without that.
+
+          Set as a spread (ADR-0015): the succession is a long register, so its
+          heading holds in the rail while the century travels past — the one
+          place on the site where the sticky rail is doing real navigational
+          work rather than compositional work. The source note joins it there;
+          it qualifies the whole record, not the last row of it. */}
       <section
         id="history"
-        className="relative scroll-mt-24 overflow-hidden border-t border-navy/10 bg-sand/40 py-16 sm:py-20 lg:py-24"
+        className="relative scroll-mt-28 overflow-clip border-t border-navy/10 bg-sand/40 py-16 sm:py-20 lg:py-24"
       >
         <Container>
           <div className="relative">
-            <p
-              aria-hidden
-              className="pointer-events-none absolute -top-10 right-0 hidden select-none font-serif text-[9rem] leading-none tracking-tight text-navy/[0.07] tabular-nums sm:block lg:text-[13rem]"
-            >
-              1905
-            </p>
-            <SectionHeader
-              eyebrow={t.history.eyebrow}
-              title={t.history.title}
-              lead={t.history.lead}
-            />
-            <div className="mt-10 max-w-3xl border-b border-navy/10 lg:mt-12">
-              {history.map((period) => (
-                <article
-                  key={period.id}
-                  className="grid gap-x-8 gap-y-1 border-t border-navy/10 py-6 sm:grid-cols-[7rem_1fr] sm:py-7"
-                >
-                  <p className="font-serif text-lg tabular-nums leading-snug text-copper">
-                    {period.years}
+            <SectionSpread
+              header={
+                <>
+                  <SectionHeader
+                    size="rail"
+                    eyebrow={t.history.eyebrow}
+                    title={t.history.title}
+                    lead={t.history.lead}
+                  />
+                  <p className="mt-5 max-w-xl text-xs leading-5 text-slate">
+                    {t.history.sourceNote}
                   </p>
-                  <div>
-                    <h3 className="font-medium leading-6 text-navy">
-                      {period.head}
-                      <ReviewMark provenance={period.provenance} />
-                    </h3>
-                    <p className="mt-1.5 max-w-xl text-pretty text-sm leading-6 text-slate">
-                      {period.focus}
+                  {/* The founding year, set as an archival watermark. It used to
+                      be absolutely positioned at the band's top-right, where it
+                      sat harmlessly behind a `max-w-3xl` record. Now that the
+                      record uses the full column it landed BEHIND live text —
+                      7% navy under body copy is faint but it is still contrast
+                      taken away from a reader who gains nothing for it. The
+                      margin is where an archival numeral belongs anyway: the
+                      century stands beside its own register, in the empty rail
+                      below the heading, competing with nothing. */}
+                  <p
+                    aria-hidden
+                    className="pointer-events-none mt-10 hidden select-none font-serif text-[7rem] leading-none tracking-tight text-navy/[0.09] tabular-nums lg:block"
+                  >
+                    1905
+                  </p>
+                </>
+              }
+            >
+              <div className="border-b border-navy/10">
+                {history.map((period) => (
+                  <article
+                    key={period.id}
+                    className="reveal row-engage grid gap-x-8 gap-y-1 border-t border-navy/10 py-6 sm:grid-cols-[7rem_minmax(0,1fr)] sm:py-7"
+                  >
+                    <p className="font-serif text-lg tabular-nums leading-snug text-copper">
+                      {period.years}
                     </p>
-                  </div>
-                </article>
-              ))}
-            </div>
-            <p className="mt-5 max-w-xl text-xs leading-5 text-slate/80">
-              {t.history.sourceNote}
-            </p>
+                    <div>
+                      <h3 className="font-medium leading-6 text-navy">
+                        {period.head}
+                        <ReviewMark provenance={period.provenance} />
+                      </h3>
+                      <p className="mt-1.5 max-w-2xl text-pretty text-sm leading-6 text-slate">
+                        {period.focus}
+                      </p>
+                    </div>
+                  </article>
+                ))}
+              </div>
+            </SectionSpread>
           </div>
         </Container>
       </section>

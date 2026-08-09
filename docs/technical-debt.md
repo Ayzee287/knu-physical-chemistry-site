@@ -38,23 +38,32 @@ recorded decision that it will never be done — never by being forgotten.
 
 ## P1 — next sprint
 
-### P1.1 Accessibility: measured contrast failures (computed, unconfirmed in browser)
-- **What:** computed luminance estimates (code audit 2026-06-11) put several
-  small-text combinations below WCAG AA 4.5:1:
+### ~~P1.1 Accessibility: measured contrast failures~~ — RESOLVED 2026-08-01 (ADR-0015)
+- **What it was:** computed luminance estimates (code audit 2026-06-11) put
+  several small-text combinations below WCAG AA 4.5:1:
   - copper `#9a6a3f` on ivory `#f4f0e8` ≈ **4.1:1** — all 12px eyebrows/labels;
   - copper on the sand/40 band ≈ **3.9:1** — band eyebrows;
   - slate/80 on ivory ≈ **3.5:1** — source notes (12px);
   - slate/90 at 12px (keyword lines) ≈ **4.4:1** — marginal.
-  Passing: slate on ivory ≈ 5.3:1 ✓; sand/55 + sand/70 on ink ≥ 4.7:1 ✓.
-- **Impact:** AA conformance failure on a public institutional site; copper
-  eyebrows are the site's signature device, so the failure is everywhere.
-- **Effort:** small — darken copper for *text* use (a `copper-text` tone within
-  the palette's discipline) and raise the slate alphas; one session including
-  browser confirmation. Hairlines/rules can keep the current copper (non-text).
-- **Risk if ignored:** legal/conformance exposure once institutional (roadmap
-  Phase F requires it); excludes low-vision readers now.
-- **Timing:** with the Phase C session; the numbers above make it plannable
-  today. Do NOT change tokens before browser confirmation of the estimates.
+- **Browser confirmation** (the gate this item set): Lighthouse on the running
+  site reported copper at **4.09:1**, within 0.01 of the estimate. The 2026-06-11
+  audit's numbers were sound; the caution was warranted and is now discharged.
+- **Fixed in the P1 experience phase:**
+  - `--color-copper` `#9a6a3f` → **`#8a5d36`** — 4.99:1 on ivory, **4.73:1 on
+    sand/40**, so it clears AA on *both* paper surfaces. (The intermediate
+    `#8f6139` was rejected: 4.69 on ivory but only 4.44 on sand — the band is the
+    binding constraint, not the paper.) One token, not a separate `copper-text`
+    tone: a second accent would have split the palette's single-accent discipline
+    to solve a problem the primary value could solve outright.
+  - The light-surface `slate/90|80|70` text tints are **retired**, not raised.
+    They bought almost no perceptible hierarchy (4.36 vs 5.37) at a real cost;
+    tonal hierarchy comes from size and weight instead. Where a label genuinely
+    needed to read as a label, the *value* went navy.
+  - Decorative copper (aria-hidden index numerals `/80`, `·` separators `/60`) is
+    exempt from the minimum and inherits the shift harmlessly.
+- **Verified:** Lighthouse **accessibility 100** on a production build —
+  desktop `/ua/staff`, mobile `/ua`. Dev-build runs score lower only because
+  `ReviewMark` badges render outside production (D026).
 
 ### P1.2 Published facts are `sourced`, not `verified`
 - **What:** every published person/contact/group claim traces to department

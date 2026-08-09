@@ -14,12 +14,21 @@ export type HeroFact = { label: string; value: string; provenance?: Provenance }
  * fact (the founding year), set as a large serif numeral.
  *
  * Identity is carried by typography, hairlines and one copper accent — no
- * imagery, no gradients. Motion is limited to the composed two-beat arrival
- * (beat 1 — the masthead identity: eyebrow, struck nameplate rule, headline;
- * beat 2, ~150ms later — the supporting statement, lead, CTAs and fact rail
- * settle in; ADR-0007/D018) plus the shared hover devices. When real
- * photography arrives, it belongs in the page sections below, not here: the
- * masthead stays typographic.
+ * imagery. Motion is limited to the composed two-beat arrival (beat 1 — the
+ * masthead identity: eyebrow, struck nameplate rule, headline; beat 2, ~150ms
+ * later — the supporting statement, lead, CTAs and fact rail settle in;
+ * ADR-0007/D018) plus the shared hover devices. When real photography arrives,
+ * it belongs in the page sections below, not here: the masthead stays
+ * typographic.
+ *
+ * Atmosphere (ADR-0015). The band was always documented as "the site's one
+ * deliberately atmospheric moment" and was in fact an even fill of ink. Two
+ * painted layers now supply what the description claimed — a depth wash that
+ * gives the plane a light source, and a plotting graticule masked into the
+ * quiet top-right quadrant behind the fact rail. Both are pure CSS (globals.css
+ * `.hero-depth` / `.hero-field`); the graticule DEVELOPS over 1.6s after the
+ * headline has landed rather than arriving with it, so the surface acquires
+ * depth as a third, slowest beat. Neither layer ever crosses the title block.
  */
 export function InstitutionalHero({
   eyebrow,
@@ -44,9 +53,10 @@ export function InstitutionalHero({
   facts: HeroFact[];
 }) {
   return (
-    <section className="dark-surface bg-ink text-ivory">
+    <section className="dark-surface hero-depth relative isolate overflow-clip bg-ink text-ivory">
+      <div aria-hidden className="hero-field motion-field-develop" />
       <Container>
-        <div className="grid gap-x-16 gap-y-12 pb-16 pt-16 sm:pt-20 lg:grid-cols-[minmax(0,7fr)_minmax(0,3fr)] lg:pb-24 lg:pt-28">
+        <div className="relative grid gap-x-16 gap-y-12 pb-16 pt-16 sm:pt-20 lg:grid-cols-[minmax(0,7fr)_minmax(0,3fr)] lg:pb-24 lg:pt-28">
           {/* Title block */}
           <div className="max-w-2xl">
             <div className="flex items-center gap-4">
