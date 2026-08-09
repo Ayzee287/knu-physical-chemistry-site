@@ -1,0 +1,3 @@
+# Normalise all text files to LF in the repository and in the working tree.
+# Prevents CRLF from reappearing when files pass through a Windows tool.
+* text=auto eol=lf
